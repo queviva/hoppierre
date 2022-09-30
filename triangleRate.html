@@ -1,0 +1,27 @@
+
+
+
+<body>
+<div id="X" style="font-size:120px">
+</div>
+</body>
+
+<script>
+
+const log = console.log;
+const note = (...v) => X.innerHTML = v;
+
+let t = 15;
+let x_rate = 2;
+let y_rate = 7;
+
+let x = x_rate * t;
+let y = y_rate * t;
+let z = Math.sqrt(x ** 2 + y ** 2);
+
+let z_rate = ((x * x_rate) + (y * y_rate)) / z;
+
+note(t,z_rate);
+
+
+</script>

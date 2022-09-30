@@ -1,0 +1,1021 @@
+<!doctype html><html lang="en">
+
+<head>
+	<title>hoppierre</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<style id="docStyles">
+		* {
+			box-sizing: border-box;
+			word-wrap: break-word;
+			--hue: 48;
+			--sat: 100%;
+			--lit: 88%;
+			--color: hsl(var(--hue), var(--sat), var(--lit));
+			--backcolor: hsl(120, 100%, 13%);
+			--litback: hsla(120, 50%, 25%);
+		}
+
+		body {
+			padding: 0px;
+			margin: 0px;
+			background-color: #000;
+			hyphens: auto;
+			text-align: center;
+		}
+
+		#holder {
+			display: inline-grid;
+			grid-template-columns: 1fr;
+			grid-template-rows: 1fr 1fr;
+			padding: 10px;
+			font-size: 24px;
+			text-align: justify;
+			max-width: 700px;
+			width: 100%;
+			height: 100vh;
+			margin: auto;
+			xxxborder: 1px solid #000;
+			background-color: var(--backcolor);
+			color: var(--color);
+			z-index: 2;
+		}
+
+		#discussion {
+			margin: 0px;
+			overflow-x: hidden;
+			overflow-y: auto;
+			min-height: 40px;
+		}
+
+		.addendum {
+			font-size: 0.9em;
+			opacity: .3;
+		}
+
+		div {
+			position: relative;
+			margin: 0;
+			padding: 0;
+		}
+
+		hr {
+			border-top: 1px solid var(--color);
+			border-bottom: none;
+			border-left: none;
+			border-right: none;
+			margin: 50px 0px 50px 0px;
+		}
+
+		img {
+			xxxwidth: 100%;
+			xxxmax-width: 400px;
+		}
+
+		a,
+		a:visited {
+			color: var(--color);
+			text-decoration: none;
+			transition: 300ms linear color;
+		}
+
+		a:hover {
+			color: #e86;
+			transition: 300ms linear color;
+		}
+
+		input {
+			--thumbH: 40px;
+			--color: 48, 100%;
+			--lightness: 88%;
+			--midness: var(--lightness);
+			/*calc(0.37 * var(--lightness));*/
+		}
+
+		input[type=range] {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			display: inline-block;
+			padding: 0;
+			margin: 0;
+			height: var(--thumbH);
+			width: 100%;
+			border-radius: calc(var(--thumbH) / 2);
+			background-color: hsla(0, 100%, 100%, 0.3);
+			pointer-events: none;
+		}
+
+		input[type=range]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			background-color: hsl(var(--color), var(--lightness));
+			opacity: 1.7;
+			height: var(--thumbH);
+			margin-bottom: 0px;
+			width: var(--thumbH);
+			border: calc(0.1 * var(--thumbH)) solid;
+			border-color: var(--backcolor);
+			border-radius: calc(var(--thumbH) / 2);
+			pointer-events: auto;
+		}
+
+		input[type=range]:focus {
+			outline: none;
+		}
+
+		/*possibly a portrait mobi-fone*/
+		@media screen and (max-width:500px) {
+
+			input {
+				--thumbH: 30px;
+			}
+
+			dd {
+				font-size: 16px;
+				margin-left: 20px;
+			}
+
+		}
+
+		/*possibly a mobile landscaper*/
+		@media screen and (orientation: landscape) and (max-width: 760px) {
+
+			#holder {
+				height: 500px;
+				width: 100%;
+				max-width: none;
+			}
+
+		}
+		
+		.signature {
+		    width: 100%;
+		    text-align: right;
+		}
+		
+	</style>
+	<style id="svgStyles">
+		svg {
+			padding: 0;
+			margin: 0;
+			top:0;
+			left:0;
+			position: absolute;
+		}
+		
+		path, g {
+		    xtransition: all linear 200ms;
+		}
+		
+		#svgHolder {
+			border: 10px solid hsla(0, 100%, 100%, 0.3);
+			position: relative;
+			padding: 0;
+			margin: 0;
+			width: 100%;
+			height: 50%;
+			padding-top: calc(40% - 7px);
+			overflow: hidden;
+			user-select: none;
+		}
+
+		#logoDiv {
+			position: absolute;
+			right: 0px;
+			bottom: 0px;
+			padding: 2px;
+			opacity: 0.3;
+			font-style: italic;
+			font-size: 20px;
+			color: var(--axis-color);
+			user-select: none;
+		}
+
+		#menu {
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			background-color: rgba(0, 0, 0, 0.3);
+			overflow: hidden;
+			visibility: hidden;
+			transition: height linear 250ms;
+		}
+
+		input[type=checkbox] {
+
+			width: 30px;
+			height: 30px;
+			vertical-align: middle;
+			accent-color: var(--axis-color);
+
+		}
+
+		label {
+			font-style: italic;
+		}
+		
+		@keyframes move-mass-line {
+			0% {
+				stroke-dashoffset: 0;
+			}
+			100% {
+				stroke-dashoffset: -6;
+			}
+		}
+
+		@keyframes move-grid-line {
+			0% {
+				stroke-dashoffset: 0;
+			}
+			100% {
+				stroke-dashoffset: -14;
+			}
+		}
+
+		/*possibly a portrait mobi-fone*/
+		@media screen and (max-width:500px) {
+
+			#svgHolder {
+				border-width: 2px;
+			}
+
+		}
+	</style>
+	<style id="mathStyles">
+		/* (c) Aardvark Aaronson */
+
+		frac {
+			display: inline-grid;
+			grid-template-columns: 1fr;
+			grid-template-rows: 1fr 1fr;
+			font-style: italic;
+			font-size: 0.6em;
+			vertical-align: middle;
+			text-align: center;
+		}
+
+		num {
+			border-bottom: 1px solid;
+		}
+
+		num::before {
+			content: "\00a0\00a0";
+		}
+
+		num::after {
+			content: "\00a0\00a0";
+		}
+
+		sup {
+			font-size: 0.6em;
+		}
+
+		sub {
+			font-size: 0.6em;
+		}
+
+		com {
+			font-size: 0.5em;
+		}
+
+		com::before {
+			content: "\00a0\00a0\00a0[";
+		}
+
+		com::after {
+			content: "]";
+		}
+
+		whr {
+			border-left: 1px solid;
+			padding: 0.5em;
+			margin-left: 1.25em;
+			font-size: 0.7em;
+			vertical-align: middle;
+		}
+
+		dd {
+			margin-top: 15px;
+		}
+	</style>
+</head>
+
+<body>
+<div id="holder">
+
+    <div id="svgHolder">
+
+        <div id="logoDiv">hop&middot;pierre</div>
+
+        <svg
+         xmlns:xlink="http://www.w3.org/2000/svg"
+         width="100%"
+         viewbox="-100 -50 200 100"
+         preserveAspectRatio="none"
+        >
+            
+            <defs>
+                <linearGradient id="shade" y2="70%">
+                    <stop offset="30%" stop-color="hsl(35,100%,20%)" stop-opacity="0.9" />
+                    <stop offset="100%" stop-color="hsla(35,100%,20%)" stop-opacity="0.5" />
+                </linearGradient>
+            </defs>
+
+            <style>
+            
+                @keyframes echoAni {
+                    0% {
+                        transform: translate(0px, 0px) scale(0.1);
+                        opacity: 0;
+                    }
+                    10% {
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translate(var(--echoX), 0px) scale(1.4);
+                        opacity: 0;
+                    }
+                }
+                
+                #echoGroup > g {
+                    animation-name: echoAni;
+                    animation-timing-function: linear;
+                    animation-iteration-count: infinite;
+                    animation-play-state: running;
+                }
+                
+                #echoGroup > g > path {
+                    d: path('\
+                    M  0 0 a 100 30 0 1 0 0 0.001 Z \
+                    M -7 1 a  95 27 0 1 0 0 0.001 Z \
+                    ');
+                    /*M -15 1 a  90 27 0 1 0 0 0.001 Z \*/
+                    fill-rule: evenodd;
+                    transform-origin: -100px 0px;
+                    transform: translateX(100px);
+                    fill: hsla(35,100%,100%,0.1);
+                    stroke: none;
+                    stroke-width: 1;
+                    vector-effect: non-scaling-stroke;
+                }
+                
+            </style>
+            
+            <g id="echoGroup" transform="translate(25,-7) rotate(-5)"></g>
+            <g id="boxOver" transform="translate(10, -25)">
+                <path id="boxShadow"/>
+                <g id="boxGroup">
+                    <path id="boxBody"/>
+                    <path id="boxShade"/>
+                    <path id="boxLite"/>
+                </g>
+            </g>
+            <g id="circOver" transform="
+                translate(-50, -4) scale(0.3)
+            ">
+                <ellipse id="circShadow" rx="20" ry="5"
+                    fill="hsla(300,100%,0%,0.45)"
+                    cx="20" cy="30"
+                />
+                <g id="circGroup" transform="rotate(-5)">
+                    <ellipse id="circLine" rx="9" ry="21"
+                     style="fill:hsla(0,100%,15%,1)"/>
+                    <ellipse id="circBody" rx="8" ry="18"
+                     style="fill:hsla(300,100%,50%,1)"/>
+                    <path id="circShade"i
+                     style="
+                        fill:hsla(0,100%,30%,0.3)
+                     "
+                     d="M-6 11 C 2 31 13 3 5 -12 C 3 -16 6 15 -6 11Z"
+                    />
+                </g>
+            </g>
+        
+        </svg>
+
+    </div>
+
+    <div id="slideDiv" style="
+        padding: 10px 0px 5px 0px;
+        margin: 0;
+    ">
+        <input id="slide0" type="range" min="0" max="100" step="1" value="0" />
+    </div>
+
+    <div id="discussion">
+        
+        <div class="qr">
+            oh, hop&middot;pierre, you shifty, shifty doppler!
+        
+        </div>
+
+        <p class="signature"><i>~queviva</i></p>
+
+    </div>
+
+</div>
+</body>
+
+<script id="gravscript">
+
+////////////////////////////////////////////////////////////{
+// licensed from Aardvark Aaronson, November 2021          //
+// MCMLXXXVIII                                             //
+//
+const log = console.log;
+////////////////////////////////////////////////////////////}
+
+// expiration date {
+Date.now() < new Date('2023-10-13') &&
+
+((dset = document.currentScript.dataset) =>
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // prefs {
+    
+    let aniDur = 1000;
+    const topSpeed = 500;
+    const numEchos = 8;
+        
+    //}
+                
+    // utils {
+        
+        const rand = Math.random;
+        const round = Math.round;
+        
+    //}
+    
+    // vars and refs {
+    
+    let curSpeed = 0;
+    
+    const NS = 'http://www.w3.org/2000/svg';
+    
+    const boxGroup = document.getElementById('boxGroup');
+    const boxOver = document.getElementById('boxOver');
+    boxOver.style.setProperty('--xtra', 1 + rand()*3);
+    const boxShadow = document.getElementById('boxShadow');
+    const boxBody = document.getElementById('boxBody');
+    const boxShade = document.getElementById('boxShade');
+    const boxLite = document.getElementById('boxLite');
+    const slide0 = document.getElementById('slide0');
+    
+    //}
+    
+    // objects {
+        
+    function Sprite (vals) {
+    
+        vals = Object.assign({
+            obj: '',
+            fill: 'none',
+            stroke: 'none',
+            strokeWidth: '0.0',
+            steps: {}
+        }, vals);
+    
+        this.obj = vals.obj;
+        this.obj.setAttribute('fill', vals.fill);
+        this.obj.setAttribute('stroke', vals.stroke);
+        this.obj.setAttribute('stroke-width', vals.strokeWidth);
+    
+        this.steps = vals.steps
+    
+        let rule = '@keyframes ' + this.obj.id + 'Ani {\n';
+    
+        let arr = Array.from(Object.entries(this.steps));
+        let len = arr[0][1].length;
+    
+        for (let i = 0, j = len; i < j; i++) {
+            
+            let perc = round(100 * (i / (j)));
+            
+            rule += '\t'+ perc + '% {\n'
+    
+            arr.forEach(s => rule += '\t\t'+ s[0] +':'+ s[1][i] +';\n');
+    
+            rule += '\t}\n';
+            
+            perc = round(100 * ((i+1)/(j))) - 1;
+                
+            rule += '\t' + (perc === 99 ? 100 : (perc +'.9')) +'%{\n';
+            
+            arr.forEach(s => rule += '\t\t' +s[0] +':'+ s[1][i] +';\n');
+            
+            rule += '\t}\n';
+            
+        }
+    
+        rule += '}'
+        
+        svgStyles.sheet.insertRule(rule);
+        
+        this.obj.style.animationName = this.obj.id+'Ani';
+        this.obj.style.animationDuration =  aniDur +'ms';
+        this.obj.style.animationDelay = 'none';
+        this.obj.style.animationDirection = 'end';
+        this.obj.style.animationFillMode = 'forward';
+        this.obj.style.animationIterationCount = 'infinite';
+        this.obj.style.animationPlayState = 'running';
+        
+    }
+    
+    function Echo (delay) {
+    
+        const g = document.createElementNS(NS, 'g');
+        
+        g.style.setProperty('animation-delay', delay);
+        g.style.setProperty('animation-duration', 1000 * numEchos +'ms');
+        
+        g.append(document.createElementNS(NS, 'path'));
+        echoGroup.append(g);
+        
+        g.addEventListener('animationiteration', e => {
+            g.style.setProperty('--echoX', curSpeed +'px');
+        });
+
+    }
+    
+    //}
+        
+    // all sprites {
+    
+    // up-and-down hopping
+    const HOPPINGallSprites = [
+        
+        // boxShadow
+        {
+            obj: boxShadow,
+            fill: 'hsla(35,100%,0%,0.45)',
+            steps: {
+                d: [
+                    `path('M10 22L40 22L25 14 L20 14L4.0 16Z')`,
+                    `path('M10 22L39 22L24 14 L20 14L4.0 16Z')`,
+                    `path('M10 22L38 22L23 14 L20 14L4.0 16Z')`,
+                    `path('M10 22L40 22L25 14 L20 14L4.0 16Z')`,
+                    `path('M10 22L40 22L25 14 L20 14L4.0 16Z')`,
+                    `path('M10 22L40 22L25 14 L20 14L4.0 16Z')`,
+                    `path('M10 22L40 22L25 14 L20 14L4.0 16Z')`
+                ],
+                transform: [
+                    'translate(calc(0.0px * var(--xtra)))',
+                    'translate(calc(0.0px * var(--xtra)))',
+                    'translate(calc(0.0px * var(--xtra)))',
+                    'translate(calc(0.0px * var(--xtra)))',
+                    'translate(calc(2.0px * var(--xtra)))',
+                    'translate(calc(2.5px * var(--xtra)))',
+                    'translate(calc(2.2px * var(--xtra)))'
+                ]
+            }
+        },
+        
+        // boxBody
+        {
+            obj: boxBody,
+            fill: 'hsla(35,100%,50%,1.0)',
+            steps: {
+                d: [
+        
+        // standing
+        `path('M-1 0L1.5 8L4 16L10 22Q26 19 26 19Q30 -3 30 -3L13 -8Q-1 0 -1 0Z')`,
+        
+        // semi-squat
+        `path('M-1 1L3.2 12L4 16L10 22Q26 19 26 19Q30 10 30 -2L13 -7Q6 -1.5 -1 1Z')`,
+      
+        // full-squat
+        `path('M-1 2L4 12L4 16L10 22Q26 19 26 19Q33 10 30 -1L13 -6Q7 -0.5 -1 2Z')`,
+        
+        // standing-arch
+        `path('M-1 0L1.5 8L4 16L10 22Q18 19 26 19Q30 -3 30 -3L13 -8Q6 -6 -1 0Z')`,
+        
+        // leaping-arch
+        `path('M-1 0L1.5 8L4 16L10 22Q18 18 26 19Q30 -3 30 -3L13 -8Q6 -7 -1 0Z')`,
+        
+        // leaping-arch
+        `path('M-1 0L1.5 8L4 16L10 22Q18 18 26 19Q30 -3 30 -3L13 -8Q6 -7 -1 0Z')`,
+        
+        // leaping-arch
+        `path('M-1 0L1.5 8L4 16L10 22Q18 18 26 19Q30 -3 30 -3L13 -8Q6 -7 -1 0Z')`
+        
+                ]
+            }
+        },
+        
+        // boxShade
+        {
+            obj: boxShade,
+            fill: 'url(#shade)',
+            stroke: 'hsla(35,0%,0%,0.3',
+            strokeWidth: 0.1,
+            steps: {
+                d:[
+        
+        // standing
+        `path('M10 22 Q26 19 26 19 Q30 -3 30 -3Q 9 8 9 8L 9.5 15 L10 22 Z')`,
+        
+        // semi-squat
+        `path('M10 22 Q26 19 26 19 Q30 10 30 -2Q 20 5 9 9L 10.25 17 L10 22 Z')`,
+        
+        // full-squat
+        `path('M10 22 Q26 19 26 19 Q33 10 30 -1Q 18.5 7.5 9 10L 10.75 17 L 10 22Z')`,
+      
+        // standing-arch
+        `path('M10 22 Q 18 19 26 19 Q30 -3 30 -3Q 20 0 9 8L 9.5 15 L10 22 Z')`,
+        
+        // leaping-arch
+        `path('M10 22 Q 18 19 26 19 Q30 -3 30 -3Q 20 -1 9 8L 9.5 15 L10 22 Z')`,
+        
+        // leaping-arch
+        `path('M10 22 Q 18 19 26 19 Q30 -3 30 -3Q 20 -1 9 8L 9.5 15 L10 22 Z')`,
+        
+        // leaping-arch
+        `path('M10 22 Q 18 19 26 19 Q30 -3 30 -3Q 20 -1 9 8L 9.5 15 L10 22 Z')`
+        
+        
+        
+                ]
+            }
+        },
+        
+        // boxLite
+        {
+            obj: boxLite,
+            steps: {
+                d: [
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M3.2 12L4 16L10 22 L10.25 17 Z')`,
+                    `path('M4 12L4 16L10 22 L10.5 17 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`
+                ],
+                fill: [
+                    'none',
+                    'hsla(35,100%,80%,0.15)',
+                    'hsla(35,100%,80%,0.15)',
+                    'none',
+                    'none',
+                    'none'
+                ]
+            }
+        },
+        
+        // boxGroup
+        {
+            obj: boxGroup,
+            steps: {
+                transform: [
+                    'translate(0, 0)',
+                    'translate(0, 0)',
+                    'translate(0, 0)',
+                    'translate(0, 0)',
+                    'translate(0, calc(-2.2px * var(--xtra)))',
+                    'translate(0, calc(-3.0px * var(--xtra)))',
+                    'translate(0, calc(-2.2px * var(--xtra)))',
+                ]
+            }
+        }
+        
+    ]//.map(s => new Sprite(s));
+    
+    // running forward
+    const RUNNINGallSprites = [
+        
+        // boxShadow
+        {
+            obj: boxShadow,
+            fill: 'hsla(35,100%,0%,0.45)',
+            steps: {
+                d: [
+                    `path('M10 22L40 22L25 14 L20 14L4.0 16Z')`,
+                    `path('M12 22L40 22L25 12 L12 14L6.0 16Z')`,
+                    `path('M12 22L40 22L25 12 L12 14L6.0 16Z')`,
+                    `path('M10 22L40 22L25 12 L12 14L4.0 16Z')`,
+                    `path('M 8 22L40 22L25 12 L12 14L2.0 16Z')`
+                ],
+                transform: [
+                    'translate(calc(0.0px * var(--xtra)))',
+                    'translate(calc(2.0px * var(--xtra)))',
+                    'translate(calc(2.5px * var(--xtra)))',
+                    'translate(calc(2.2px * var(--xtra)))',
+                    'translate(calc(2.0px * var(--xtra)))'
+                ]
+            }
+        },
+       
+        // boxBody
+        {
+            obj: boxBody,
+            fill: 'hsla(35,100%,50%,1.0)',
+            steps: {
+                d: [
+        
+        // standing
+        `path('M-1 0L1.5 8L4 16L10 22L26 19L26 19L30 -3L13 -8Q-1 0 -1 0Z')`,
+        
+        // back lift
+        `path('M-1 0L2.5 12L4.5 15.5L11 21L28 16L 27 12L30 -3L13 -8Q 5 -4.5 -1 0Z')`,
+        // back lift
+        `path('M-1 0L2.5 12L4.5 15.5L11 21L28 16L 27 12L30 -3L13 -8 Q5 -5.1 -1 0Z')`,
+        
+        // standing
+        `path('M-1 0L1.5 8L4 16L10 22L26 19L26 19L30 -3L13 -8 Q5 -4.3 -1 0Z')`,
+        
+        // front lift
+        `path('M-1 0L2 10L1 14L8 20L23.5 20L28 12L30 -3L13 -8 Q6 -3 -1 0 Z')`
+      
+                ]
+            }
+        },
+        
+        // boxShade
+        {
+            obj: boxShade,
+            fill: 'url(#shade)',
+            stroke: 'hsla(35,100%,20%,0.8)',
+            strokeWidth: 0.2,
+            steps: {
+                d:[
+        
+        // standing
+        `path('M10 22 L 26 19 L 26 19 L 30 -3Q 9 8 9 8L 9.5 15 L10 22 Z')`,
+        
+        // backlift
+        `path('M11 21 L 28 16 L 27 12 L 30 -3Q 19 0.25 9 8L 9.25 17 L11 21 Z')`,
+        // backlift
+        `path('M11 21 L 28 16 L 27 12 L 30 -3Q 19 0.5 9 8L 9.25 17 L11 21 Z')`,
+        
+        // standing
+        `path('M10 22 L 26 19 L 26 19 L 30 -3Q 19 0.25 9 8L 9.5 15 L10 22 Z')`,
+        
+        // front lift
+        `path('M8 20 L 23.5 20 L 28 12 L 30 -3Q 20 3 9 8L 9.5 15 L 8 20Z')`
+      
+                ]
+            }
+        },
+        
+        // boxLite
+        {
+            obj: boxLite,
+            steps: {
+                d: [
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M4.5 15.5L11 21L 9.25 17L2.5 12 Z')`,
+                    `path('M4.5 15.5L11 21L 9.25 17L2.5 12 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M2 10 L1 14L8 20L9.5 15 Z')`
+                ],
+                fill: [
+                    'none',
+                    'hsla(35,100%,20%,0.2)',
+                    'hsla(35,100%,20%,0.2)',
+                    'none',
+                    'hsla(35,100%,80%,0.15)'
+                ]
+            }
+        },
+        
+        // boxGroup
+        {
+            obj: boxGroup,
+            steps: {
+                transform: [
+                    'translate(0, calc( 0.0px * var(--xtra)))',
+                    'translate(0, calc(-1.5px * var(--xtra)))',
+                    'translate(0, calc(-1.8px * var(--xtra)))',
+                    'translate(0, calc(-2.2px * var(--xtra)))',
+                    'translate(0, calc(-2.0px * var(--xtra)))'
+                ]
+            }
+        }
+        
+    ]//.map(s => new Sprite(s));
+    
+    // standing-still
+    const allSprites = [
+        
+        // boxShadow
+        {
+            obj: boxShadow,
+            fill: 'hsla(35,100%,0%,0.45)',
+            steps: {
+                d: [
+                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
+                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
+                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
+                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
+                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
+                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
+                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
+                    `path('M10 22L41.0 22L25.5 14 L20 14L4 16Z')`
+                ]
+            }
+        },
+        
+        // boxBody
+        {
+            obj: boxBody,
+            fill: 'hsla(35,100%,50%,1.0)',
+            steps: {
+                d: [
+        
+        // standing
+        `path('M-1 0L1.5 8L4 16L10 22Q26 19 26 19Q30 -3 30 -3L13 -8Q-1 0 -1 0Z')`,
+        
+        // semi-squat
+        `path('M-1 0.5L2.3 12L4 16L10 22Q26 19 26 19Q29 10 30 -2.5L13 -7Q7 -3 -1 0.5Z')`,
+      
+        // standing
+        `path('M-1 0L1.5 8L4 16L10 22Q26 19 26 19Q30 -3 30 -3L13 -8Q-1 0 -1 0Z')`,
+        
+        // standing-arch
+        `path('M-1 -0.5L3.2 12L4 16L10 22Q26 19 26 19Q27 7 30 -3.5L13 -9Q6 -6 -1 -0.5Z')`,
+        
+        // standing
+        `path('M-1 0L1.5 8L4 16L10 22Q26 19 26 19Q30 -3 30 -3L13 -8Q-1 0 -1 0Z')`,
+        
+        // semi-squat
+        `path('M-1 1L2 12L4 16L10 22Q26 19 26 19Q30 10 30 -2L13 -7Q6 -2 -1 1Z')`,
+      
+        // standing
+        `path('M-1 0L1.5 8L4 16L10 22Q26 19 26 19Q30 -3 30 -3L13 -8Q-1 0 -1 0Z')`,
+        
+        // standing-arch
+        `path('M-1 -1L3.2 12L4 16L10 22Q18 19.5 26 19Q26 8 30 -4L13 -9Q6 -6 -1 -1Z')`
+        
+                ]
+            }
+        },
+        
+        // boxShade
+        {
+            obj: boxShade,
+            fill: 'url(#shade)',
+            stroke: 'hsla(35,0%,0%,0.3',
+            strokeWidth: 0.1,
+            steps: {
+                d:[
+        
+        // standing
+        `path('M10 22 Q26 19 26 19 Q30 -3 30 -3Q 9 8 9 8L 9.5 15 L10 22 Z')`,
+        
+        // semi-squat
+        `path('M10 22 Q26 19 26 19 Q29 10 30 -2.5Q 20 4 9 8.5L 9.4 17 L10 22 Z')`,
+        
+        // standing
+        `path('M10 22 Q26 19 26 19 Q30 -3 30 -3Q 9 8 9 8L 9.5 15 L10 22 Z')`,
+        
+        
+        // standing-arch
+        `path('M10 22 Q 26 19 26 19 Q27 7 30 -3.5Q 20 0 9 7.5L 9.75 15 L10 22 Z')`,
+        
+        // standing
+        `path('M10 22 Q26 19 26 19 Q30 -3 30 -3Q 9 8 9 8L 9.5 15 L10 22 Z')`,
+        
+        // semi-squat
+        `path('M10 22 Q26 19 26 19 Q30 10 30 -2Q 20 5 9 9L 9.3 17 L10 22 Z')`,
+        
+        // standing
+        `path('M10 22 Q26 19 26 19 Q30 -3 30 -3Q 9 8 9 8L 9.5 15 L10 22 Z')`,
+        
+        // standing-arch
+        `path('M10 22 Q18 19.5 26 19 Q26 8 30 -4Q 20 -1 9 7L 9.5 15 L10 22 Z')`
+        
+                ]
+            }
+        },
+        
+        // boxLite
+        {
+            obj: boxLite,
+            steps: {
+                d: [
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M2.3 12L4 16L10 22 L9.4 17 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M2 12L4 16L10 22 L9.3 17 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`
+                ],
+                fill: [
+                    'none',
+                    'hsla(35,0%,0%,0.02)',
+                    'none',
+                    'none',
+                    'none',
+                    'hsla(35,0%,0%,0.028)',
+                    'none',
+                    'none'
+                ]
+            }
+        }
+        
+        
+    ].map(s => new Sprite(s));
+    
+    
+    //}
+    
+    // all echos {
+        
+    /*
+    const allEchos = [...new Array(numEchos).fill(0)].map((x, i) =>
+        new Echo(i * 1000 +'ms')
+    );
+    */
+    
+    //}
+    
+    // lizzers {
+    
+    window.addEventListener('keypress', e => {
+    
+        e.stopPropagation();
+        e.preventDefault();
+    
+        if (e.code === 'Space') {
+        
+            allSprites.forEach(s =>
+        
+                s.obj.style.animationPlayState =
+                s.obj.style.animationPlayState === 'paused' ?
+                'running' : 'paused'
+        
+            );
+            
+            for (let i of echoGroup.children) {
+                i.style.animationPlayState =
+                i.style.animationPlayState === 'paused' ?
+                'running' : 'paused'
+            }
+            
+        } else if (e.code === 'Equal') {
+            
+            aniDur = [100, aniDur - 20, 1000]
+            .sort((a,b)=>a-b)[1];
+            
+        } else if (e.code === 'Minus') {
+            
+            aniDur = [100, aniDur + 20, 1000]
+            .sort((a,b)=>a-b)[1];
+            
+        } else if (e.code === 'KeyA') {
+            
+            let echo = document.createElementNS(NS, 'ellipse');
+            echo.setAttribute('cx', 0);
+            echo.setAttribute('cy', 0);
+            echo.setAttribute('rx', 110);
+            echo.setAttribute('ry', 30);
+            echo.setAttribute('fill', 'none');
+            echo.setAttribute('stroke-width', '1');
+            echo.setAttribute('stroke', 'hsla(35,100%,50%,0.8)');
+            
+            echo.setAttribute('transform', 'rotate(-5) scale(0.2)');
+            echo.setAttribute('transition', 'transform linear 1000ms');
+            
+                
+            echo.addEventListener('transitionend', e => {
+                lineGroup.remove(echo);
+            }, { once: true });
+            
+            lineGroup.append(echo);
+            setTimeout(
+                () => {
+                    echo.setAttribute('transform', 'rotate(-5) scale(1)');
+                }, 0
+            );
+        }
+        
+    }, { passive: false });
+    
+    boxBody.addEventListener('animationiteration', e => {
+        
+        boxOver.style.setProperty('--xtra', 1 + rand()*3);
+        
+        allSprites.forEach(s => {
+            s.obj.style.animationPlayState = 'paused';
+            s.obj.style.animationDuration = aniDur + 'ms'
+        });
+        setTimeout(() => allSprites.forEach(s => {
+            s.obj.style.animationPlayState = 'running';
+        }), 0);
+        
+    });
+    
+    slide0.addEventListener('input', e => {
+        curSpeed = (slide0.value / 100) * topSpeed;
+    });
+    
+    //}
+    
+}))() === undefined || (console.log('eXp!red'));
+
+// }
+
+</script>
+
+</html>

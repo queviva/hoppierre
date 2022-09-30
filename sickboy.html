@@ -1,0 +1,78 @@
+
+<body>
+<div id="areaX">I am the ratmaster</div>
+</body>
+
+
+<script>
+
+////////////////////////////////////////////////////////////
+// pizzaface
+//
+////////////////////////////////////////////////////////////
+
+//const trials = 100000;
+const familySize = 5;
+const chanceOfBoy = 1/2;
+const chanceOfSickness = 1/4;
+const startOnLoad = false;
+
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+
+const log = console.log;
+
+const rand = (x=1) => [...crypto.getRandomValues(
+    new Uint32Array(1))
+].map(v => v / (0xffffffff + 1))[0] * x;
+
+let count = 0;
+let matchFams = 0;
+let looping = false;
+
+function Kid (gen, sic) {
+    this.gender = gen;
+    this.sickness = sic;
+}
+
+function Family (size) {
+    
+    this.kids = [...new Array(size)].map(() =>
+        new Kid(
+            rand() > chanceOfBoy ? 'boy' : 'girl',
+            rand() > chanceOfSickness ? 'healthy' : 'sick'
+        )
+    );
+    
+    this.sickboys = this.kids.filter(k =>
+        k.gender === 'boy' && k.sickness === 'sick'
+    ).length;
+    
+}
+
+function animate () {
+    
+    if (looping) {
+    
+        areaX.innerHTML =
+        
+            (matchFams += new Family(familySize).sickboys === 2 ? 1 : 0) +
+            ' / '+ (++count) + '&nbsp;&rarr;&nbsp;' +
+            (100 * matchFams / count).toFixed(3) + '%';
+    
+        looping = setTimeout(animate, 0);
+    
+    }
+    
+}
+
+window.addEventListener('keypress', e => {
+    if (e.code === 'Space') {
+        looping = looping? false : setTimeout(animate, 0);
+    }
+});
+
+!startOnLoad || (looping = setTimeout(animate, 0));
+
+
+</script>

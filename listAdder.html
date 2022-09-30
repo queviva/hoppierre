@@ -1,0 +1,551 @@
+<!doctype html><html lang="en">
+    
+<head><title>arranger</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<script defer src="nanopicker.js"></script>
+<style id="demoStyles">
+
+@font-face {
+    font-family : luckiest;
+    src : url(luckiest.ttf);
+}
+
+:root {
+    --back-color: #666;
+    --holder-back: #111;
+    --thumbH : 30px;
+}
+
+* {
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: var(--back-color);
+    font-size: 22px;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    text-align: center;
+}
+
+#holder {
+    
+    --nose-hsla: '0 40 80 1';
+    --nose-h: 120;
+    --nose-s: 40%;
+    --nose-l: 80%;
+    --nose-a: 1;
+    
+    --lightness: hsl(
+        var(--nose-h),
+        var(--nose-s),
+        calc(70% + 0.3 * var(--nose-l))
+    );
+    
+    --midness: hsl(
+        var(--nose-h),
+        calc(0.7 * var(--nose-s)),
+        calc(0.8 * var(--nose-l))
+    );
+    
+    --darkness: hsl(
+        var(--nose-h),
+        var(--nose-s),
+        calc(0.4 * var(--nose-l))
+    );
+    
+    --blackness: hsl(
+        var(--nose-h),
+        var(--nose-s),
+        calc(0.2 * var(--nose-l))
+    );
+                
+    --main-color: var(--lightness);
+    --greyed-out: var(--darkness);
+    
+    display: inline-grid;
+    xgrid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    
+    position: relative;
+    color: var(--main-color);
+    background-color: var(--holder-back);
+    margin: auto;
+    margin-bottom: none;
+    width: 100%;
+    max-width: 700px;
+    padding: 10px;
+    font-size: 24px;
+    text-align: justify;
+    height: 100vh;
+    
+}
+
+a, a:hover, a:visited {
+    text-decoration: none;
+    color: var(--darkness);
+}
+
+.qa > div > a, .qa > div > a:hover, .qa > div > a:visited,
+.qb > div > a, .qb > div > a:hover, .qb > div > a:visited
+{
+    color: var(--lightness);
+}
+
+pre {
+    background-color: var(--back-color);
+    margin: 0px;
+    padding: 10px;
+    color: var(--blackness);
+    overflow: auto;
+}
+
+hr {
+    border-top: 1px solid var(--blackness);
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin: 7px 0px 7px 0px;
+}
+
+b {
+    color: var(--darkness);
+}
+
+li {
+    color: var(--midness);
+}
+
+li > b {
+    color: var(--darkness);
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: inline-block;
+    margin: 0;
+    height: var(--thumbH);
+    width: 100%;
+    border-radius: calc(var(--thumbH) / 2);
+    background-color: var(--darkness);
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: var(--lightness);
+    opacity: 1.7;
+    height: var(--thumbH);
+    margin-bottom: 0px;
+    width: var(--thumbH);
+    border: 3px solid var(--blackness);
+    border-radius: calc(var(--thumbH) / 2);
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+.qr {
+    padding: 10px;
+}
+
+.qa, .qb {
+    color: var(--midness);
+}
+
+.qa:after, .qb:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.qa > div, .qb > div {
+    float: left;
+    padding: 10px;
+    height: auto;
+}
+
+.qa > div:nth-child(1),
+.qb > div:nth-child(2) {
+  width: 65%;
+}
+
+.qa > div:nth-child(2),
+.qb > div:nth-child(1) {
+  width: 35%;
+}
+
+.qa > div > b,
+.qb > div > b {
+    color: var(--lightness);
+}
+
+.mobr {
+    display: none;
+}
+
+.hobr {
+    display: inline-block;
+}
+
+.abhr {
+    display: none;
+}
+
+.emp {
+    font-family: luckiest;
+}
+
+.small {
+    font-size: 0.8em;
+}
+
+/*possibly a portrait mobi-fone*/
+@media screen and (max-width:500px) {
+
+    .qa > div:nth-child(1),
+    .qa > div:nth-child(2),
+    .qb > div:nth-child(1),
+    .qb > div:nth-child(2)
+    {
+        width: 100%;
+    }
+    
+    .mobr {
+        display: inline-block;
+    }
+    .hobr {
+        display: none;
+    }
+    .abhr {
+        display: block;
+    }
+    ul {
+        text-align: left;
+    }
+    
+}
+
+.signature {
+    text-align: right;
+    font-family: 'luckiest';
+    font-style: italic;
+    height: 100px;
+    -webkit-text-stroke: 1px var(--midness);
+    user-select:none;
+}
+
+</style>
+<style id="addlistStyles">
+
+#listDiv {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    --trans-speed: 450ms;
+    
+    user-select: none;
+    word-wrap: none;
+    
+}
+
+#listDiv > div > div {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: visible;
+}
+
+.itemDiv {
+    
+    position: relative;
+    
+    height: 50px;
+    width:50%;
+    padding-left: 0px;
+    margin-bottom: 15px;
+    
+    color: var(--lightness);
+    xbackground-color: var(--darkness);
+    font-size: 40px;
+    line-height: 48px;
+    
+    overflow: visible;
+    user-select: none;
+    
+    transition:
+        all linear var(--trans-speed),
+        color 1ms, background-color 1ms;
+    
+}
+
+.bulge {
+    
+    animation-duration: var(--trans-speed);
+    animation-timing-function: linear;
+    animation-name: BG0;
+    
+}
+
+.hide {
+    margin-left: -8%;
+    height: 0px;
+    line-height: 0px;
+    margin-bottom: 0px;
+    font-size: 0px;
+    opacity: 0;
+}
+
+@keyframes BG0 {
+    50% {
+        margin-left: 8%;
+        transform: scale(1.2, 1.2);
+    } 100% {
+        transform: scale(1.0, 1.0);
+    }
+}
+
+@keyframes HD0 {
+    100% {
+        margin-left: -8%;
+        height: 0px;
+        line-height: 0px;
+        margin-bottom: 0px;
+        font-size: 0px;
+        opacity: 0;
+    }
+}
+
+.box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 50px;
+    margin-left:0px;
+    margin-right: 10px;
+    border: 1px solid var(--darkness);
+    background-color: var(--midness);
+    transition: all linear var(--trans-speed);
+    overflow: visible;
+}
+
+.completed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 1px solid var(--darkness);
+    background-color: var(--blackness);
+    transform: rotate(-360deg);
+    text-align: center;
+    font-size: 20px;
+    line-height: 50px;
+}
+
+.box > svg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: none"
+    overflow: visible;
+}
+
+.box > svg > path {
+    
+    d:path('M 14 17 L 22 33 Q 27 10 38 -8 L 44 2 Q 32 15.25 23.25 46 Q 14 37 9 27 Z');
+    
+    vector-effect: non-scaling-stroke;
+    stroke-width: 2px;
+    stroke: var(--lightness);
+    stroke-linecap: round;
+    xfill: none;
+    xstroke: none;
+    fill: var(--darkness);
+    opacity: 1;
+    transition: opacity linear 400ms;
+    
+}
+
+/*poor traits of a mobi fone*/
+@media screen and (max-width:500px) {
+    
+}
+
+/*possibly a mobile landscraper*/
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    
+    #holder {
+        max-width: 1000px;
+    }
+    
+}
+
+</style>
+</head>
+
+<body>
+<div id="holder">
+    
+    <div id="listDiv" class="qr" xxdata-nose="#holder"></div>
+    
+    <br><hr><div class="qr signature">~queviva</div>
+    
+</div>
+</body>
+
+<script type="text/javascript">
+
+/////////////////////////////////////////////////////{
+// pizzaFace - MCMLXXXVIII
+//
+// licensed from Aardvark Aaronson
+//
+const log = console.log;
+/////////////////////////////////////////////////////}
+
+
+(() => {
+    
+// prefs {
+
+const prefs = {
+    
+    transSpeed : '400ms',
+    
+};
+
+//}
+
+// utils {
+
+const crandomArray = (n=1) => [...crypto.getRandomValues(
+    new Uint32Array(n))
+].map(v => v / 4294967296.5);
+
+//}
+
+// scene vals {
+
+const listDiv = document.getElementById('listDiv');
+
+//}
+
+// scene setup {
+
+listDiv.style.setProperty('--trans-speed', prefs.transSpeed);
+
+//}
+
+// app methods & objects {
+
+function ListItem (name) {
+    
+    this.div = document.createElement('div');
+    this.div.classList.add('itemDiv');
+
+    this.box = document.createElement('div');
+    this.box.classList.add('box');
+    this.box.innerHTML =
+        `<svg viewbox="0 0 50 50"><path /></svg>`;
+
+    this.svg = this.box.childNodes[0];
+    this.check = this.svg.childNodes[0];
+
+    
+    this.cap = document.createElement('div');
+    this.cap.innerHTML =
+        name.length > 15 ?
+        name.slice(0, 12) + '...' :
+        name;
+        
+    this.div.appendChild(this.box);
+    this.div.appendChild(this.cap);
+    
+    this.liz = e => {
+        
+        let idx = Array.prototype.indexOf.call(
+            listDiv.children, this.div
+        );
+        
+        if (idx === 0) return;
+        
+        let up = listDiv.children[idx];
+        let dn = listDiv.children[idx - 1];
+        let rm = dn.cloneNode();
+        
+        rm.innerHTML = dn.innerHTML;
+        
+        listDiv.replaceChild(rm, dn);
+        
+        up.after(dn);
+        dn.classList.add('hide');
+        up.classList.add('bulge');
+        
+        setTimeout(() => {
+            
+            up.removeEventListener('click', this.liz);
+            
+            rm.classList.add('hide');
+            
+            dn.classList.remove('hide');
+            
+            dn.addEventListener('transitionend', e => {
+                
+                listDiv.removeChild(rm);
+                up.classList.remove('bulge');
+                up.addEventListener('click', this.liz);
+                
+            }, { once: true });
+        
+        }, 0)
+        
+    };
+    
+    this.div.addEventListener('click', this.liz);
+    
+    return this;
+    
+}
+
+//}
+
+// lizzers {
+    
+//}
+
+//////////////////////////////////////////////////////
+In_Principio_Erat_Verbum = function () {
+
+    let rat =
+    `
+    call fone #,
+    submit forms,
+    lab experiment,
+    sexy baby,
+    O&#8209;chem    ,
+    &#2309;cha-cha
+    `
+    .trim()
+    .replace(/\n/g, '')
+    .split(/\s*,\s+/)
+    .forEach(LI => {
+    
+        
+        listDiv.append((this[LI] = new ListItem(LI)).div);
+        
+    
+    });
+  
+
+}()})();
+
+</script>
+
+</html>

@@ -1,0 +1,746 @@
+<!doctype html><html lang="en">
+    
+<head><title>cannon ball alley</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<script defer src="nanopicker.js"></script>
+<style id="demoStyles">
+
+@font-face {
+    font-family : luckiest;
+    src : url(luckiest.ttf);
+}
+
+:root {
+    --back-color: #666;
+    --holder-back: #111;
+    --thumbH : 30px;
+}
+
+* {
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: var(--back-color);
+    font-size: 22px;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+    text-align: center;
+}
+
+#holder {
+    
+    --nose-hsla: '0 40 80 1';
+    --nose-h: 120;
+    --nose-s: 40%;
+    --nose-l: 80%;
+    --nose-a: 1;
+    
+    --lightness: hsl(
+        var(--nose-h),
+        var(--nose-s),
+        calc(70% + 0.3 * var(--nose-l))
+    );
+    
+    --midness: hsl(
+        var(--nose-h),
+        calc(0.7 * var(--nose-s)),
+        calc(0.8 * var(--nose-l))
+    );
+    
+    --darkness: hsl(
+        var(--nose-h),
+        var(--nose-s),
+        calc(0.4 * var(--nose-l))
+    );
+    
+    --blackness: hsl(
+        var(--nose-h),
+        var(--nose-s),
+        calc(0.2 * var(--nose-l))
+    );
+                
+    --main-color: var(--lightness);
+    --greyed-out: var(--darkness);
+    
+    display: inline-grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    
+    position: relative;
+    color: var(--main-color);
+    background-color: var(--holder-back);
+    margin: auto;
+    margin-bottom: none;
+    width: 100%;
+    max-width: 700px;
+    padding: 10px;
+    font-size: 24px;
+    text-align: justify;
+    height: 100vh;
+}
+
+#holder > div:nth-of-type(1) {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+#discussion {
+    position: relative;
+    margin-top: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 40px;
+}
+
+a, a:hover, a:visited {
+    text-decoration: none;
+    color: var(--darkness);
+}
+
+.qa > div > a, .qa > div > a:hover, .qa > div > a:visited,
+.qb > div > a, .qb > div > a:hover, .qb > div > a:visited
+{
+    color: var(--lightness);
+}
+
+pre {
+    background-color: var(--back-color);
+    margin: 0px;
+    padding: 10px;
+    color: var(--blackness);
+    overflow: auto;
+}
+
+hr {
+    border-top: 1px solid var(--blackness);
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin: 7px 0px 7px 0px;
+}
+
+b {
+    color: var(--darkness);
+}
+
+li {
+    color: var(--midness);
+}
+
+li > b {
+    color: var(--darkness);
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: inline-block;
+    margin: 0;
+    height: var(--thumbH);
+    width: 100%;
+    border-radius: calc(var(--thumbH) / 2);
+    background-color: var(--darkness);
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: var(--lightness);
+    opacity: 1.7;
+    height: var(--thumbH);
+    margin-bottom: 0px;
+    width: var(--thumbH);
+    border: 3px solid var(--blackness);
+    border-radius: calc(var(--thumbH) / 2);
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+.qr {
+    padding: 10px;
+}
+
+.qa, .qb {
+    color: var(--midness);
+}
+
+.qa:after, .qb:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.qa > div, .qb > div {
+    float: left;
+    padding: 10px;
+    height: auto;
+}
+
+.qa > div:nth-child(1),
+.qb > div:nth-child(2) {
+  width: 65%;
+}
+
+.qa > div:nth-child(2),
+.qb > div:nth-child(1) {
+  width: 35%;
+}
+
+.qa > div > b,
+.qb > div > b {
+    color: var(--lightness);
+}
+
+.mobr {
+    display: none;
+}
+
+.hobr {
+    display: inline-block;
+}
+
+.abhr {
+    display: none;
+}
+
+.emp {
+    font-family: luckiest;
+}
+
+.small {
+    font-size: 0.8em;
+}
+
+/*possibly a portrait mobi-fone*/
+@media screen and (max-width:500px) {
+
+    .qa > div:nth-child(1),
+    .qa > div:nth-child(2),
+    .qb > div:nth-child(1),
+    .qb > div:nth-child(2)
+    {
+        width: 100%;
+    }
+    
+    .mobr {
+        display: inline-block;
+    }
+    .hobr {
+        display: none;
+    }
+    .abhr {
+        display: block;
+    }
+    ul {
+        text-align: left;
+    }
+    
+}
+
+.signature {
+    text-align: right;
+    font-family: 'luckiest';
+    font-style: italic;
+    height: 130px;
+    -webkit-text-stroke: 1px var(--midness);
+    user-select:none;
+}
+
+</style>
+<style id="tableStyles">
+
+#tableTop {
+    height: 200px;
+    width: 100%;
+    padding: 10px;
+    background-color: hsl(120,40%,32%);
+    --gtc: repeat(5, 1fr);
+    --trans-speed : 400ms;
+}
+
+#tableTop > div {
+    display: grid;
+    grid-column-gap: 2px;
+    grid-row-gap: 5px;
+    cursor: auto;
+    overflow: scroll;
+    margin-bottom: 10px;
+    grid-template-columns: var(--gtc);
+    line-height: 25px;
+    height: 25px;
+    transition:
+        height linear var(--trans-speed),
+        margin linear var(--trans-speed);
+}
+
+#tableTop > div > div {
+    position: relative;
+    text-align: center;
+    font-size: var(--font-size);
+    color: #fff;
+    overflow: hidden;
+}
+
+#logo {
+    position:absolute;
+    bottom: 2px;
+    right: 5px;
+    font-size: 0.4em;
+    font-style: italic;
+}
+
+#bars {
+    position: absolute;
+    bottom: 2px;
+    left:5px;
+    width: 80px;
+}
+
+#bars > div {
+    position: relative;
+    height: 10px;
+    width: 10%;
+    margin: 2px 0px;
+    font-size: 8px;
+    line-height: 10px;
+    white-space: nowrap;
+    xtext-overflow: ellipsis;
+    overflow: visible;
+    padding-left: 2px;
+    transition: width linear 200ms;
+}
+
+/*poor traits of a mobi fone*/
+@media screen and (max-width:500px) {
+    
+}
+
+/*possibly a mobile landscraper*/
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    
+    #holder {
+        max-width: 1000px;
+    }
+    
+}
+
+</style>
+</head>
+
+<body>
+<div id="holder">
+    
+    <div data-nose="#holder">
+        <div id="tableTop"></div>
+        <div id="logo">cannon ball alley</div>
+        <div id="bars"></div>
+    </div>
+    
+    <div id="discussion">
+        
+        <div intro class="qr">
+        some people get together to play cards - in
+        a game more of physical quickness than of
+        skillful cardplay
+        <br><br>
+        each player has an entire deck of cards, with
+        different colored backs from the other player's
+        <br><br>
+        
+        at first, they take turns, one at a time, in
+        order, just placing down a random card from
+        their deck in a line on the table, from
+        left-to-right, until the line reaches the
+        limit of space
+        <br><br>
+        
+        then, a series of rounds begins - each player
+        simply attempts to put down a card, from his
+        deck, that matches the suit of the cards on
+        the table, one at a time, in order,
+        from left-to-right
+        <br><br>
+        
+        whichever player's card gets played <i>first</i>
+        remains, then they try to match the card on
+        its right, over and over, until they reach
+        the last card
+        <br><br>
+        
+        once the entire sequence of cards has been
+        matched, the original line of cards is
+        removed and the new line replaces it
+        <br><br>
+        
+        they repeat the exact same task - simply
+        trying to play the next, suit matching,
+        card as quickly as possible, from left-to-right
+        until they reach the end
+        <br><br>
+        
+        again, the old line of cards is redistributed
+        back to the original decks, and they all play
+        again ...
+        <br><br>
+        
+        and again, just replicating the sequence of
+        cards on the table, over and over, until
+        <i>all of the cards</i> always have the same
+        color back - that is to say, until the
+        <i>same player makes every match, every time</i>
+        <br><br>
+        
+        will that actually ever happen?
+        <br><br>
+        
+        </div>
+        
+        <hr>
+        <div parallel class="qr">
+            
+        according to Lasso Nobell&eacute;, if
+        Barbi, Threo, Arabino, and Ribo
+        get together to play this game, eventually
+        Ribo will handily beat everyone else,
+        <i>simply from being slightly faster</i>
+        <br><br>
+        
+        even being five times faster won't cause
+        Ribo to play every single card in the hand
+        <br><br>
+        
+        so then, <i>how</i> could one player eventually
+        play every card in the hand?
+        </div>
+        
+        <hr>
+        <div colorAdvantage class="qr">
+            
+        instead of saying that Ribo plays faster than
+        everyonelse, let's just say he plays faster
+        when the card everyone's trying to match belongs
+        to Ribo - so, they all play at the same speed,
+        except when Ribo tries to match one of his
+        own cards, and then he has only a very slight
+        advantage
+        <br><br>
+        
+        would <i>that</i> allow a winner to emerge?
+        <br><br>
+        
+        the answer again is <i>no</i>
+        
+        </div>
+        
+        <hr>
+        <div doubleDown class="qr">
+            
+        how many advantages does this patriarchy need?!
+        <br><br>
+        
+        let's give Ribo an advantage if the <i>previous</i>
+        card is his - the orginal suggestion being that
+        the nucleo<i>side</i> is quicker to bond if
+        it matches the nucleoside in the oligomer
+        that it is about to attach to; the nucleobases
+        H&#8209;bind to eachother away from where the
+        ribose sugars reside - right?
+        <br><br>
+        
+        assuming Ribo has a several-hundred times
+        bonding speed advantage, he <i>still</i>
+        won't win the game
+        <br><br>
+        
+        so far, I have no idea how this is supposed
+        to emerge
+        
+        
+        <br>
+        </div>
+        
+        <br><hr><div class="qr signature">~queviva</div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+/////////////////////////////////////////////////////{
+// pizzaFace - MCMLXXXVIII
+//
+// licensed from Aardvark Aaronson
+//
+const log = console.log;
+/////////////////////////////////////////////////////}
+
+
+(() => {
+    
+// prefs {
+
+const prefs = {
+    
+    players : [
+        ['arabino',     '70', 1],
+        ['barbituric',  '60', 1],
+        ['threo',       '40', 1.2],
+        ['melanie',     '30', 1.2],
+        ['ribose',      '15', 12]
+    ],
+    suits : ['&#9830;','&#9829;','&#9824;','&#9827;'],
+    cardsPerHand : 15,
+    
+    pureRandomMutation : 1,
+    
+    loopSpeed : 10,
+    transSpeed : '400ms',
+    
+    showLabels: false,
+    playOnStart: false
+    
+};
+
+//}
+
+// utils {
+
+const crandomArray = (n=1) => [...crypto.getRandomValues(
+    new Uint32Array(n))
+].map(v => v / 4294967296.5);
+
+//}
+
+// scene vals {
+
+const table = document.getElementById('tableTop');
+const logo  = document.getElementById('logo');
+const bars  = document.getElementById('bars');
+
+let islooping = false;
+
+//}
+
+// scene setup {
+
+table.style.setProperty('--gtc', 'repeat(' +
+    prefs.cardsPerHand + ', 1fr)');
+
+table.style.setProperty('--trans-speed', prefs.transSpeed);
+    
+//}
+
+// app methods & objects {
+
+const Players = new (function (list) {
+    
+    this.list = list.map(p => new (function (n, c, w) {
+    
+        this.name = n
+        
+        this.color = `hsl(var(--nose-h),var(--nose-s),${c}%)`
+        
+        this.weight = w;
+    
+        this.plays = 0;
+        
+        this.bar = document.createElement('div');
+        this.bar.style.backgroundColor = this.color;
+        
+    })(...p));
+    
+})(prefs.players);
+
+const Hand = new (function (n) {
+    
+    this.count = 0;
+    
+    this.sequence = [];
+    
+    this.plays = [];
+    
+    this.makeRowDiv = () => {
+    
+        let rowDiv = document.createElement('div');
+    
+        for (let i = 0; i < n; i++) {
+    
+            rowDiv.append(document.createElement('div'));
+    
+        }
+        
+        table.append(rowDiv);
+    };
+    
+    this.newHand = (num=n) => {
+        
+        this.count = 0;
+        
+        this.sequence = crandomArray(num)
+            .map(v=>~~(v * prefs.suits.length));
+            
+        this.plays = this.sequence.map((v, i) =>
+            Players.list[i % Players.list.length]);
+    
+        this.makeRowDiv();
+    
+        [...table.childNodes[0].children].forEach((div, i) =>
+            div.innerHTML = prefs.suits[this.sequence[i]]
+        );
+    
+        this.makeRowDiv();
+        
+    };
+    
+    this.newHand();
+    
+})(prefs.cardsPerHand);
+
+const Weight = new (function (list) {
+    
+    let weights = Object.fromEntries(list.map((p, i) => {
+        let arr = new Array(list.length).fill(1);
+        arr[i] = p.weight;
+        let sum = arr.reduce((v, acc) => v + acc);
+        return [p.name, arr.map(v => v/sum)];
+    }));
+    
+    this.pickPlayer = p => {
+        let i, sum = 0, r = crandomArray()[0];
+        for(i in weights[p.name]) {
+            sum += weights[p.name][i];
+            if (r <= sum) return list[i];
+        }
+    };
+    
+})(Players.list);
+
+const Stats = new (function (list) {
+    
+    this.list = list;
+    this.list.forEach(p => {
+    
+        p.bar.innerHTML = prefs.showLabels ?
+            p.name.length > 15 ?
+            p.name.slice(0, 12) + '...' : p.name : '';
+        bars.append(p.bar);
+    
+    });
+    
+    this.plays = list.map(p => 0);
+    
+    this.updateBars = () => {
+        this.list.forEach((p, i) => {
+        
+            p.bar.style.width = `
+                ${100 * p.plays / prefs.cardsPerHand}%
+            `;
+            p.plays = 0;
+        })
+    }
+    
+})(Players.list);
+
+const Gamer = new (function () {
+    
+    this.roundCount = 1;
+    this.pauseCount = 0;
+    
+    this.play = () => {
+    
+        if (!isLooping) return;
+    
+        if (Hand.count < prefs.cardsPerHand) {
+    
+            let nextPlayer =
+                crandomArray()[0] > prefs.pureRandomMutation ?
+                Players.list[~~(crandomArray()[0] * Players.list.length)] :
+                Weight.pickPlayer(
+                    Hand.plays[Hand.count - 1] ||
+                    Hand.plays[Hand.count]
+                );
+    
+            nextPlayer.plays++;
+    
+            Hand.plays[Hand.count] = nextPlayer;
+    
+            let div = table.childNodes[1].childNodes[Hand.count];
+            div.style.backgroundColor = nextPlayer.color;
+            div.innerHTML = prefs.suits[
+                Hand.sequence[Hand.count]
+            ];
+    
+            Hand.count = Hand.count + 1;
+    
+            setTimeout(this.play, prefs.loopSpeed);
+    
+        }
+        else {
+    
+            Hand.count = 0;
+    
+            Stats.updateBars();
+    
+            logo.innerHTML = 'round#: ' +
+                ('0000' + (this.roundCount++)).substr(-3);
+    
+            table.childNodes[0].style.height = 0;
+            table.childNodes[0].style.marginBottom = 0;
+    
+            table.addEventListener('transitionend', e => {
+                if (e.propertyName === 'height') {
+                    table.removeChild(table.childNodes[0]);
+                    Hand.makeRowDiv();
+                    this.play();
+                }
+            }, { once: true });
+    
+        }
+    
+    }
+    
+    this.togglePause = () => [() => {
+        
+        isLooping = clearTimeout(isLooping);
+        
+    },() => {
+        
+        isLooping = setTimeout(Gamer.play, prefs.loopSpeed);
+        
+    }][(++Gamer.pauseCount) % 2]();
+    
+});
+
+//}
+
+// lizzers {
+    
+const winKey = e => {
+    if (e.charCode === 32) {
+        Gamer.togglePause();
+        e.preventDefault();
+        e.stopPropagation();
+    }
+}
+
+//}
+
+//////////////////////////////////////////////////////
+In_Principio_Erat_Verbum = function () {
+    
+    window.addEventListener('keypress', winKey);
+    
+    if (prefs.playOnStart) Gamer.togglePause();
+    
+
+}()})();
+
+</script>
+
+</html>

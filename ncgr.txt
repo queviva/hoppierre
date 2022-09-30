@@ -1,0 +1,156 @@
+
+MWF 9am to 11am
+
+1. Login to Baby's google drive:
+    jocapocchi@gmail.com
+    Snowf@ll1!
+    
+my drive > research > ncgr summer 2022 >
+
+
+cave antibiotic resistance - this is SHARED!!!
+
+teaching notes describes everything
+
+case-study is highest priority
+
+make a glossary at end of teaching notes
+breifly defining werds in blue and other terms
+probably before references section
+
+time class activities - how long does it take
+and can you do it from the instructions
+
+
+glossary :::
+
+spelunking: A highly specific term for simply exploring a cave.
+
+antibiotic resistance: The tendency for bacteria to acquire
+    a tolerance for medicines that formerly killed them.
+
+pangenomics: Within genetics, a field focused on the study of
+    the set of genes from all individuals in a larger group.
+    From _pan_ meaning "all" and _genome_.
+
+de Bruijn graph: A representation of symbols connected by arrows,
+    where the symbols indicate short overlapping sequences and
+    the arrows indicate possible directions in which to assemble
+    the individual symbols into a final combined element.
+
+protozoa: Incredibly small, animal-like, single-celled life forms
+    possessing at least one nucleus and living either individually
+    or in colonies. From _proto_ "first" [see _prototype_] and
+    _zoa_ "animal [see _zoo_]."
+
+archaea: Old things, specifically single-celled, prokaryotitc
+    microorganisms which do _not_ have a nucleus. Originally referred
+    only to such organisms that existed in extreme environs.
+    From _archaea_ "old things" [see _archaic_, or _archaeology_].
+
+phyla: More than one _phylum_, a division of a taxonomic Kingdom.
+
+microbiome: The group of all microscopic organism living in a
+    particular place.
+
+antibiotics: Any of a group of medicines specifically intended to
+    kill bacteria or other pathogenic life forms.
+
+Ignaz Semmelweiss: Known for advocating, in the 1840s and later,
+    the idea of hand-washing and cleanliness to prevent the
+    transmission of disease in hospitals.
+
+Joseph Lister: Known for promoting, in the 1850s and later,
+    antiseptic techniques and sterilization of surgical instruments
+    to prevent infection.
+
+germ theory: The idea, prior to the invention of microscopes,
+    that diseases originated from insivibly small "germs" invading
+    a host and then developing until they caused the symptoms
+    of a disease. From _germ_ "seed" [see _germinate_].
+    
+Paul Ehrlich: Known for creating a method of staining things to
+    make them distinguishable under a microscope and for
+    discovering a cure for syphilis.
+
+syphilis: A transmissible bacterial infection that may cause
+    various debilitating symptoms, now curable with antibiotics.
+    From _Syphilis_ the name of a character in a story.
+
+Alexander Fleming: Known for discovering penicillin and promoting
+    its use as an antibiotic medical treatment.
+
+penicillin:
+    From _penicillus_ "paintbrush" [see _pencil_].
+
+pathogenic: Something that causes disease.
+    From _pathos_ "disease" and _genic_ "generating."
+
+Constable Albert Alexander
+
+staphylococcus:
+
+Anne Miller:
+    From _hannah_ "grace" and _miller_ "person who operates a mill"
+
+Howard Florey
+Ernst Chain
+
+antimicrobials: The larger class of medicines intended to kill or
+    hinder microbes, of which antibiotics are one.
+
+broad/narrow spectrum:
+
+eukaryotes:
+
+beta-lactam:
+
+bacteriostatic:
+
+macrolides:
+
+quinoline:
+
+resistance genes: The specific short sequences within DNA responsible
+    for creating the traits that protect organisms from antibiotics.
+
+genetic mutations: Alterations in DNA code.
+
+superbug:
+
+MRSA:
+
+horizontal/lateral gene transfer
+
+transformation
+
+bacterial conjugation
+
+transduction
+
+gene mobilization
+
+lechugilla: spanish for "little lettuce girl"
+
+Paenibacillus
+
+kinase encoding
+
+evolutionary pressure
+
+streptogramin
+
+antiparallel
+
+immunocompromised
+
+
+
+
+
+
+
+
+
+
+

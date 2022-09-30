@@ -1,0 +1,1347 @@
+<!doctype html><html lang="en">
+    
+<head><title>dopplierre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<script defer src="nanopicker.js"></script>
+<style id="demoStyles">
+
+@font-face {
+    font-family : luckiest;
+    src : url(luckiest.ttf);
+}
+
+:root {
+    --back-color: #666;
+    --holder-back: #111;
+    --thumbH : 30px;
+}
+
+* {
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: var(--back-color);
+    font-size: 22px;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+            text-align: center;
+}
+
+#holder {
+    
+    --nose-hsla: '395 100 94 1';
+    --nose-h: 395;
+    --nose-s: 100%;
+    --nose-l: 94%;
+    --nose-a: 1;
+    
+    --lightness: hsl(
+        var(--nose-h),
+        var(--nose-s),
+        calc(70% + 0.3 * var(--nose-l))
+    );
+    
+    --midness: hsl(
+        var(--nose-h),
+        calc(0.7 * var(--nose-s)),
+        calc(0.8 * var(--nose-l))
+    );
+    
+    --darkness: hsl(
+        var(--nose-h),
+        var(--nose-s),
+        calc(0.7 * var(--nose-l))
+    );
+    
+    --blackness: hsl(
+        var(--nose-h),
+        var(--nose-s),
+        calc(0.20 * var(--nose-l))
+    );
+                
+    --main-color: var(--lightness);
+    --greyed-out: var(--darkness);
+    
+    display: inline-grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    
+    position: relative;
+    color: var(--main-color);
+    background-color: var(--holder-back);
+    margin: auto;
+    margin-bottom: none;
+    width: 100%;
+    max-width: 700px;
+    padding: 10px;
+    font-size: 24px;
+    text-align: justify;
+    height: 100vh;
+}
+
+#discussion {
+    position: relative;
+    margin-top: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 40px;
+}
+
+a, a:hover, a:visited {
+    text-decoration: none;
+    color: var(--darkness);
+}
+
+.qa > div > a, .qa > div > a:hover, .qa > div > a:visited,
+.qb > div > a, .qb > div > a:hover, .qb > div > a:visited
+{
+    color: var(--lightness);
+}
+
+pre {
+    background-color: var(--back-color);
+    margin: 0px;
+    padding: 10px;
+    color: var(--blackness);
+    overflow: auto;
+}
+
+hr {
+    border-top: 1px solid var(--blackness);
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    margin: 7px 0px 7px 0px;
+}
+
+b {
+    color: var(--darkness);
+}
+
+li {
+    color: var(--midness);
+}
+
+li > b {
+    color: var(--darkness);
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: inline-block;
+    margin: 0;
+    height: var(--thumbH);
+    width: 100%;
+    border-radius: calc(var(--thumbH) / 2);
+    background-color: var(--darkness);
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: var(--lightness);
+    opacity: 1.7;
+    height: var(--thumbH);
+    margin-bottom: 0px;
+    width: var(--thumbH);
+    border: 3px solid var(--blackness);
+    border-radius: calc(var(--thumbH) / 2);
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+.qr {
+    padding: 10px;
+}
+
+.qa, .qb {
+    color: var(--midness);
+}
+
+.qa:after, .qb:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.qa > div, .qb > div {
+    float: left;
+    padding: 10px;
+    height: auto;
+}
+
+.qa > div:nth-child(1),
+.qb > div:nth-child(2) {
+  width: 65%;
+}
+
+.qa > div:nth-child(2),
+.qb > div:nth-child(1) {
+  width: 35%;
+}
+
+.qa > div > b,
+.qb > div > b {
+    color: var(--lightness);
+}
+
+.mobr {
+    display: none;
+}
+
+.hobr {
+    display: inline-block;
+}
+
+.abhr {
+    display: none;
+}
+
+.emp {
+    font-family: luckiest;
+}
+
+.small {
+    font-size: 0.8em;
+}
+
+/*possibly a portrait mobi-fone*/
+@media screen and (max-width:500px) {
+
+    .qa > div:nth-child(1),
+    .qa > div:nth-child(2),
+    .qb > div:nth-child(1),
+    .qb > div:nth-child(2)
+    {
+        width: 100%;
+    }
+    
+    .mobr {
+        display: inline-block;
+    }
+    .hobr {
+        display: none;
+    }
+    .abhr {
+        display: block;
+    }
+    ul {
+        text-align: left;
+    }
+    
+}
+
+.signature {
+    text-align: right;
+    font-family: 'luckiest';
+    font-style: italic;
+    height: 130px;
+    -webkit-text-stroke: 1px var(--midness);
+    user-select:none;
+}
+
+</style>
+<style id="sceneStyles">
+
+#sceneHolder {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+    box-sizing: border-box;
+    user-select: none;
+    resize: vertical;
+    max-height: 75vh;
+    min-height: 50px;
+}
+
+#sceneHolder::-webkit-resizer {
+    background: var(--blackness);
+    outline: 2px solid var(--midness);
+}
+
+#scene {
+    width: 100%;
+    height: 100%;
+    transform-origin: 0% 0%;
+    background-color: var(--back-color);
+}
+
+#scene > div > div {
+    position: absolute;
+}
+
+#outDiv, #objDiv, #bubDiv, #hacDiv {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#bubDiv {
+    pointer-events: none;
+    display: none;
+}
+
+#bubDiv > div {
+    pointer-events: none;
+    border: 2px solid var(--lightness);
+    border-radius: 50%;
+    --xxx : none;
+}
+
+#hacDiv {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    border: 15px solid var(--blackness);
+}
+
+#addButt, #remButt {
+    position: absolute;
+    right: 0px;
+    width: 0px;
+    overflow: hidden;
+    font-family: luckiest;
+    font-size: 50px;
+    text-align: center;
+    color: var(--darkness);
+    margin: 15px;
+    transition: width ease-in 250ms;
+    pointer-events: all;
+    -webkit-text-stroke: 3px var(--lightness);
+    
+}
+
+#addButt {
+    top: 0px;
+}
+
+#remButt {
+    bottom: 0px;
+}
+
+#zoomer {
+    margin-top: 10px;
+    --thumbH: 30px;
+}
+
+.hexBot {
+    
+    vector-effect: non-scaling-stroke;
+    fill: var(--midness);
+    stroke: var(--blackness);
+    stroke-width: 4px;
+    stroke-miterlimit: 0;
+    
+}
+
+.hexEye {
+    vector-effect: non-scaling-stroke;
+    fill: var(--darkness);
+    stroke: var(--blackness);
+    stroke-width: 2px;
+    stroke-miterlimit: 0;
+}
+
+.hexhead {
+    --hexrot: 0rad;
+}
+
+.hexhead::before, .hexhead::after {
+    content: '';
+    position: absolute;
+    box-sizing: border-box;
+    clip-path: polygon( 50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.hexhead::before {
+    height: 20px;
+    width: 17.3px;
+    top: calc(23% - 20px/2);
+    left: calc(50% - 17.3px/2);
+    background-color: var(--lightness);
+    opacity: 0.8;
+    transform: rotate(var(--hexrot));
+}
+
+.hexhead::after {
+    height: 15px;
+    width: 13px;
+    top: calc(23% - 15px/2);
+    left: calc(50% - 13px/2);
+    background-color: var(--darkness);
+    transform: rotate(var(--hexrot));
+    /*display: none;*/
+}
+
+svg {
+    height: inherit;
+    width: inherit;
+    display: block;
+    isolation: isolate;
+}
+
+/*poor traits of a mobi fone*/
+@media screen and (max-width:500px) {
+    #zoomer {
+        --thumbH: 60px;
+    }
+}
+
+/*possibly a mobile landscraper*/
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    
+    #sceneHolder {
+        height: 50vh;
+    }
+    
+    #holder {
+        max-width: 1000px;
+    }
+    
+}
+
+</style>
+</head>
+
+<body>
+<div id="holder">
+    
+    <div id="numerator">
+        <div id="sceneHolder">
+            <div id="scene">
+                <div id="outDiv"></div>
+                <div id="objDiv"></div>
+                <div id="bubDiv"></div>
+            </div>
+            <div id="hacDiv">
+                <div id="addButt">+</div>
+                <div id="remButt">-</div>
+            </div>
+        </div>
+        
+        <input id="zoomer" type="range" min=".20" max="1000" step="any" value="50">
+    </div>
+    
+    <div id="discussion">
+
+        <br>
+        <div hexadopoulus class="qb">
+
+            <div id="peligro">
+            <svg viewbox="0 0 600 500" data-nose="#holder"
+             style="
+                display: inline-block;
+                vertical-align: top;
+                height: 167px;
+                width: 200px;
+                overflow: visible;
+                user-select: none;
+                clip-path: polygon(0% 0%, 200% 0%, 200% 100%, 0% 100%);
+                --body-color: var(--midness);
+                --outline-color: var(--blackness);
+                --hexapoid-color: var(--darkness);
+                --fone-color: var(--darkness);
+                --cam-color: var(--lightness);
+             ">
+                <use xlink:href="hexapoid.svg#ikon"/>
+                <use xlink:href="ground.svg#ikon"
+                    transform="
+                        translate(300, 460)
+                        scale(3)
+                    "
+                    style="--color: var(--blackness);"
+                />
+            </svg>
+            </div>
+            <div>
+            <span style="
+                font-family:luckiest;
+                color: var(--darkness);
+                user-select: none;
+            ">
+                what?! &nbsp; no, my butt is
+                <i>NOT</i>&nbsp; that big
+            </span>
+            </div>
+        </div>
+   
+        <br><hr><div class="qr signature">~queviva</div>
+        
+    </div>
+
+</div>
+</body>
+
+<script type="text/javascript">
+
+/////////////////////////////////////////////////////{
+// pizzaFace - MCMLXXXVIII
+//
+// licensed from Aardvark Aaronson
+//
+const log = console.log;
+/////////////////////////////////////////////////////}
+
+
+(() => {
+    
+// prefs {
+
+const prefs = {
+    moveOnStart: false,
+    extraRotation: 0,//Math.PI/6,
+    botSize: 125,
+    botSides: 7,
+    listLoop: 1,
+    listNum: 2,
+    zoom: window.matchMedia(
+        `screen and (orientation: landscape)
+                and (max-height: 500px)`
+        ).matches ?
+        100 : 750, // 750 = '1'
+    maxZoom: 5,
+    buttWidth : '25px',
+    bubColor:   '#c30',
+    menuWidth: 150,
+    menuHeight: 100,
+    menuZone: 40
+};
+
+//}
+
+// utils {
+
+const sin = Math.sin;
+const cos = Math.cos;
+const abs = Math.abs;
+const min = Math.min;
+const max = Math.max;
+const pi  = Math.PI;
+const pi2 = Math.PI/2;
+const tau = Math.PI*2;
+const sign = Math.sign;
+const sqrt = Math.sqrt;
+const sq32 = sqrt(3)/2;
+
+const NS = 'http://www.w3.org/2000/svg';
+
+const rand = (x=1) => [...crypto.getRandomValues(
+    new Uint32Array(1))
+].map(v => v / (0xffffffff + 1))[0] * x;
+
+const xMod = (x, M) => ((x % M) + M) % M;
+
+const fadeVal = (per,A,B) => (A-((A-B)*per));
+
+const fadeArray = (per,A,B) => A.map((a,i)=>a-((a-B[i])*per));
+
+const placeDiv = (L=0,T=0,W=0,H=0,C='#000',P='none') => {
+    
+    let obj  = document.createElement('div');
+    let objS = obj.style;
+    
+    objS.left     = L +'px';
+    objS.top      = T +'px';
+    objS.width    = W +'px';
+    objS.height   = H +'px';
+    objS.clipPath = P;
+    objS.backgroundColor = C;
+    
+    return [obj, objS];
+    
+};
+
+//}
+
+// scene vals {
+
+const scene  = document.getElementById('scene');
+const objDiv = document.getElementById('objDiv');
+const outDiv = document.getElementById('outDiv');
+const bubDiv = document.getElementById('bubDiv');
+
+const addButt = document.getElementById('addButt');
+const remButt = document.getElementById('remButt');
+
+const menuHolder = document.getElementById('menuHolder');
+const menuAdd    = document.getElementById('menuAdd');
+
+let sceneQ;
+let sceneQQ;
+
+//}
+
+// all shapes {
+
+let todasObj = [];
+
+const TPO = [
+
+    {nom: 'terada',
+     clp: 'circle()',
+     siz: [25,25,0],
+     brd: [4,4],
+     col: '--darkness', dur:60, cnt:0},
+
+    {nom: 'manada',
+     clp: 'circle()',
+     siz: [18,18,0],
+     brd: [4,4],
+     col: '--darkness', dur:60, cnt:0},
+
+    {nom: 'cazada',
+     clp: `polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)`,
+     siz: [16,24,0],
+     brd: [4,7],
+     ori: true,
+     col: '--darkness', dur:60, cnt:0},
+
+    {nom: 'ambante',
+     clp: `polygon(
+         50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%
+     )`,
+     siz: [12.5,12.5,0],
+     brd: [4,4],
+     ori: false,
+     col: '--blackness', dur:5000, cnt:0},
+    
+    {nom: 'gigax',
+     clp: `polygon(
+         50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%
+     )`,
+     siz: [40, 40, 0],
+     brd: [4,4],
+     ori: true,
+     cls: 'hexhead',
+     col: '--midness', dur:80, cnt:0},
+     
+    {nom: 'torax',
+     clp: 'circle()',
+     siz: [25, 25, 0],
+     brd: [4,4],
+     col: '--midness', dur:80, cnt:0},
+     
+    {nom: 'colax',
+     clp: `polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)`,
+     siz: [25, 30, 0],
+     brd: [6,6],
+     ori: true,
+     col: '--midness', dur:80, cnt:0},
+     
+    {nom: 'pentaq',
+     clp: `polygon(50% 0%, 100% 75%, 0% 75%)`,
+     siz: [30, 30, 0],
+     brd: [8,8],
+     ori: true,
+     col: '--blackness', dur:60, cnt:0},
+
+    {nom: 'toraq',
+     siz: [20, 20, 0],
+     clp: `circle()`,
+     brd: [4,4],
+     ori: true,
+     col: '--blackness', dur:60, cnt:0},
+     
+    {nom: 'colaq',
+     clp: `ellipse(20% 30%)`,
+     clp: `circle()`,
+     siz: [40, 40, 0],
+     siz: [15, 15, 0],
+     brd: [10,8],
+     brd: [4,4],
+     ori: true,
+     col: '--blackness', dur:60, cnt:0},
+     
+     
+]
+.map(PO => {
+    
+    PO.siz[0] *= PO.nom.match(/amb|gig|pen/) ? Math.sqrt(3)/2 : 1;
+        
+   !PO.col.match('--') || (PO.col = 'var(' + PO.col +')');
+    
+    PO.scl = PO.nom.match('x')  ? 200 : 200;
+    
+    return PO;
+    
+});
+
+const zonaMesa = [
+    
+    [375,50,67.5,125,125,125,125,125,125,125],  //terada 25
+    [2.5,375,25,125,125,125,125,125,125,125],   //manada 18
+    [22.5,5,375,125,125,125,125,125,125,125],   //cazada 13.5
+    [375,375,375,1400,375,375,375,125,125,125], //ambante
+    
+    [125,125,125,125,375,65,95,125,125,125],    //gigax  40
+    [125,125,125,125,2.5,375,37,125,125,125],   //torax  25
+    [125,125,125,125,32.5,5,375,125,125,125],   //colax  15
+    
+    [125,125,125,125,125,125,125,375,10,80],   //pentaq 40
+    [125,125,125,125,125,125,125,10,40,15],   //toraq  20
+    [125,125,125,125,125,125,125,50,5,180]     //colaq  15
+];
+
+const lista = [
+    [
+    
+     {typ:3},{typ:3},{typ:3}
+    
+    ,{typ:2},{typ:1},{typ:0}
+    ,{typ:2},{typ:1},{typ:0}
+    ,{typ:2},{typ:1},{typ:0}
+    
+    ,{typ:4},{typ:5},{typ:6}
+    
+    ],[
+     {typ:3}
+    ,{typ:2},{typ:1},{typ:0}
+    ,{typ:2},{typ:1},{typ:0}
+    ,{typ:2},{typ:1},{typ:0}
+    ,{typ:8},{typ:9},
+    ,{typ:8},{typ:9},
+    ,{typ:8},{typ:9}
+    ],[
+     {typ:3},
+    ,{typ:2},{typ:1},{typ:0}
+    ,{typ:4},{typ:5},{typ:6}
+    ],[
+     {typ:2},{typ:1},{typ:0}
+    ,{typ:2},{typ:1},{typ:0}
+    ,{typ:2},{typ:1},{typ:0}
+    ,{typ:2},{typ:1},{typ:0}
+    ,{typ:2},{typ:1},{typ:0}
+    ]
+][prefs.listNum];
+
+//}
+
+// PerligrObj {
+    
+function PeligrObj (vals) {
+
+    for (let v in vals) { this[v] = vals[v] }
+    
+    this.req;
+    this.dif = 0;
+    this.pos = [[0,0,0], vals.pos, vals.pos];
+    this.ori = [0,0,0];
+    
+    this.reDO = vals.ori ?
+        per => {this.rePOS(per);this.reORG(per)} :
+        this.rePOS;
+        
+    this.reCAL = vals.ori ? this.upORG : this.upPOS;
+    
+    this.doBUB = e => {
+        
+        e.stopPropagation();
+        
+        if (e.shiftKey) {
+            
+            if (ObjX.sel.indexOf(this) > -1) {
+                ObjX.sel.splice(ObjX.sel.indexOf(this), 1);
+                ObjX.sel.forEach(o => Burbujas.lite(o));
+                return;
+            }
+            ObjX.sel.push(this);
+            todasObj.forEach(TO => TO.bubS.display = 'none');
+            ObjX.sel.forEach(SO => {
+                SO.bubS.display = 'block';
+                Burbujas.lite(SO);
+            });
+            
+        } else {
+            Burbujas.show(this);
+            ObjX.sel[0] = this;
+        }
+    };
+    
+    this.beBUB = v => {
+        this.obj[(v ? 'add' : 'remove') + 'EventListener'](
+            'pointerdown', this.doBUB
+        );
+        this.obj[(v ? 'add' : 'remove') + 'EventListener'](
+            'dblclick', this.noDUB
+        );
+    };
+    
+    this.noDUB = e => {
+        e.stopPropagation(), e.preventDefault();
+    };
+    
+    this.hiBUB = () => this.bubS.borderColor =
+        'var(--darkness)';
+        
+    this.loBUB = () => this.bubS.borderColor =
+        'var(--lightness)';
+    
+    ['obj','out','bub'].forEach((v,i) => {
+        
+        [this[v], this[v+'S']] = placeDiv(
+            vals.pos[0] - (this.siz[0] + (this.brd[0]*i)),
+            vals.pos[1] - (this.siz[1] + (this.brd[1]*i)),
+           (this.siz[0] + this.brd[0]*i) * 2,
+           (this.siz[1] + this.brd[1]*i) * 2,
+           [vals.col,'var(--lightness)','var(--xxx)'][i],
+           [vals.clp,vals.clp,'none'][i]
+        );
+        
+    });
+    
+    !vals.cls || this.obj.classList.add(vals.cls);
+
+};
+
+PeligrObj.prototype.rePOS = function (per) {
+
+    this.pos[2] = this.pos[2].map((v, i, _, m = sceneQ[i]) =>
+        (((
+            fadeVal(per, this.pos[0][i], this.pos[1][i])
+        % m) + m) % m)
+    );
+
+    ['obj',  'out'].forEach((div, j) =>
+    ['left', 'top'].forEach((val, i) =>
+        this[div+'S'][val] =
+        this.pos[2][i] -
+        this.siz[i] -
+        this.brd[i]*j + 'px'
+    ));
+
+};
+
+PeligrObj.prototype.reORG = function (per) {
+    
+    this.ori[2] = fadeVal(per, this.ori[0], this.ori[1]);
+    
+    ['obj', 'out'].forEach(div => {
+        
+        this.objS.transform =
+        this.outS.transform = 'rotate(' + this.ori[2] + 'rad)';
+        this.objS.setProperty(
+            '--hexrot', -1 * this.ori[2] + 'rad'
+        );
+        
+    });
+    
+}
+
+PeligrObj.prototype.upPOS = function () {
+
+    this.pos[0] = this.pos[1];
+    
+    let tot = [0, 0, 0];
+
+    for (let TO of todasObj.filter(to => to !== this)) {
+
+        let del = TO.pos[2].map((v,i,_,
+            d = v - this.pos[2][i]) =>
+            d**2 > sceneQQ[i] ?
+            v - Math.sign(d) * sceneQ[i] - this.pos[2][i] : d
+        );
+        
+        let dis = Math.sqrt(del[0]**2 + del[1]**2);
+        
+        let bub = dis - zonaMesa[this.typ][TO.typ];
+        
+        tot = del.map((v,i) => tot[i] + (
+            this.scl * bub * v / dis**3
+        ));
+
+    }
+
+    this.pos[1] = this.pos[0].map((v,i) => tot[i] + v);
+    
+};
+
+PeligrObj.prototype.upORG = function () {
+
+    this.pos[0] = this.pos[1];
+    this.ori[0] = this.ori[1];
+    
+    let tot = [0, 0, 0];
+
+    for (let TO of todasObj.filter(to => to !== this)) {
+
+        let del = TO.pos[2].map((v,i,_,
+            d = v - this.pos[2][i]) =>
+            d**2 > sceneQQ[i] ?
+            v - Math.sign(d) * sceneQ[i] - this.pos[2][i] : d
+        );
+        
+        let dis = Math.sqrt(del[0]**2 + del[1]**2);
+        
+        let bub = dis - zonaMesa[this.typ][TO.typ];
+        
+        tot = del.map((v,i) => tot[i] + (
+            this.scl * bub * v / dis**3
+        ));
+
+    }
+
+    this.pos[1] = this.pos[0].map((v,i) => tot[i] + v);
+    this.ori[1] = pi2 + Math.atan2(tot[1], tot[0]);
+    
+};
+
+PeligrObj.prototype.reRUN = function (start) {
+    
+    this.dif = (Date.now() - start);
+    
+    let per = this.dif / this.dur;
+    
+    if (per < 1) {
+        
+        this.reDO(per);
+
+        this.req = window.requestAnimationFrame(
+            () => this.reRUN(start)
+        );
+
+    } else {
+        
+        this.reCAL();
+        this.reRUN(Date.now());
+        
+    }
+    
+};
+
+//}
+
+// DriveObj {
+
+function DriveBot (s=200, n=6) {
+    
+    this.xPos = 0;
+    this.yPos = 0;
+    this.rot  = 0;
+    this.size = s;
+    
+    let sides = n;
+    let pers = 0.9;
+    let cent = { x: 100, y: 100 };
+    this.size2 = this.size / 2;
+    
+    this.div = document.createElement('div');
+    this.divS = this.div.style;
+    this.divS.position = 'absolute';
+    this.divS.width  = this.size +'px';
+    this.divS.height = this.size +'px';
+    this.divS.left = (sceneQ[0]/2) - (this.size / 2) +'px';
+    this.divS.top  = (sceneQ[1]/2) - (this.size / 2) +'px';
+    
+    this.div.innerHTML = `
+        <svg viewbox="0 0 200 200"><path/><g><path/></g></svg>
+    `;
+
+    this.svg = this.div.children[0];
+    this.svg.style.overflow = 'visible';
+    this.path = this.svg.children[0];
+    this.path.classList.add('hexBot');
+    this.path.setAttribute('fill-rule', 'evenodd');
+    this.spot = this.svg.children[1];
+    this.eye = this.spot.children[0];
+    this.eye.classList.add('hexEye');
+    
+    this.botHexOrg = ([...new Array(sides)].fill(0)).map((v, i) => ({
+        x: cent.x + pers * this.size2 * cos(i*tau/sides + this.rot),
+        y: cent.y + pers * this.size2 * sin(i*tau/sides + this.rot)
+    }));
+    
+    this.topHexOrg = ([...new Array(sides)].fill(0)).map((v, i) => ({
+        x: cent.x + this.size2 * cos(i*tau/sides + this.rot),
+        y: cent.y + this.size2 * sin(i*tau/sides + this.rot)
+    }));
+    
+    this.eyeHexOrg = ([...new Array(sides)].fill(0)).map((v, i) => ({
+        x: 0.2 * this.size2 * cos(i*tau/sides),
+        y: 0.2 * this.size2 * sin(i*tau/sides)
+    }));
+    
+    this.botHex = this.botHexOrg.map(v => v);
+    this.topHex = this.topHexOrg.map(v => v);
+    this.eyeHex = this.eyeHexOrg.map(v => v);
+    this.faces;
+    
+    this.eye.setAttribute('d', new SVGcoords(this.eyeHexOrg).path);
+    
+    this.makeFaces = () => {
+    
+        this.faces = ([...new Array(sides)].fill(0)).map((v, i) => {
+            let j = (i + 1) % sides;
+            return new SVGcoords([
+                { x: this.topHex[i].x, y: this.topHex[i].y },
+                { x: this.topHex[j].x, y: this.topHex[j].y },
+                { x: this.botHex[j].x, y: this.botHex[j].y },
+                { x: this.botHex[i].x, y: this.botHex[i].y }
+            ]);
+        });
+        this.path.setAttribute('d',
+          //this.faces.slice(1,4).reduce((acc, f) =>
+            this.faces.reduce((acc, f) =>
+              //acc + f.path
+                acc + (f.clock < 0 ? f.path : '')
+            , '')
+            + new SVGcoords(this.topHex).path
+        );
+        
+        this.spot.setAttribute('transform', 'translate('+
+            (this.topHex[0].x - 0.2 * this.size * cos(this.rot)) +','+
+            (this.topHex[0].y - 0.2 * this.size * sin(this.rot)) +')'
+        );
+        
+    };
+    this.makeFaces();
+    
+    this.shiftBy = vals => {
+        
+        this.botHex = this.botHexOrg.map((v, i) => ({
+            x: cent.x + pers * this.size2 * cos(i*tau/sides + this.rot),
+            y: cent.y + pers * this.size2 * sin(i*tau/sides + this.rot)
+        }));
+        
+        this.topHex = this.topHexOrg.map((v, i) => ({
+            x: cent.x + this.size2 * cos(i*tau/sides + this.rot),
+            y: cent.y + this.size2 * sin(i*tau/sides + this.rot)
+        }));
+        
+        this.topHex = this.topHex.map(c => (
+            { x: c.x + vals.x / 3, y: c.y + vals.y / 3 }
+        ));
+        
+        if (vals.x > 100) {
+            this.botHex = this.botHex.map(c => ({
+                x: c.x + (vals.x - 100) / 3, y: c.y
+            }));
+        }
+        else if (vals.x < -100) {
+            this.botHex = this.botHex.map(c => ({
+                x: c.x + (vals.x + 100) / 3, y: c.y
+            }));
+            
+        }
+        if (vals.y > 100) {
+            this.botHex = this.botHex.map(c => ({
+                x: c.x, y: c.y + (vals.y - 100) / 3
+            }));
+        }
+        if (vals.y < -100) {
+            this.botHex = this.botHex.map(c => ({
+                x: c.x, y: c.y + (vals.y + 100) / 3
+            }));
+        }
+        
+        this.makeFaces();
+    }
+    
+    
+    return this;
+    
+}
+
+function SVGcoords (Coords) {
+    
+    this.area = 0;
+    this.clock = 0;
+    this.path = 'M' + Coords[0].x +' '+ Coords[0].y;
+    
+    if (Coords.length > 2) {
+        
+        this.area = Coords.reduce((acc, cur, i, org) => {
+            let j = (i + 1) % org.length;
+            return acc +
+                (org[j].x + cur.x) *
+                (org[j].y - cur.y)
+        }, 0);
+        
+        this.clock = sign(this.area);
+        this.area = abs(this.area);
+    }
+    
+    Coords.slice(1).forEach(c =>
+        this.path += 'L'+ c.x +' '+ c.y
+    );
+    this.path += 'Z';
+    
+    return this;
+}
+
+//}
+
+// app methods & objects {
+
+const reSET = () => {
+    
+    let mag = window.getComputedStyle(objDiv).transform
+              .match('matrix') ? 2 : 1;
+    
+    sceneQ  = [scene.offsetWidth, scene.offsetHeight, 0];
+    sceneQ  = sceneQ.map(v => v * mag);
+    sceneQQ = sceneQ.map(v => v**2 / 4);
+    
+    zonaMesa[3][3] = sceneQ[0] * 2;
+    
+};
+
+const Obscene = new ResizeObserver(reSET);
+
+const ObjX = {
+    
+    sel: [],
+    
+    add: () => {
+        
+        ObjX.sel.forEach(o => {
+        
+        let L = {...TPO[o.typ]};
+        
+        L.typ = o.typ;
+        
+        L.pos = [rand(sceneQ[0]), rand(sceneQ[1]), 0];
+        
+        L.dur += rand(0.10 * L.dur) - 0.05 * L.dur;
+        
+        L.nom = L.nom + (TPO[L.typ].cnt++);
+        
+        todasObj.push(new PeligrObj(L));
+        
+        ['obj','out','bub'].forEach(v =>
+            this[v+'Div'].appendChild(todasObj.at(-1)[v])
+        );
+        
+        todasObj.at(-1).reCAL();
+        });
+        
+    },
+    
+    rem: () => {
+        if (!ObjX.sel.length) return;
+        
+        ObjX.sel.forEach(o => {
+        
+            ['obj', 'out', 'bub'].forEach(v =>
+                this[v + 'Div'].removeChild(o[v])
+            );
+            todasObj = todasObj.filter(to => to !== o);
+            
+        });
+        Burbujas.hide();
+        ObjX.sel = [];
+    },
+    
+    key: e => {
+         e.charCode === 45 ? ObjX.rem() :
+         e.charCode === 43 ? ObjX.add() : ''
+    }
+    
+};
+
+const Burbujas = {
+    
+    lite : PO => {
+        
+        PO.bubS.left   = PO.pos[2][0] - PO.siz[0] +'px';
+        PO.bubS.top    = PO.pos[2][1] - PO.siz[0] +'px';
+        PO.bubS.width  = PO.siz[0]    * 2 +'px';
+        PO.bubS.height = PO.siz[0]    * 2 +'px';
+        PO.bubS.borderColor = prefs.bubColor;
+        
+        PO.obj.removeEventListener('mouseover', PO.hiBUB);
+        PO.obj.removeEventListener('mouseout',  PO.loBUB);
+        
+    },
+    
+    show : PO => {
+        
+        Burbujas.lite(PO);
+        
+        todasObj.filter(to => to !== PO).forEach(TO => {
+            
+            let rad = zonaMesa[PO.typ][TO.typ];
+            
+            TO.bubS.left   = TO.pos[2][0] - rad +'px';
+            TO.bubS.top    = TO.pos[2][1] - rad +'px';
+            TO.bubS.width  = 2 * rad +'px';
+            TO.bubS.height = 2 * rad +'px';
+            TO.bubS.borderColor = 'var(--lightness)';
+            TO.bubS.display = 'block';
+            
+            TO.obj.addEventListener('mouseover', TO.hiBUB);
+            TO.obj.addEventListener('mouseout',  TO.loBUB);
+           
+        });
+        
+        bubDiv.style.display = 'block';
+
+    },
+    
+    hide : () => {
+        
+        todasObj.forEach(TO => {
+            TO.obj.removeEventListener('mouseover', TO.hiBUB);
+            TO.obj.removeEventListener('mouseout',  TO.loBUB);
+        });
+        
+        bubDiv.style.display = 'none';
+        
+    }
+    
+};
+
+const Pause = {
+    cnt: 0,
+    dwn: () => { Burbujas.hide(); ObjX.sel = []; },
+    tog: () => [() => {
+        
+        window.addEventListener('keypress', ObjX.key);
+        
+        todasObj.forEach(TO => {
+            window.cancelAnimationFrame(TO.req);
+            TO.beBUB(true);
+        });
+        
+        scene.addEventListener('pointerdown', Pause.dwn);
+                
+        addButt.style.width = prefs.buttWidth;
+        remButt.style.width = prefs.buttWidth;
+        
+    },() => {
+        
+        window.removeEventListener('keypress', ObjX.key);
+        
+        todasObj.forEach(TO => {
+            TO.beBUB(false);
+            TO.reRUN((Date.now()) - TO.dif)
+        });
+        
+        scene.removeEventListener('pointerdown', Pause.dwn);
+        
+        addButt.style.width = '0px';
+        remButt.style.width = '0px';
+        
+        Pause.dwn();
+        
+    }][(++Pause.cnt) % 2]()
+};
+
+const addList = () => {
+    lista.forEach(L => ObjX.add(ObjX.sel[0] = {typ:L.typ}));
+    ObjX.sel = [];
+}
+
+//}
+
+//////////////////////////////////////////////////////
+
+In_Principio_Erat_Verbum = function () {
+
+    [
+      sceneHolder, 'mousemove', e => {
+          
+          let bbox = scene.getBoundingClientRect();
+          
+          coords = {
+              x : e.clientX - bbox.left - sceneQ[0] / 2,
+              y : e.clientY - bbox.top  - sceneQ[1] / 2
+          };
+          
+          hexapoid.rot = Math.atan2(
+              e.pageY - (bbox.top  + bbox.height/2),
+              e.pageX - (bbox.left + bbox.width /2)
+          ) + prefs.extraRotation;
+          
+          hexapoid.shiftBy(coords);
+          
+      },
+      window, 'resize', reSET,
+      window, 'keypress', e => {
+        (e.charCode !== 32) || Pause.tog();
+         e.preventDefault();
+      },
+      scene, 'dblclick', Pause.tog,
+      sceneHolder, 'pointerdown', e => Obscene.observe(scene),
+      sceneHolder, 'pointerup', e => Obscene.unobserve(scene),
+      addButt, 'pointerdown', e => {
+          e.stopPropagation();
+          if (ObjX.sel.length === 0) return;
+          ObjX.add();
+          let TO = todasObj.at(-1);
+          TO.beBUB(true);
+          TO.obj.dispatchEvent(
+              new PointerEvent('pointerdown')
+          );
+      },
+      addButt, 'dblclick', e => {
+          e.stopPropagation();
+          let i = todasObj.length;
+          addList();
+          todasObj.slice(i).forEach(TO => TO.beBUB(true));
+          Burbujas.hide();
+      },
+      remButt, 'pointerdown', e => {
+          e.stopPropagation();
+          if (ObjX.sel === []) return;
+          ObjX.rem();
+      },
+      remButt, 'dblclick', e => {
+          e.stopPropagation();
+          todasObj.forEach(TO => {
+              ObjX.sel[0] = TO;
+              ObjX.rem();
+          });
+      },
+      zoomer, 'input', e => {
+      
+          let Z = parseFloat(zoomer.value, 10);
+      
+          Z = zoomer.value = Z < 775 && Z > 725 ? 750 : Z;
+      
+          let adj = (Z <= 750) ?
+              (Z / 750) ** 0.5 :
+              1 + (((Z - 750) / 250) ** 2) * (prefs.maxZoom - 1);
+      
+          scene.style.transform = 'scale(' + adj + ')';
+          scene.style.width = 100 / adj + '%';
+          scene.style.height = 100 / adj + '%';
+      
+          reSET();
+      
+      },
+    ].reduce((x,v,i)=>
+        ((i%3===0&&i!==0)?x.push([v]):x.at(-1).push(v),x)
+    ,[[]]).forEach(e =>
+        e[0].addEventListener(e[1], e[2], {passive:false})
+    );
+    
+    zoomer.value = prefs.zoom;
+    
+    zoomer.dispatchEvent(new Event('input'));
+    
+    //for (let i = prefs.listLoop; i--; addList());
+    
+    prefs.moveOnStart ? Pause.tog() : '';
+    
+    const hexapoid = new DriveBot(prefs.botSize, prefs.botSides);
+    
+    scene.append(hexapoid.div);
+
+}()})();
+
+</script>
+
+</html>
