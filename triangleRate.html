@@ -1,9 +1,30 @@
-
-
+<html>
+<head>
+<style>
+#X {
+}
+svg {
+    --rat : path('M 0 0 ' 'V 100 H 100 Z');
+    background-color: #fb0;
+}
+svg > path {
+    fill: green;
+    d : var(--rat);
+}
+</style>
+</head>
 
 <body>
-<div id="X" style="font-size:120px">
-</div>
+    
+<div id="X" style="font-size:120px"></div>
+
+<svg id="svg0" viewbox="0 0 200 200">
+    <path
+            d="M 0 10 H 20 V 80 Z"
+            fill="red"
+    />
+</svg>
+
 </body>
 
 <script>
@@ -11,6 +32,7 @@
 const log = console.log;
 const note = (...v) => X.innerHTML = v;
 
+/*
 let t = 15;
 let x_rate = 2;
 let y_rate = 7;
@@ -21,7 +43,13 @@ let z = Math.sqrt(x ** 2 + y ** 2);
 
 let z_rate = ((x * x_rate) + (y * y_rate)) / z;
 
-note(t,z_rate);
+//note(t,z_rate);
+*/
+
+let svg0 = document.getElementById('svg0');
+
+log(window.getComputedStyle(svg0).getPropertyValue('--rat'));
 
 
 </script>
+</html>

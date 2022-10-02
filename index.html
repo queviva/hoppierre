@@ -163,7 +163,7 @@
 		}
 		
 		path, g {
-		    xtransition: all linear 200ms;
+		    xxxtransition: all linear 200ms;
 		}
 		
 		#svgHolder {
@@ -211,24 +211,6 @@
 
 		label {
 			font-style: italic;
-		}
-		
-		@keyframes move-mass-line {
-			0% {
-				stroke-dashoffset: 0;
-			}
-			100% {
-				stroke-dashoffset: -6;
-			}
-		}
-
-		@keyframes move-grid-line {
-			0% {
-				stroke-dashoffset: 0;
-			}
-			100% {
-				stroke-dashoffset: -14;
-			}
 		}
 
 		/*possibly a portrait mobi-fone*/
@@ -344,7 +326,7 @@
                 }
                 
                 #echoGroup > g > path {
-                    d: path('\
+                    d: \
                     M  0 0 a 100 30 0 1 0 0 0.001 Z \
                     M -7 1 a  95 27 0 1 0 0 0.001 Z \
                     ');
@@ -361,15 +343,20 @@
             </style>
             
             <g id="echoGroup" transform="translate(25,-7) rotate(-5)"></g>
-            <g id="boxOver" transform="translate(10, -25)">
+            <g id="boxOver" style="transform:translate(10px, -25px)">
+            <g id="boxMirror" style="
+                transform-origin: 15px 0;
+                transform: scale(1,1);
+                transition: none;
+            ">
                 <path id="boxShadow"/>
                 <g id="boxGroup">
                     <path id="boxBody"/>
                     <path id="boxShade"/>
-                    <path id="boxLite"/>
+                    <path id="boxLite" style="display:none;"/>
                 </g>
-            </g>
-            <g id="circOver" transform="
+            </g></g>
+            <!--g id="circOver" transform="
                 translate(-50, -4) scale(0.3)
             ">
                 <ellipse id="circShadow" rx="20" ry="5"
@@ -388,7 +375,7 @@
                      d="M-6 11 C 2 31 13 3 5 -12 C 3 -16 6 15 -6 11Z"
                     />
                 </g>
-            </g>
+            </g-->
         
         </svg>
 
@@ -418,10 +405,9 @@
 <script id="gravscript">
 
 ////////////////////////////////////////////////////////////{
-// licensed from Aardvark Aaronson, November 2021          //
+// licensed from Aardvark Aaronson, November 2022          //
 // MCMLXXXVIII                                             //
-//
-const log = console.log;
+//                                                         //
 ////////////////////////////////////////////////////////////}
 
 // expiration date {
@@ -440,16 +426,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 
     // utils {
         
-        const rand = Math.random;
-        const round = Math.round;
+    const log = console.log;
+    const rand = Math.random;
+    const round = Math.round;
         
     //}
     
     // vars and refs {
     
     let curSpeed = 0;
+    let canKey = true;
     
     const NS = 'http://www.w3.org/2000/svg';
+    
+    const shadowStandD = `path('M 10 22 L 40 22 L 25 14 L 20 14 L 4 16 Z')`;
+    const bodyStandD = `path('M -1 0 L 1.5 8 L 4 16 L 10 22 Q 26 19 26 19 Q 30 -3 30 -3 L 13 -8 Q -1 0 -1 0 Z')`;
+    const bodyMatch = bodyStandD.replace(/[^\d-]/g, '');
+    const shadeStandD = `path('M 9 8 L 9.5 15 L 10 22 Q 26 19 26 19 Q 30 -3 30 -3 Q 9 8 9 8 Z')`;
     
     const boxGroup = document.getElementById('boxGroup');
     const boxOver = document.getElementById('boxOver');
@@ -471,16 +464,24 @@ document.addEventListener('DOMContentLoaded', () => {
             fill: 'none',
             stroke: 'none',
             strokeWidth: '0.0',
+            cssVars : [],
             steps: {}
         }, vals);
     
         this.obj = vals.obj;
-        this.obj.setAttribute('fill', vals.fill);
-        this.obj.setAttribute('stroke', vals.stroke);
-        this.obj.setAttribute('stroke-width', vals.strokeWidth);
+        this.obj.style.setProperty('fill', vals.fill);
+        this.obj.style.setProperty('stroke', vals.stroke);
+        this.obj.style.setProperty('stroke-width', vals.strokeWidth);
+        
+        this.cssVars = vals.cssVars;
+        this.setLoopVars();
+        
+        this.steps = vals.steps;
     
-        this.steps = vals.steps
+    }
     
+    Sprite.prototype.makeAniRule = function () {
+        
         let rule = '@keyframes ' + this.obj.id + 'Ani {\n';
     
         let arr = Array.from(Object.entries(this.steps));
@@ -518,6 +519,26 @@ document.addEventListener('DOMContentLoaded', () => {
         this.obj.style.animationIterationCount = 'infinite';
         this.obj.style.animationPlayState = 'running';
         
+    };
+    
+    Sprite.prototype.setLoopVars = function () {
+        
+        this.cssVars.forEach(v => {
+            v[0].style.setProperty(v[1], v[2]());
+        });
+        
+    };
+    
+    Sprite.prototype.show = function (n) {
+        
+        for (let [v, k] of Object.entries(this.steps)) {
+            
+            if (n % k.length === 0) this.setLoopVars();
+            
+            this.obj.style.setProperty(v, k[n % k.length]);
+            
+        }
+        
     }
     
     function Echo (delay) {
@@ -540,31 +561,34 @@ document.addEventListener('DOMContentLoaded', () => {
         
     // all sprites {
     
+    const allSprites = {
+    
     // up-and-down hopping
-    const HOPPINGallSprites = [
+    hopping : [
         
         // boxShadow
         {
             obj: boxShadow,
             fill: 'hsla(35,100%,0%,0.45)',
+            cssVars: [[boxOver, '--xtra', () => 1 + 3 * rand()]],
             steps: {
                 d: [
-                    `path('M10 22L40 22L25 14 L20 14L4.0 16Z')`,
                     `path('M10 22L39 22L24 14 L20 14L4.0 16Z')`,
                     `path('M10 22L38 22L23 14 L20 14L4.0 16Z')`,
-                    `path('M10 22L40 22L25 14 L20 14L4.0 16Z')`,
-                    `path('M10 22L40 22L25 14 L20 14L4.0 16Z')`,
-                    `path('M10 22L40 22L25 14 L20 14L4.0 16Z')`,
-                    `path('M10 22L40 22L25 14 L20 14L4.0 16Z')`
+                    shadowStandD,
+                    shadowStandD,
+                    shadowStandD,
+                    shadowStandD,
+                    shadowStandD
                 ],
                 transform: [
-                    'translate(calc(0.0px * var(--xtra)))',
-                    'translate(calc(0.0px * var(--xtra)))',
-                    'translate(calc(0.0px * var(--xtra)))',
-                    'translate(calc(0.0px * var(--xtra)))',
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(0px)',
                     'translate(calc(2.0px * var(--xtra)))',
                     'translate(calc(2.5px * var(--xtra)))',
-                    'translate(calc(2.2px * var(--xtra)))'
+                    'translate(calc(2.2px * var(--xtra)))',
+                    'translate(0px)'
                 ]
             }
         },
@@ -576,12 +600,9 @@ document.addEventListener('DOMContentLoaded', () => {
             steps: {
                 d: [
         
-        // standing
-        `path('M-1 0L1.5 8L4 16L10 22Q26 19 26 19Q30 -3 30 -3L13 -8Q-1 0 -1 0Z')`,
-        
         // semi-squat
-        `path('M-1 1L3.2 12L4 16L10 22Q26 19 26 19Q30 10 30 -2L13 -7Q6 -1.5 -1 1Z')`,
-      
+        `path('M -1 1 L 3.2 12 L4 16 L10 22 Q26 19 26 19 Q30 10 30 -2 L13 -7 Q6 -1.5 -1 1 Z')`,
+        
         // full-squat
         `path('M-1 2L4 12L4 16L10 22Q26 19 26 19Q33 10 30 -1L13 -6Q7 -0.5 -1 2Z')`,
         
@@ -595,12 +616,15 @@ document.addEventListener('DOMContentLoaded', () => {
         `path('M-1 0L1.5 8L4 16L10 22Q18 18 26 19Q30 -3 30 -3L13 -8Q6 -7 -1 0Z')`,
         
         // leaping-arch
-        `path('M-1 0L1.5 8L4 16L10 22Q18 18 26 19Q30 -3 30 -3L13 -8Q6 -7 -1 0Z')`
+        `path('M-1 0L1.5 8L4 16L10 22Q18 18 26 19Q30 -3 30 -3L13 -8Q6 -7 -1 0Z')`,
+        
+        // standing
+        bodyStandD
         
                 ]
             }
         },
-        
+
         // boxShade
         {
             obj: boxShade,
@@ -610,28 +634,26 @@ document.addEventListener('DOMContentLoaded', () => {
             steps: {
                 d:[
         
-        // standing
-        `path('M10 22 Q26 19 26 19 Q30 -3 30 -3Q 9 8 9 8L 9.5 15 L10 22 Z')`,
-        
         // semi-squat
-        `path('M10 22 Q26 19 26 19 Q30 10 30 -2Q 20 5 9 9L 10.25 17 L10 22 Z')`,
+        `path('M 9 9 L 10.25 17 L 10 22 Q 26 19 26 19 Q 30 10 30 -2 Q 20 5 9 9 Z')`,
         
         // full-squat
-        `path('M10 22 Q26 19 26 19 Q33 10 30 -1Q 18.5 7.5 9 10L 10.75 17 L 10 22Z')`,
+        `path('M 9 10 L 10.75 17 L 10 22 Q 26 19 26 19 Q 33 10 30 -1 Q 18.5 7.5 9 10 Z')`,
       
         // standing-arch
-        `path('M10 22 Q 18 19 26 19 Q30 -3 30 -3Q 20 0 9 8L 9.5 15 L10 22 Z')`,
+        `path('M 9 8 L 9.5 15 L10 22 Q 18 19 26 19 Q 30 -3 30 -3 Q 20 0 9 8 Z')`,
         
         // leaping-arch
-        `path('M10 22 Q 18 19 26 19 Q30 -3 30 -3Q 20 -1 9 8L 9.5 15 L10 22 Z')`,
+        `path('M 9 8 L 9.5 15 L10 22 Q 18 19 26 19 Q 30 -3 30 -3 Q 20 -1 9 8 Z')`,
         
         // leaping-arch
-        `path('M10 22 Q 18 19 26 19 Q30 -3 30 -3Q 20 -1 9 8L 9.5 15 L10 22 Z')`,
+        `path('M 9 8 L 9.5 15 L10 22 Q 18 19 26 19 Q 30 -3 30 -3 Q 20 -1 9 8 Z')`,
         
         // leaping-arch
-        `path('M10 22 Q 18 19 26 19 Q30 -3 30 -3Q 20 -1 9 8L 9.5 15 L10 22 Z')`
+        `path('M 9 8 L 9.5 15 L10 22 Q 18 19 26 19 Q 30 -3 30 -3 Q 20 -1 9 8 Z')`,
         
-        
+        // standing
+        shadeStandD
         
                 ]
             }
@@ -642,18 +664,19 @@ document.addEventListener('DOMContentLoaded', () => {
             obj: boxLite,
             steps: {
                 d: [
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
                     `path('M3.2 12L4 16L10 22 L10.25 17 Z')`,
                     `path('M4 12L4 16L10 22 L10.5 17 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
                     `path('M4 16L4 16L10 22L10 22 Z')`,
                     `path('M4 16L4 16L10 22L10 22 Z')`,
                     `path('M4 16L4 16L10 22L10 22 Z')`,
                     `path('M4 16L4 16L10 22L10 22 Z')`
                 ],
                 fill: [
+                    'hsla(35,100%,80%,0.15)',
+                    'hsla(35,100%,80%,0.15)',
                     'none',
-                    'hsla(35,100%,80%,0.15)',
-                    'hsla(35,100%,80%,0.15)',
+                    'none',
                     'none',
                     'none',
                     'none'
@@ -666,40 +689,41 @@ document.addEventListener('DOMContentLoaded', () => {
             obj: boxGroup,
             steps: {
                 transform: [
-                    'translate(0, 0)',
-                    'translate(0, 0)',
-                    'translate(0, 0)',
-                    'translate(0, 0)',
-                    'translate(0, calc(-2.2px * var(--xtra)))',
-                    'translate(0, calc(-3.0px * var(--xtra)))',
-                    'translate(0, calc(-2.2px * var(--xtra)))',
+                    'translate(0px, 0px)',
+                    'translate(0px, 0px)',
+                    'translate(0px, 0px)',
+                    'translate(0px, calc(-2.2px * var(--xtra)))',
+                    'translate(0px, calc(-3.0px * var(--xtra)))',
+                    'translate(0px, calc(-2.2px * var(--xtra)))',
+                    'translate(0px, 0px)'
                 ]
             }
         }
         
-    ]//.map(s => new Sprite(s));
+    ].map(s => new Sprite(s)),
     
     // running forward
-    const RUNNINGallSprites = [
+    running : [
         
         // boxShadow
         {
             obj: boxShadow,
             fill: 'hsla(35,100%,0%,0.45)',
+            cssVars: [[boxGroup, '--xtra', () => 1 + 4 * rand()]],
             steps: {
                 d: [
-                    `path('M10 22L40 22L25 14 L20 14L4.0 16Z')`,
                     `path('M12 22L40 22L25 12 L12 14L6.0 16Z')`,
                     `path('M12 22L40 22L25 12 L12 14L6.0 16Z')`,
                     `path('M10 22L40 22L25 12 L12 14L4.0 16Z')`,
-                    `path('M 8 22L40 22L25 12 L12 14L2.0 16Z')`
+                    `path('M 8 22L40 22L25 12 L12 14L2.0 16Z')`,
+                    shadowStandD
                 ],
                 transform: [
-                    'translate(calc(0.0px * var(--xtra)))',
                     'translate(calc(2.0px * var(--xtra)))',
                     'translate(calc(2.5px * var(--xtra)))',
                     'translate(calc(2.2px * var(--xtra)))',
-                    'translate(calc(2.0px * var(--xtra)))'
+                    'translate(calc(2.0px * var(--xtra)))',
+                    'translate(0)'
                 ]
             }
         },
@@ -711,19 +735,20 @@ document.addEventListener('DOMContentLoaded', () => {
             steps: {
                 d: [
         
-        // standing
-        `path('M-1 0L1.5 8L4 16L10 22L26 19L26 19L30 -3L13 -8Q-1 0 -1 0Z')`,
-        
         // back lift
         `path('M-1 0L2.5 12L4.5 15.5L11 21L28 16L 27 12L30 -3L13 -8Q 5 -4.5 -1 0Z')`,
+        
         // back lift
         `path('M-1 0L2.5 12L4.5 15.5L11 21L28 16L 27 12L30 -3L13 -8 Q5 -5.1 -1 0Z')`,
         
         // standing
-        `path('M-1 0L1.5 8L4 16L10 22L26 19L26 19L30 -3L13 -8 Q5 -4.3 -1 0Z')`,
+        bodyStandD,
         
         // front lift
-        `path('M-1 0L2 10L1 14L8 20L23.5 20L28 12L30 -3L13 -8 Q6 -3 -1 0 Z')`
+        `path('M-1 0L2 10L1 14L8 20L23.5 20L28 12L30 -3L13 -8 Q6 -3 -1 0 Z')`,
+        
+        // standing
+        bodyStandD
       
                 ]
             }
@@ -738,19 +763,20 @@ document.addEventListener('DOMContentLoaded', () => {
             steps: {
                 d:[
         
-        // standing
-        `path('M10 22 L 26 19 L 26 19 L 30 -3Q 9 8 9 8L 9.5 15 L10 22 Z')`,
+        // backlift
+        `path('M 9 8 L 9.25 17 L11 21 L 28 16 L 27 12 L 30 -3 Q 19 0.25 9 8 Z')`,
         
         // backlift
-        `path('M11 21 L 28 16 L 27 12 L 30 -3Q 19 0.25 9 8L 9.25 17 L11 21 Z')`,
-        // backlift
-        `path('M11 21 L 28 16 L 27 12 L 30 -3Q 19 0.5 9 8L 9.25 17 L11 21 Z')`,
+        `path('M 9 8 L 9.25 17 L11 21 L 28 16 L 27 12 L 30 -3 Q 19 0.25 9 8 Z')`,
         
         // standing
-        `path('M10 22 L 26 19 L 26 19 L 30 -3Q 19 0.25 9 8L 9.5 15 L10 22 Z')`,
+        shadeStandD,
         
         // front lift
-        `path('M8 20 L 23.5 20 L 28 12 L 30 -3Q 20 3 9 8L 9.5 15 L 8 20Z')`
+        `path('M 9 8 L 9.5 15 L 8 20 L 23.5 20 L 28 12 L 30 -3 Q 20 3 9 8 Z')`,
+        
+        // standing
+        shadeStandD
       
                 ]
             }
@@ -761,18 +787,18 @@ document.addEventListener('DOMContentLoaded', () => {
             obj: boxLite,
             steps: {
                 d: [
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
                     `path('M4.5 15.5L11 21L 9.25 17L2.5 12 Z')`,
                     `path('M4.5 15.5L11 21L 9.25 17L2.5 12 Z')`,
                     `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M2 10 L1 14L8 20L9.5 15 Z')`
+                    `path('M2 10 L1 14L8 20L9.5 15 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`
                 ],
                 fill: [
-                    'none',
                     'hsla(35,100%,20%,0.2)',
                     'hsla(35,100%,20%,0.2)',
                     'none',
-                    'hsla(35,100%,80%,0.15)'
+                    'hsla(35,100%,80%,0.15)',
+                    'none'
                 ]
             }
         },
@@ -782,19 +808,19 @@ document.addEventListener('DOMContentLoaded', () => {
             obj: boxGroup,
             steps: {
                 transform: [
-                    'translate(0, calc( 0.0px * var(--xtra)))',
-                    'translate(0, calc(-1.5px * var(--xtra)))',
-                    'translate(0, calc(-1.8px * var(--xtra)))',
-                    'translate(0, calc(-2.2px * var(--xtra)))',
-                    'translate(0, calc(-2.0px * var(--xtra)))'
+                    'translate(0px, calc(-1.5px * var(--xtra)))',
+                    'translate(0px, calc(-1.8px * var(--xtra)))',
+                    'translate(0px, calc(-2.2px * var(--xtra)))',
+                    'translate(0px, calc(-2.0px * var(--xtra)))',
+                    'translate(0px)'
                 ]
             }
         }
         
-    ]//.map(s => new Sprite(s));
+    ].map(s => new Sprite(s)),
     
-    // standing-still
-    const allSprites = [
+    // standing-still-bob
+    bobbing : [
         
         // boxShadow
         {
@@ -802,14 +828,14 @@ document.addEventListener('DOMContentLoaded', () => {
             fill: 'hsla(35,100%,0%,0.45)',
             steps: {
                 d: [
-                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
-                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
-                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
-                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
-                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
-                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
-                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
-                    `path('M10 22L41.0 22L25.5 14 L20 14L4 16Z')`
+                    shadowStandD,
+                    shadowStandD,
+                    shadowStandD,
+                    shadowStandD,
+                    shadowStandD,
+                    shadowStandD,
+                    `path('M10 22L41 22L25.5 14 L20 14L4 16Z')`,
+                    shadowStandD
                 ]
             }
         },
@@ -821,29 +847,29 @@ document.addEventListener('DOMContentLoaded', () => {
             steps: {
                 d: [
         
-        // standing
-        `path('M-1 0L1.5 8L4 16L10 22Q26 19 26 19Q30 -3 30 -3L13 -8Q-1 0 -1 0Z')`,
-        
         // semi-squat
         `path('M-1 0.5L2.3 12L4 16L10 22Q26 19 26 19Q29 10 30 -2.5L13 -7Q7 -3 -1 0.5Z')`,
       
         // standing
-        `path('M-1 0L1.5 8L4 16L10 22Q26 19 26 19Q30 -3 30 -3L13 -8Q-1 0 -1 0Z')`,
+        bodyStandD,
         
         // standing-arch
-        `path('M-1 -0.5L3.2 12L4 16L10 22Q26 19 26 19Q27 7 30 -3.5L13 -9Q6 -6 -1 -0.5Z')`,
+        `path('M-1 -0.5L3.2 12L4 16L10 22Q26 19 26 19Q27 7 30 -3.5L13 -8.5Q6 -6.2 -1 -0.5Z')`,
         
         // standing
-        `path('M-1 0L1.5 8L4 16L10 22Q26 19 26 19Q30 -3 30 -3L13 -8Q-1 0 -1 0Z')`,
+        bodyStandD,
         
-        // semi-squat
+        // semi-squat-extra
         `path('M-1 1L2 12L4 16L10 22Q26 19 26 19Q30 10 30 -2L13 -7Q6 -2 -1 1Z')`,
       
         // standing
-        `path('M-1 0L1.5 8L4 16L10 22Q26 19 26 19Q30 -3 30 -3L13 -8Q-1 0 -1 0Z')`,
+        bodyStandD,
         
-        // standing-arch
-        `path('M-1 -1L3.2 12L4 16L10 22Q18 19.5 26 19Q26 8 30 -4L13 -9Q6 -6 -1 -1Z')`
+        // standing-arch-extra
+        `path('M-1 -1L3.2 12L4 16L10 22Q18 19.5 26 19Q26 8 30 -4L13 -9Q6 -7 -1 -1Z')`,
+        
+        // standing
+        bodyStandD
         
                 ]
             }
@@ -858,35 +884,130 @@ document.addEventListener('DOMContentLoaded', () => {
             steps: {
                 d:[
         
-        // standing
-        `path('M10 22 Q26 19 26 19 Q30 -3 30 -3Q 9 8 9 8L 9.5 15 L10 22 Z')`,
-        
         // semi-squat
-        `path('M10 22 Q26 19 26 19 Q29 10 30 -2.5Q 20 4 9 8.5L 9.4 17 L10 22 Z')`,
+        `path('M 9 8.5 L 9.4 17 L 10 22 Q 26 19 26 19 Q 29 10 30 -2.5 Q 20 4 9 8.5 Z')`,
         
         // standing
-        `path('M10 22 Q26 19 26 19 Q30 -3 30 -3Q 9 8 9 8L 9.5 15 L10 22 Z')`,
-        
+        shadeStandD,
         
         // standing-arch
-        `path('M10 22 Q 26 19 26 19 Q27 7 30 -3.5Q 20 0 9 7.5L 9.75 15 L10 22 Z')`,
+        `path('M 9 7.5 L 9.75 15 L10 22 Q 26 19 26 19 Q 27 7 30 -3.5 Q 20 0 9 7.5 Z')`,
         
         // standing
-        `path('M10 22 Q26 19 26 19 Q30 -3 30 -3Q 9 8 9 8L 9.5 15 L10 22 Z')`,
+        shadeStandD,
         
-        // semi-squat
-        `path('M10 22 Q26 19 26 19 Q30 10 30 -2Q 20 5 9 9L 9.3 17 L10 22 Z')`,
+        // semi-squat-extra
+        `path('M 9 9 L 9.3 17 L10 22 Q 26 19 26 19 Q 30 10 30 -2 Q 20 5 9 9 Z')`,
         
         // standing
-        `path('M10 22 Q26 19 26 19 Q30 -3 30 -3Q 9 8 9 8L 9.5 15 L10 22 Z')`,
+        shadeStandD,
         
-        // standing-arch
-        `path('M10 22 Q18 19.5 26 19 Q26 8 30 -4Q 20 -1 9 7L 9.5 15 L10 22 Z')`
+        // standing-arch-extra
+        `path('M 9 7 L 9.5 15 L10 22 Q 18 19.5 26 19 Q 26 8 30 -4 Q 20 -1 9 7 Z')`,
+        
+        // standing
+        shadeStandD
         
                 ]
             }
         },
         
+        // boxLite
+        {
+            obj: boxLite,
+            steps: {
+                d: [
+                    `path('M2.3 12L4 16L10 22 L9.4 17 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M2 12L4 16L10 22 L9.3 17 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`,
+                    `path('M4 16L4 16L10 22L10 22 Z')`
+                ],
+                fill: [
+                    'hsla(35,0%,0%,0.02)',
+                    'none',
+                    'none',
+                    'none',
+                    'hsla(35,0%,0%,0.028)',
+                    'none',
+                    'none',
+                    'none'
+                ]
+            }
+        },
+        
+        // boxGroup
+        {
+            obj: boxGroup,
+            steps: {
+                transform: [
+                    'translate(0px)',
+                ]
+            }
+        }
+
+    ].map(s => new Sprite(s)),
+    
+    // twist
+    twister : [
+        
+        // boxShadow
+        {
+            obj: boxShadow,
+            fill: 'hsla(35,100%,0%,0.45)',
+            steps: {
+                d: [
+                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
+                    `path('M6.5 21Q 22 24 38 22L30 15 L20 15L4 16Z')`
+                ]
+            }
+        },
+        
+        // boxBody
+        {
+            obj: boxBody,
+            fill: 'hsla(35,100%,50%,1.0)',
+            steps: {
+                d: [
+        
+        // standing-arch-extra
+        `path('M-1 -1L3.2 12L4 16L10 22Q18 19.5 26 19Q26 8 30 -4L13 -9Q6 -7 -1 -1Z')`,
+        
+        // quarter turn
+        `path('M0 -3L3.4 10L4 14L6.5 21Q16 19 24 20Q24 8 29 -2.4 L18.5 -10 Q8 -9.4 0 -3Z')`
+        
+        // more turn
+        //`path('M14 -4 L0 -2 L4 16 Q7 16 10 22 Q26 19 26 19 Q30 -4 30 -4  L18.5 -10 Q8 -9.4 0 -3Z')`
+        
+                ]
+            }
+        },
+        
+        // boxShade
+        {
+            obj: boxShade,
+            fill: 'url(#shade)',
+            stroke: 'hsla(35,0%,0%,0.3',
+            strokeWidth: 0.1,
+            steps: {
+                d:[
+        
+        
+        // standing-arch
+        `path('M 9 7 L 9.5 15 L 10 22 Q 18 19.5 26 19 Q 26 8 30 -4 Q 20 -1.5 9 7 Z')`,
+        
+        
+        // quarter turn
+        `path('M 5 7 L 6 15 L 6.5 21 Q 16 19 24 20 Q 24 8 29 -2.4 Q 18 -1.5 5 7 Z')`
+        
+                ]
+            }
+        },
+        
+        /*
         // boxLite
         {
             obj: boxLite,
@@ -913,10 +1034,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 ]
             }
         }
-        
-        
-    ].map(s => new Sprite(s));
+        */
+    ].map(s => new Sprite(s))
     
+    };
     
     //}
     
@@ -930,81 +1051,198 @@ document.addEventListener('DOMContentLoaded', () => {
     
     //}
     
+    // ani method {
+            
+    const aniMaker = new function () {
+    
+        this.isLooping = false;
+        this.stall = 120;
+        this.frameCount = 0;
+        this.frameEnd = 0;
+        this.nextSet = allSprites.bobbing;
+        this.spriteSet = allSprites.bobbing;
+    
+        this.anim = () => {
+            
+            this.spriteSet.forEach(s => {
+                s.show(this.frameCount);
+            });
+            
+            this.frameCount++;
+            
+            if (this.isLooping) {
+            
+                if (this.frameCount >= this.frameEnd) {
+
+                    this.frameCount = 0;
+
+                    if (this.nextSet !== allSprites.bobbing) {
+
+                        this.spriteSet = this.nextSet;
+                        this.nextSet = allSprites.bobbing;
+
+                    } else {
+
+                        this.spriteSet = allSprites.bobbing;
+
+                    }
+                    
+                    this.isLooping = setTimeout(this.play, this.stall);
+                    
+                } else {
+                    
+                    this.isLooping = setTimeout(this.anim, this.stall);
+                    
+                }
+
+            }
+            
+        };
+    
+        this.play = () => {
+            
+            if (!this.looping) {
+                
+                this.frameEnd = Object.values(
+                    this.spriteSet[0].steps
+                )[0].length;
+
+                this.isLooping = setTimeout(this.anim, 0);
+                
+            }
+            
+        };
+    
+        this.pause = () => {
+            this.isLooping = clearTimeout(this.isLooping);
+        };
+        
+        this.switchTo = s => {
+            
+            this.isLooping = clearTimeout(this.isLooping);
+            
+            if (
+                boxGroup.style.transform === 'translate(0px)' &&
+                boxBody.style.d.replace(/[^\d-]/g, '') === bodyMatch
+            ) {
+                
+                this.frameCount = 0;
+                this.spriteSet = s;
+                this.isLooping = setTimeout(this.play, 50);
+                setTimeout(
+                    () => canKey = true,
+                    (s[0].steps.d.length - 1) * this.stall
+                );
+                
+            } else { // animate to standing position first
+            
+                log('transit');
+                
+                setTimeout(() => {
+                    
+                    boxShadow.style.d = shadowStandD;
+                    boxBody.style.d = bodyStandD;
+                    boxShade.style.d = shadeStandD;
+                    boxLite.style.fill = 'none';
+                    boxGroup.style.transform = 'translate(0px)';
+                    
+                    setTimeout(() => {
+                        log('switch now ');
+                        this.frameCount = 0;
+                        this.spriteSet = s;
+                        this.isLooping = setTimeout(this.play, 0);
+                        setTimeout(
+                            () => canKey = true,
+                            (s[0].steps.d.length -1) * this.stall
+                        );
+                    
+                    
+                    }, this.stall);
+                    
+                }, 50);
+                
+            }
+        }
+    
+    };
+    aniMaker.play();
+        
+    //}
+    
     // lizzers {
     
-    window.addEventListener('keypress', e => {
+    const keyLizzer = e => {
     
         e.stopPropagation();
         e.preventDefault();
     
         if (e.code === 'Space') {
-        
-            allSprites.forEach(s =>
-        
-                s.obj.style.animationPlayState =
-                s.obj.style.animationPlayState === 'paused' ?
-                'running' : 'paused'
-        
-            );
-            
-            for (let i of echoGroup.children) {
-                i.style.animationPlayState =
-                i.style.animationPlayState === 'paused' ?
-                'running' : 'paused'
+    
+            if (aniMaker.isLooping) {
+                aniMaker.pause();
             }
-            
-        } else if (e.code === 'Equal') {
-            
-            aniDur = [100, aniDur - 20, 1000]
-            .sort((a,b)=>a-b)[1];
-            
-        } else if (e.code === 'Minus') {
-            
-            aniDur = [100, aniDur + 20, 1000]
-            .sort((a,b)=>a-b)[1];
-            
-        } else if (e.code === 'KeyA') {
-            
-            let echo = document.createElementNS(NS, 'ellipse');
-            echo.setAttribute('cx', 0);
-            echo.setAttribute('cy', 0);
-            echo.setAttribute('rx', 110);
-            echo.setAttribute('ry', 30);
-            echo.setAttribute('fill', 'none');
-            echo.setAttribute('stroke-width', '1');
-            echo.setAttribute('stroke', 'hsla(35,100%,50%,0.8)');
-            
-            echo.setAttribute('transform', 'rotate(-5) scale(0.2)');
-            echo.setAttribute('transition', 'transform linear 1000ms');
-            
-                
-            echo.addEventListener('transitionend', e => {
-                lineGroup.remove(echo);
-            }, { once: true });
-            
-            lineGroup.append(echo);
-            setTimeout(
-                () => {
-                    echo.setAttribute('transform', 'rotate(-5) scale(1)');
-                }, 0
-            );
+            else {
+                aniMaker.play();
+            }
+    
         }
         
-    }, { passive: false });
+        if (!canKey) return;
+        
+        if (e.code === 'KeyH') {
+            canKey = false;
+            aniMaker.switchTo(allSprites.hopping);
+        }
+        else if (e.code === 'KeyR') {
+            canKey = false;
+            aniMaker.switchTo(allSprites.running);
+        }
+        else if (e.code === 'KeyT') {
+            canKey = false;
+            aniMaker.switchTo(allSprites.twister);
+        }
+        else if (e.code === 'KeyS') {
+            let x = boxMirror.style.transform.indexOf('-1');
+            boxMirror.style.transform = x === -1 ? 'scale(-1, 1)' : 'scale(1, 1)';
+        }
+        else if (e.code === 'KeyJ') {
     
-    boxBody.addEventListener('animationiteration', e => {
-        
-        boxOver.style.setProperty('--xtra', 1 + rand()*3);
-        
-        allSprites.forEach(s => {
-            s.obj.style.animationPlayState = 'paused';
-            s.obj.style.animationDuration = aniDur + 'ms'
-        });
-        setTimeout(() => allSprites.forEach(s => {
-            s.obj.style.animationPlayState = 'running';
-        }), 0);
-        
-    });
+            let T = boxOver.style.transform.match(/-?\d+/g)
+                .map(v => Number(v));
+            boxOver.style.transform = 'translate(' +
+                (T[0] - 3) + 'px,' + T[1] + 'px' +
+                ')';
+    
+        }
+        else if (e.code === 'KeyL') {
+            let T = boxOver.style.transform.match(/-?\d+/g)
+                .map(v => Number(v));
+            boxOver.style.transform = 'translate(' +
+                (T[0] + 3) + 'px,' + T[1] + 'px' +
+                ')';
+    
+        }
+        else if (e.code === 'KeyI') {
+            let T = boxOver.style.transform.match(/-?\d+/g)
+                .map(v => Number(v));
+            boxOver.style.transform = 'translate(' +
+                T[0] + 'px,' + (T[1] - 3) + 'px' +
+                ')';
+    
+        }
+        else if (e.code === 'KeyK') {
+            let T = boxOver.style.transform.match(/-?\d+/g)
+                .map(v => Number(v));
+            boxOver.style.transform = 'translate(' +
+                T[0] + 'px,' + (T[1] + 3) + 'px' +
+                ')';
+    
+    
+        }
+    
+    };
+    
+    window.addEventListener('keypress', keyLizzer, { passive: false });
     
     slide0.addEventListener('input', e => {
         curSpeed = (slide0.value / 100) * topSpeed;
