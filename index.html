@@ -2,8 +2,10 @@
 
 <head>
 	<title>hoppierre</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
+	<script defer src="nanopicker.js"></script>
+    <script src="sketch.js"></script>
 	<style id="docStyles">
 		* {
 			box-sizing: border-box;
@@ -25,20 +27,20 @@
 		}
 
 		#holder {
-			display: inline-grid;
-			grid-template-columns: 1fr;
-			grid-template-rows: 1fr 1fr;
-			padding: 10px;
+			xdisplay: inline-grid;
+			xgrid-template-columns: 1fr;
+			xgrid-template-rows: 1fr 1fr;
+			padding: 0px;
 			font-size: 24px;
 			text-align: justify;
-			max-width: 700px;
+			xxxmax-width: 700px;
 			width: 100%;
 			height: 100vh;
 			margin: auto;
 			xxxborder: 1px solid #000;
 			background-color: var(--backcolor);
 			color: var(--color);
-			z-index: 2;
+			xz-index: 2;
 		}
 
 		#discussion {
@@ -115,7 +117,6 @@
 			border: calc(0.1 * var(--thumbH)) solid;
 			border-color: var(--backcolor);
 			border-radius: calc(var(--thumbH) / 2);
-			pointer-events: auto;
 		}
 
 		input[type=range]:focus {
@@ -139,11 +140,13 @@
 		/*possibly a mobile landscaper*/
 		@media screen and (orientation: landscape) and (max-width: 760px) {
 
+            /*
 			#holder {
 				height: 500px;
 				width: 100%;
 				max-width: none;
 			}
+			*/
 
 		}
 		
@@ -154,12 +157,20 @@
 		
 	</style>
 	<style id="svgStyles">
+	
 		svg {
-			padding: 0;
-			margin: 0;
-			top:0;
-			left:0;
-			position: absolute;
+		    padding: 0;
+		    margin: 0;
+		    width: 100%;
+		    height: 100%;
+		    xborder: 4px solid #c30;
+		    top: 0;
+		    left: 0;
+		    position: absolute;
+		    xxxbackground-color: #888;
+		    xxxbackground: url(bag0.jpg);
+		    xxxbackground-size: cover;
+
 		}
 		
 		path, g {
@@ -167,12 +178,37 @@
 		}
 		
 		#svgHolder {
-			border: 10px solid hsla(0, 100%, 100%, 0.3);
+		    --nose-h: 32;
+		    --nose-s: 100%;
+		    --nose-l: 70%;
+		    --nose-a: 1;
+		    --nose-hsla: '32 100 70 1';
+		    --lightness: hsl(
+		        var(--nose-h),
+		        var(--nose-s),
+		        var(--nose-l)
+		    );
+		    --midness: hsl(
+		        var(--nose-h),
+		        var(--nose-s),
+		        calc(0.7 * var(--nose-l))
+		    );
+		    --darkness: hsl(
+		        var(--nose-h),
+		        var(--nose-s),
+		        calc(0.35 * var(--nose-l))
+		    );
+		    --blackness: hsl(
+		        var(--nose-h),
+		        var(--nose-s),
+		        calc(0.20 * var(--nose-l))
+		    );
 			position: relative;
 			padding: 0;
 			margin: 0;
 			width: 100%;
-			height: 50%;
+			height: 100vh;
+			xxmax-height: 300px;
 			padding-top: calc(40% - 7px);
 			overflow: hidden;
 			user-select: none;
@@ -188,16 +224,6 @@
 			font-size: 20px;
 			color: var(--axis-color);
 			user-select: none;
-		}
-
-		#menu {
-			position: absolute;
-			top: 0px;
-			right: 0px;
-			background-color: rgba(0, 0, 0, 0.3);
-			overflow: hidden;
-			visibility: hidden;
-			transition: height linear 250ms;
 		}
 
 		input[type=checkbox] {
@@ -286,19 +312,30 @@
 
     <div id="svgHolder">
 
-        <div id="logoDiv">hop&middot;pierre</div>
-
         <svg
          xmlns:xlink="http://www.w3.org/2000/svg"
          width="100%"
          viewbox="-100 -50 200 100"
-         preserveAspectRatio="none"
+         transform="scale(1.0)"
+         preserveAspectRatio="xMidYMid"
         >
             
             <defs>
                 <linearGradient id="shade" y2="70%">
-                    <stop offset="30%" stop-color="hsl(35,100%,20%)" stop-opacity="0.9" />
-                    <stop offset="100%" stop-color="hsla(35,100%,20%)" stop-opacity="0.5" />
+                    <stop offset="30%" stop-color="
+                        hsl(
+                            var(--nose-h),
+                            var(--nose-s),
+                            calc(0.1 * var(--nose-l))
+                        )
+                    " stop-opacity="0.7" />
+                    <stop offset="100%" stop-color="
+                        hsl(
+                            var(--nose-h),
+                            var(--nose-s),
+                            calc(0.1 * var(--nose-l))
+                        )
+                    " stop-opacity="0.5" />
                 </linearGradient>
             </defs>
 
@@ -306,45 +343,164 @@
             
                 @keyframes echoAni {
                     0% {
-                        transform: translate(0px, 0px) scale(0.1);
+                        transform: scale(0.1);
                         opacity: 0;
                     }
                     10% {
                         opacity: 1;
                     }
                     100% {
-                        transform: translate(var(--echoX), 0px) scale(1.4);
+                        transform: scale(var(--xtra));
                         opacity: 0;
                     }
                 }
                 
-                #echoGroup > g {
-                    animation-name: echoAni;
-                    animation-timing-function: linear;
-                    animation-iteration-count: infinite;
-                    animation-play-state: running;
+                @keyframes shineAni {
+                    
+                    0% {
+                        d: path(var(--small-d));
+                        opacity: 0;
+                        transform: rotate(49deg);
+                    } 100% {
+                        d: path(var(--large-d));
+                        opacity: 0.5;
+                        transform: rotate(-14deg);
+                    }
+                    
                 }
                 
-                #echoGroup > g > path {
-                    d: \
-                    M  0 0 a 100 30 0 1 0 0 0.001 Z \
-                    M -7 1 a  95 27 0 1 0 0 0.001 Z \
+                @keyframes shockAni {
+                    0% {
+                        transform: translate(0px, 0px) scale(0.0);
+                        opacity: 0;
+                    }
+                    10% {
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translate(-5px, -3px) scale(0.8);
+                        opacity: 0;
+                    }
+                }
+                
+                #echoGroup > g > g {
+                    opacity: 0;
+                    animation-name: echoAni;
+                    animation-timing-function: linear;
+                }
+                
+                #echoGroup > g > g > path {
+                    
+                    d: path('\
+                        M  0 0 a 100 30 0 1 0 0 0.001 Z \
+                        M -7 1 a  95 27 0 1 0 0 0.001 Z \
                     ');
-                    /*M -15 1 a  90 27 0 1 0 0 0.001 Z \*/
-                    fill-rule: evenodd;
-                    transform-origin: -100px 0px;
-                    transform: translateX(100px);
-                    fill: hsla(35,100%,100%,0.1);
+                    
+                    fill: hsla(var(--nose-h), 100%, 100%, 0.1);
                     stroke: none;
-                    stroke-width: 1;
                     vector-effect: non-scaling-stroke;
+                    fill-rule: evenodd;
+                    
+                    transform: translateX(100px) rotate(-5deg);
+                    
+                }
+                
+                #boxShadow {
+                    fill: hsla(0, 0%, 0%, 0.8);
+                }
+                
+                #boxBody {
+                    fill: var(--midness);
+                }
+                
+                #boxBodyLine {
+                    fill: none;
+                    stroke: var(--darkness);
+                    stroke-width: 0.8px;
+                }
+                
+                #boxBodyLineXtra {
+                    fill: none;
+                    stroke: hsla(var(--nose-h),100%,100%,0.7);
+                    stroke-width: 0.1px;
+                }
+                
+                #boxShade {
+                    xxxfill: url(#shade);
+                    xxxstroke: hsla(var(--nose-h) 0%, 0%, 0.5);
+                    fill: hsla(
+                        var(--nose-h),
+                        100%,
+                        calc(0.4 * var(--nose-l)),
+                        0.4
+                    );
+                    stroke: none;
+                }
+                
+                #boxShadeLine {
+                    fill: none;
+                    stroke: var(--darkness);
+                    stroke-width: 0.1px;
+                }
+                
+                #shineGroup > g > path {
+                    
+                    --small-d: '\
+                        M 0 -0 L 0.5 -0.87    \
+                        L 0  0 L 1 0          \
+                        L 0  0 L 0.5 0.87     \
+                        L 0  0 L -0.5 0.87    \
+                        L 0  0 L -1 0         \
+                        L 0  0 L -0.5 -0.87   \
+                        Z \
+                    ';
+                    
+                    --large-d: '\
+                        M  0   -20  L  0.5 -0.87    \
+                        L  6.9  -4  L  1 0          \
+                        L  4.3 2.5  L  0.5 0.87     \
+                        L  0    16  L -0.5 0.87     \
+                        L -9.5 6.5  L -1 0          \
+                        L -8.7  -5  L -0.5 -0.87    \
+                        Z \
+                    ';
+                    
+                    fill: hsla(var(--nose-h), 100%, 100%, 1);
+                    vector-effect: non-scaling-stroke;
+                    fill-rule: evenodd;
+                    animation-name: shineAni;
+                    animation-timing-function: ease-out;
+                    opacity: 0;
+                    
+                }
+                
+                #shockGroup > g > g {
+                    --xtra: 0.8;
+                    animation-name: shockAni;
+                    animation-timing-function: linear;
+                    opacity: 0;
+                }
+                
+                #shockGroup > g > g > path {
+                    
+                    d: path('\
+                        M 0 0 a 2 5 0 1 0 0 0.001 Z \
+                        M -0.2 0.5 a 1.8 3.5 -5 1 0 0 0.001 Z \
+                    ');
+                   
+                    transform: translate(0px, -4px) scale(3);
+                    fill: hsla(var(--nose-h), 100%, 100%, 0.4);
+                    stroke: none;
+                    fill-rule: evenodd;
                 }
                 
             </style>
             
-            <g id="echoGroup" transform="translate(25,-7) rotate(-5)"></g>
-            <g id="boxOver" style="transform:translate(25px, -20px)">
-            <g id="boxMirror" style="
+            <g id="echoGroup" style="
+                transform: translate(15px, 15.5px);
+            "/>
+            <g id="boxOver" style="transform:translate(0, -15px)">
+            <g id="boxMirror" data-nose="#svgHolder" style="
                 transform-origin: 15px 0px;
                 transform: scale(1, 1);
                 transition: none;
@@ -353,9 +509,15 @@
                 <g id="boxGroup">
                     <path id="boxBody"/>
                     <path id="boxShade"/>
-                    <path id="boxLite" style="display:none;"/>
+                    <path id="boxShadeLine"/>
+                    <path id="boxBodyLine"/>
+                    <path id="boxBodyLineXtra"/>
+                    <g id="shineGroup"/>
                 </g>
             </g></g>
+            
+            <g id="shockGroup"/>
+            
             <!--g id="circOver" transform="
                 translate(-50, -4) scale(0.3)
             ">
@@ -378,24 +540,96 @@
             </g-->
         
         </svg>
-
-    </div>
-
-    <div id="slideDiv" style="
-        padding: 10px 0px 5px 0px;
-        margin: 0;
-    ">
-        <input id="slide0" type="range" min="0" max="100" step="1" value="0" />
-    </div>
-
-    <div id="discussion">
         
-        <div class="qr">
-            oh, hop&middot;pierre, you shifty, shifty doppler!
+        <style>
         
-        </div>
+        #RTC, #LTC {
+            position: absolute;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            bottom: 0px;
+        }
+        
+        #RTC {
+            right: 0px;
+        }
+        
+        #RTC > div, #LTC > div {
+            box-sizing: border-box;
+            position: relative;
+            width: 165px;
+            height: 90px;
+        }
+        
+        #RTC > div > div, #LTC > div > div {
+            box-sizing: border-box;
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid hsla(0, 0%, 0%, 0.2);
+            background-color: hsla(0, 100%, 100%, 0.05);
+            text-align: center;
+            line-height: 45px;
+            user-select: none;
+        }
+        
+        #RTC > div > div:nth-of-type(1) {
+            left: 0px;
+            bottom: 10px;
+        }
+        
+        #RTC > div > div:nth-of-type(2) {
+            left: 14px;
+            bottom: 60px;
+        }
+        
+        #RTC > div > div:nth-of-type(3) {
+            left: 55px;
+            bottom: 30px
+        }
+        
+        #RTC > div > div:nth-of-type(4) {
+            left: 37px;
+            bottom: 28px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background-color: hsla(0,0%,0%,0);
+        }
+        
+        #RTC > div > div:nth-of-type(5) {
+            
+            left: 92px;
+            bottom: 50px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background-color: hsla(0,0%,0%,0);
+            
+        }
+        
+        #LTC > div > div:nth-of-type(1) {
+            height: 80px;
+            width: 80px;
+            bottom: 8px;
+            left: 18px;
+        }
+        
+        </style>
 
-        <p class="signature"><i>~queviva</i></p>
+        <div id="RTC"><div>
+            <div id="Skey"></div>
+            <div id="Ekey"></div>
+            <div id="Fkey"></div>
+            <div id="SEkey"></div>
+            <div id="EFkey"></div>
+        </div></div>
+
+        <div id="LTC"><div>
+            <div id="ShiftButt"></div>
+        </div></div>
 
     </div>
 
@@ -418,10 +652,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // prefs {
     
-    let aniDur = 1000;
-    const topSpeed = 500;
-    const numEchos = 8;
-        
+    const prefs = {
+        moveStall : 100,
+        keyComboLimit : 180,
+        touchComboLimit : 180,
+    }
+
     //}
                 
     // utils {
@@ -434,16 +670,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // vars and refs {
     
-    let curSpeed = 0;
     let canKey = true;
+    let canTouch = true;
+    let mirror = 1;
     
     const NS = 'http://www.w3.org/2000/svg';
     
-    const shadowStandD = `path('M 10 22 L 40 22 L 25 14 L 20 14 L 4 16 Z')`;
-    const bodyStandD = `path('M -1 0 L 1.5 8 L 4 16 L 10 22 Q 26 19 26 19 Q 30 -3 30 -3 L 13 -8 Q -1 0 -1 0 Z')`;
-    const bodyMatch = bodyStandD.replace(/[^\d-]/g, '');
-    const shadeStandD = `path('M 9 8 L 9.5 15 L 10 22 Q 26 19 26 19 Q 30 -3 30 -3 Q 9 8 9 8 Z')`;
-    
+    const holder = document.getElementById('holder');
     const boxGroup = document.getElementById('boxGroup');
     const boxOver = document.getElementById('boxOver');
     boxOver.style.setProperty('--xtra', 1 + rand()*3);
@@ -451,7 +684,118 @@ document.addEventListener('DOMContentLoaded', () => {
     const boxBody = document.getElementById('boxBody');
     const boxShade = document.getElementById('boxShade');
     const boxLite = document.getElementById('boxLite');
-    const slide0 = document.getElementById('slide0');
+    const shineGroup = document.getElementById('shineGroup');
+    const logoDiv = document.getElementById('logoDiv');
+    const RTC = document.getElementById('RTC');
+    const Skey = document.getElementById('Skey');
+    const Fkey = document.getElementById('Fkey');
+    const Ekey = document.getElementById('Ekey');
+    const SEkey = document.getElementById('SEkey');
+    const EFkey = document.getElementById('EFkey');
+    const ShiftButt = document.getElementById('ShiftButt');
+    
+    const rough = sketch.svg(boxOver);
+    
+    //}
+    
+    // poses {
+    
+    const POS = {
+        
+        shadow: {
+            
+            stand: `path('M 10 22 L 40 22 L 25 14 L 14 14.5L 4 16 Z')`,
+            
+            quarterTurn: `path('M 6.5 21 Q 22 22 38 22 L 30 15 L 20 15 L 4 14 Z')`,
+            
+            frontLift: `path('M 10 22 L 39 22 L 24 14 L 14 14.5 L 4 16 Z')`,
+            
+            backLift: `path('M 12 22 L 40 22 L 25 12 L 12 14 L 6.0 16 Z')`,
+            
+            squat: `path('M 10 22 L 38.5 22 L 23 14 L 14 14.5 L 4 16 Z')`,
+            
+            squatSemi: `path('M 10 22 L 39 22 L 24 14 L 14 14.5 L 4 16 Z')`,
+            
+            squatXtra: `path('M 10 22 L 38 22 L 22 14 L 14 14.5 L 4 16 Z')`,
+            
+            back: `path('M 10 22 L 39 22 L 24 14 L 14 14.5 L 4 16 Z')`,
+            
+            backSemi: `path('M 10 22 L 38 22 L 23 14 L 14 14.5 L 4 16 Z')`,
+                  
+            arch: `path('M 10 22 L 40 22 L 25 14 L 14 14.5L 4 16 Z')`,
+            
+            archFlat: `path('M 10 22 L 40 22 L 25 14 L 14 14.5L 4 16 Z')`,
+            
+            archXtra: `path('M 10 22 L 41 22 L 25.5 14 L 14 14.5 L 4 16 Z')`
+            
+            
+        },
+        
+        body: {
+            
+            stand: `path('M -1 0 L 1.5 8 L 4 16 L 10 22 Q 26 19 26 19 Q 30 -3 30 -3 L 13 -8 Q -1 0 -1 0 Z')`,
+        
+            quarterTurn: `path('M 0 -3 L 3.4 10 L 4 14 L 6.5 21 Q 16 19 24 20 Q 24 8 29 -2.4  L 18.5 -10 Q 8 -9.4 0 -3 Z')`,
+            
+            frontLift: `path('M -1 0 L 2 10 L 1 14 L 8 20 L 23.5 20 L 28 12 L 30 -3 L 13 -8 Q 6 -3 -1 0 Z')`,
+            
+            backLift: `path('M -1 0 L 2.5 12 L 4.5 15.5 L 11 21 L 28 16 L  27 12 L 30 -3 L 13 -8 Q  5 -4.5 -1 0 Z')`,
+            
+            squat: `path('M -1 1 L 2 12 L 4 16 L 10 22 Q 26 19 26 19 Q 30 10 30 -2 L 13 -7 Q 6 -2 -1 1 Z')`,
+            
+            squatSemi: `path('M -1 0.5 L 2.3 12 L 4 16 L 10 22 Q 26 19 26 19 Q 29 10 30 -2.5 L 13 -7 Q 7 -3 -1 0.5 Z')`,
+            
+            squatXtra: `path('M -1 2 L 1.4 12  L 4 16 L 10 22 Q 26 19 26 19 Q 32 10 30 -1 L 13.2 -5 Q 6 0 -1 2 Z')`,
+        
+            back: `path('M -1 2 L 4 12 L 4 16 L 10 22 Q 26 19 26 19 Q 33 10 30 -1 L 13 -6 Q 7 -0.5 -1 2 Z')`,
+            
+            backSemi: `path('M -1 1 L 3.2 12 L 4 16 L 10 22 Q 26 19 26 19 Q 30 10 30 -2 L 13 -7 Q 6 -1.5 -1 1 Z')`,
+        
+            arch: `path('M -1 0 L 1.5 8 L 4 16 L 10 22 Q 18 19 26 19 Q 30 -3 30 -3 L 13 -8 Q 6 -6 -1 0 Z')`,
+            
+            archFlat: `path('M -1 -0.5 L 3.2 12 L 4 16 L 10 22 Q 26 19 26 19 Q 27 7 30 -3.5 L 13 -8.5 Q 6 -6.2 -1 -0.5 Z')`,
+            
+            archXtra: `path('M -1 -1 L 3.2 12 L 4 16 L 10 22 Q 18 19.5 26 19 Q 26 8 30 -4 L 13 -9 Q 6 -7 -1 -1 Z')`,
+            
+            slice: `path('M 3 0 L 4 10 L -9 12 L 14 23 L 26 19 L 25.5 17 Q 30 10 35 -2 L 24 -4 L 16.5 -7 Z')`,
+            
+            sliceSemi: `path('M 1 0 L 3.3 10 L -3 13.5 L 12 22.3 L 26 19 L 26 17 L 34 -2.4 Q 30.3 -4 23 -4 L 15.3 -7 Z')`
+            
+        },
+        
+        shade: {
+            
+            stand: `path('M 9 8 L 9.5 15 L 10 22 Q 26 19 26 19 Q 30 -3 30 -3 Q 9 8 9 8 Z')`,
+        
+            quarterTurn: `path('M 5 7 L 6 15 L 6.5 21 Q 16 19 24 20 Q 24 8 29 -2.4 Q 18 -1.5 5 7 Z')`,
+       
+            frontLift: `path('M 9 8 L 9.5 15 L 8 20 L 23.5 20 L 28 12 L 30 -3 Q 20 3 9 8 Z')`,
+            
+            backLift: `path('M 9 8 L 9.25 17 L 11 21 L 28 16 L 27 12 L 30 -3 Q 19 0.25 9 8 Z')`,
+            
+            squat: `path('M 9 9 L 9.3 17 L 10 22 Q 26 19 26 19 Q 30 10 30 -2 Q 20 5 9 9 Z')`,
+            
+            squatSemi: `path('M 9 8.5 L 9.4 17 L 10 22 Q 26 19 26 19 Q 29 10 30 -2.5 Q 20 4 9 8.5 Z')`,
+
+            squatXtra: `path('M 9 10 L 9 18 L 10 22 Q 26 19 26 19 Q 32 10 30 -1 Q 20 7 9 10 Z')`,
+            
+            back: `path('M 9 10 L 10.75 17 L 10 22 Q 26 19 26 19 Q 33 10 30 -1 Q 18.5 7.5 9 10 Z')`,
+            
+            backSemi: `path('M 9 9 L 10.25 17 L 10 22 Q 26 19 26 19 Q 30 10 30 -2 Q 20 5 9 9 Z')`,
+            
+            arch: `path('M 9 8 L 9.5 15 L 10 22 Q 18 19 26 19 Q 30 -3 30 -3 Q 20 0 9 8 Z')`,
+            
+            archFlat: `path('M 9 7.5 L 9.75 15 L 10 22 Q 26 19 26 19 Q 27 7 30 -3.5 Q 20 0 9 7.5 Z')`,
+            
+            archXtra: `path('M 9 7 L 9.5 15 L 10 22 Q 18 19.5 26 19 Q 26 8 30 -4 Q 20 -1 9 7 Z')`,
+            
+            slice: `path('M 19 9 L 13.8 23.3 L 14 23 L 26 19 L 25.5 17 L 35 -2 Z')`,
+            
+            sliceSemi: `path('M 15 9 L 11.8 20 L 12 22.3 L 26 19 L 26 17 L 34 -2.4 Z')`,
+            
+        }
+        
+    }
     
     //}
     
@@ -461,17 +805,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
         vals = Object.assign({
             obj: '',
-            fill: 'none',
-            stroke: 'none',
-            strokeWidth: '0.0',
             cssVars : [],
             steps: {}
         }, vals);
     
         this.obj = vals.obj;
-        this.obj.style.setProperty('fill', vals.fill);
-        this.obj.style.setProperty('stroke', vals.stroke);
-        this.obj.style.setProperty('stroke-width', vals.strokeWidth);
         
         this.cssVars = vals.cssVars;
         this.setLoopVars();
@@ -512,7 +850,7 @@ document.addEventListener('DOMContentLoaded', () => {
         svgStyles.sheet.insertRule(rule);
         
         this.obj.style.animationName = this.obj.id+'Ani';
-        this.obj.style.animationDuration =  aniDur +'ms';
+        this.obj.style.animationDuration =  1000 +'ms';
         this.obj.style.animationDelay = 'none';
         this.obj.style.animationDirection = 'end';
         this.obj.style.animationFillMode = 'forward';
@@ -533,28 +871,176 @@ document.addEventListener('DOMContentLoaded', () => {
         
         for (let [v, k] of Object.entries(this.steps)) {
             
-            if (n % k.length === 0) this.setLoopVars();
+            if (n % k.length === 0 && this.cssVars.length > 0) {
+                this.setLoopVars();
+            }
             
-            this.obj.style.setProperty(v, k[n % k.length]);
+            if (v === 'd' && this.obj === boxBody) {
+            
+                boxBodyLine.style.setProperty('d', 'path("' +
+                    rough.path(
+                        k[n % k.length]
+                        .replace(/path\(/, '')
+                        .replace(/[\)\`\']/g, ''), {
+                            fill: '#ccc',
+                            stroke: '#000',
+                            roughness: 0.3
+                        }
+                    ).children[1].getAttribute('d') + '")'
+                );
+            
+                boxBodyLineXtra.style.setProperty('d', 'path("' +
+                    rough.path(
+                        k[n % k.length]
+                        .replace(/path\(/, '')
+                        .replace(/[\)\`\']/g, ''), {
+                            fill: '#ccc',
+                            stroke: '#000',
+                            roughness: 1.3
+                        }
+                    ).children[1].getAttribute('d') + '")'
+                );
+            
+                this.obj.style.setProperty(v, k[n % k.length]);
+            
+            }
+            
+            else if (v === 'd' && this.obj === boxShade) {
+            
+                //boxShade.style.setProperty('fill', 'none');
+                //boxShade.style.setProperty('stroke', 'url(#shade)');
+                boxShadeLine.style.setProperty('d', 'path("' +
+                    rough.path(
+                        k[n % k.length]
+                        .replace(/path\(/, '')
+                        .replace(/[\)\`\']/g, ''), {
+                            fill: '#fff',
+                            fillStyle: 'cross-hatch',
+                            fillWeight: 2,
+                            bowing: 8,
+                            hachureGap: 0.8,
+                            hachureAngle: 55,
+                            stroke: '#c30',
+                            roughness: 0.3
+                        }
+                    ).children[0].getAttribute('d') +
+                    '")');
+            
+                this.obj.style.setProperty(v, k[n % k.length]);
+            
+            }
+            
+            else if (v === 'd' && this.obj === boxShadow) {
+            
+                boxShadow.style.setProperty('fill', 'none');
+                boxShadow.style.setProperty('stroke', 'hsla(0,0%,0%,0.5');
+                boxShadow.style.setProperty('stroke-width', '0.5px');
+                boxShadow.style.setProperty('d', 'path("' +
+                    rough.path(
+                        k[n % k.length]
+                        .replace(/path\(/, '')
+                        .replace(/[\)\`\']/g, ''), {
+                            fill: '#fff',
+                            fillStyle: 'hachure',
+                            fillWeight: 2,
+                            bowing: 8,
+                            hachureGap: 0.8,
+                            hachureAngle: -55,
+                            stroke: '#c30',
+                            roughness: 0.3
+                        }
+                    ).children[0].getAttribute('d') +
+                    '")');
+            
+                //this.obj.style.setProperty(v, k[n % k.length]);
+            
+            }
+            
+            else {
+            
+                this.obj.style.setProperty(v, k[n % k.length]);
+                
+            }
             
         }
         
     }
     
-    function Echo (delay) {
+    Sprite.prototype.dispatchEnd = function () {
+        
+        this.obj.dispatchEvent(new CustomEvent('spriteend', {
+            detail: this.obj.id
+        }));
+        
+    };
+    
+    function Echo (x=0, y=0, delay=100, duration=1500, xtra=1.4) {
     
         const g = document.createElementNS(NS, 'g');
-        
-        g.style.setProperty('animation-delay', delay);
-        g.style.setProperty('animation-duration', 1000 * numEchos +'ms');
-        
+        g.style.setProperty('animation-delay', delay +'ms');
+        g.style.setProperty('animation-duration', duration +'ms');
+        g.style.setProperty('--xtra', xtra);
         g.append(document.createElementNS(NS, 'path'));
-        echoGroup.append(g);
         
-        g.addEventListener('animationiteration', e => {
-            g.style.setProperty('--echoX', curSpeed +'px');
+        const G = document.createElementNS(NS, 'g');
+        G.style.transform ='translate('+ x +'px, '+ y +'px)';
+        G.append(g);
+        
+        echoGroup.append(G);
+        
+        g.addEventListener('animationend', e => {
+            echoGroup.removeChild(G);
         });
-
+        
+    }
+        
+    function Shine (duration=500, delay=0) {
+    
+        const G = document.createElementNS(NS, 'g');
+        
+        const P = document.createElementNS(NS, 'path')
+        P.style.setProperty('animation-duration', duration +'ms');
+        P.style.setProperty('animation-delay', delay +'ms');
+        P.addEventListener('animationend', e => {
+            shineGroup.removeChild(G);
+        });
+        
+        G.append(P);
+        shineGroup.append(G);
+        
+    }
+     
+    function Shock (x=0, y=0, delay=210, duration=200, xtra=1.4) {
+    
+        const g = document.createElementNS(NS, 'g');
+        g.style.setProperty('animation-delay', delay +'ms');
+        g.style.setProperty('animation-duration', duration +'ms');
+        g.style.setProperty('--xtra', xtra);
+        g.append(document.createElementNS(NS, 'path'));
+        
+        const G = document.createElementNS(NS, 'g');
+        G.style.transform ='translate('+ x +'px, '+ y +'px)';
+        G.append(g);
+        
+        shockGroup.append(G);
+        
+        g.addEventListener('animationend', e => {
+            shockGroup.removeChild(G);
+        });
+        
+    }
+       
+    function SSet (name, size, stall, spriteset) {
+        
+        this.name = name;
+        this.size = size;
+        this.stall = stall;
+        this.set = spriteset;
+    
+    }
+    
+    SSet.prototype.show = function (n) {
+        this.set.forEach(s => log(s));
     }
     
     //}
@@ -569,17 +1055,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // boxShadow
         {
             obj: boxShadow,
-            fill: 'hsla(35,100%,0%,0.45)',
             steps: {
                 d: [
-                    shadowStandD,
-                    shadowStandD,
-                    shadowStandD,
-                    shadowStandD,
-                    shadowStandD,
-                    shadowStandD,
-                    `path('M10 22L41 22L25.5 14 L20 14L4 16Z')`,
-                    shadowStandD
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.archXtra,
+                    POS.shadow.stand
                 ]
             }
         },
@@ -587,33 +1072,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // boxBody
         {
             obj: boxBody,
-            fill: 'hsla(35,100%,50%,1.0)',
             steps: {
                 d: [
         
-        // semi-squat
-        `path('M-1 0.5L2.3 12L4 16L10 22Q26 19 26 19Q29 10 30 -2.5L13 -7Q7 -3 -1 0.5Z')`,
-      
-        // standing
-        bodyStandD,
-        
-        // standing-arch
-        `path('M-1 -0.5L3.2 12L4 16L10 22Q26 19 26 19Q27 7 30 -3.5L13 -8.5Q6 -6.2 -1 -0.5Z')`,
-        
-        // standing
-        bodyStandD,
-        
-        // semi-squat-extra
-        `path('M-1 1L2 12L4 16L10 22Q26 19 26 19Q30 10 30 -2L13 -7Q6 -2 -1 1Z')`,
-      
-        // standing
-        bodyStandD,
-        
-        // standing-arch-extra
-        `path('M-1 -1L3.2 12L4 16L10 22Q18 19.5 26 19Q26 8 30 -4L13 -9Q6 -7 -1 -1Z')`,
-        
-        // standing
-        bodyStandD
+        POS.body.squatSemi,
+        POS.body.stand,
+        POS.body.archFlat,
+        POS.body.stand,
+        POS.body.squat,
+        POS.body.stand,
+        POS.body.archXtra,
+        POS.body.stand
         
                 ]
             }
@@ -622,63 +1091,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // boxShade
         {
             obj: boxShade,
-            fill: 'url(#shade)',
-            stroke: 'hsla(35,0%,0%,0.3',
-            strokeWidth: 0.1,
             steps: {
                 d:[
         
-        // semi-squat
-        `path('M 9 8.5 L 9.4 17 L 10 22 Q 26 19 26 19 Q 29 10 30 -2.5 Q 20 4 9 8.5 Z')`,
+        POS.shade.squatSemi,
+        POS.shade.stand,
+        POS.shade.archFlat,
+        POS.shade.stand,
+        POS.shade.squat,
+        POS.shade.stand,
+        POS.shade.archXtra,
+        POS.shade.stand
         
-        // standing
-        shadeStandD,
-        
-        // standing-arch
-        `path('M 9 7.5 L 9.75 15 L10 22 Q 26 19 26 19 Q 27 7 30 -3.5 Q 20 0 9 7.5 Z')`,
-        
-        // standing
-        shadeStandD,
-        
-        // semi-squat-extra
-        `path('M 9 9 L 9.3 17 L10 22 Q 26 19 26 19 Q 30 10 30 -2 Q 20 5 9 9 Z')`,
-        
-        // standing
-        shadeStandD,
-        
-        // standing-arch-extra
-        `path('M 9 7 L 9.5 15 L10 22 Q 18 19.5 26 19 Q 26 8 30 -4 Q 20 -1 9 7 Z')`,
-        
-        // standing
-        shadeStandD
-        
-                ]
-            }
-        },
-        
-        // boxLite
-        {
-            obj: boxLite,
-            steps: {
-                d: [
-                    `path('M2.3 12L4 16L10 22 L9.4 17 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M2 12L4 16L10 22 L9.3 17 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`
-                ],
-                fill: [
-                    'hsla(35,0%,0%,0.02)',
-                    'none',
-                    'none',
-                    'none',
-                    'hsla(35,0%,0%,0.028)',
-                    'none',
-                    'none',
-                    'none'
                 ]
             }
         },
@@ -688,200 +1112,46 @@ document.addEventListener('DOMContentLoaded', () => {
             obj: boxGroup,
             steps: {
                 transform: [
-                    'translate(0px)',
-                ]
-            }
-        }
-
-    ].map(s => new Sprite(s)),
-
-    // up-and-down hopping
-    hopping : [
-        
-        // boxShadow
-        {
-            obj: boxShadow,
-            fill: 'hsla(35,100%,0%,0.45)',
-            cssVars: [[boxOver, '--xtra', () => 1 + 3 * rand()]],
-            steps: {
-                d: [
-                    `path('M10 22L39 22L24 14 L20 14L4.0 16Z')`,
-                    `path('M10 22L38 22L23 14 L20 14L4.0 16Z')`,
-                    shadowStandD,
-                    shadowStandD,
-                    shadowStandD,
-                    shadowStandD,
-                    shadowStandD
-                ],
-                transform: [
-                    'translate(0px)',
-                    'translate(0px)',
-                    'translate(0px)',
-                    'translate(calc(2.0px * var(--xtra)))',
-                    'translate(calc(2.5px * var(--xtra)))',
-                    'translate(calc(2.2px * var(--xtra)))',
                     'translate(0px)'
-                ]
-            }
-        },
-        
-        // boxBody
-        {
-            obj: boxBody,
-            fill: 'hsla(35,100%,50%,1.0)',
-            steps: {
-                d: [
-        
-        // semi-back-squat
-        `path('M -1 1 L 3.2 12 L4 16 L10 22 Q26 19 26 19 Q30 10 30 -2 L13 -7 Q6 -1.5 -1 1 Z')`,
-        
-        // full-back-squat
-        `path('M-1 2L4 12L4 16L10 22Q26 19 26 19Q33 10 30 -1L13 -6Q7 -0.5 -1 2Z')`,
-        
-        // standing-arch
-        `path('M-1 0L1.5 8L4 16L10 22Q18 19 26 19Q30 -3 30 -3L13 -8Q6 -6 -1 0Z')`,
-        
-        // standing-arch-extra
-        `path('M-1 -1L3.2 12L4 16L10 22Q18 19.5 26 19Q26 8 30 -4L13 -9Q6 -7 -1 -1Z')`,
-        
-        // standing-arch-extra
-        `path('M-1 -1L3.2 12L4 16L10 22Q18 19.5 26 19Q26 8 30 -4L13 -9Q6 -7 -1 -1Z')`,
-        
-        // standing-arch-extra
-        `path('M-1 -1L3.2 12L4 16L10 22Q18 19.5 26 19Q26 8 30 -4L13 -9Q6 -7 -1 -1Z')`,
-        
-        // standing
-        bodyStandD
-        
-                ]
-            }
-        },
-
-        // boxShade
-        {
-            obj: boxShade,
-            fill: 'url(#shade)',
-            stroke: 'hsla(35,0%,0%,0.3',
-            strokeWidth: 0.1,
-            steps: {
-                d:[
-        
-        // semi-back-squat
-        `path('M 9 9 L 10.25 17 L 10 22 Q 26 19 26 19 Q 30 10 30 -2 Q 20 5 9 9 Z')`,
-        
-        // full-back-squat
-        `path('M 9 10 L 10.75 17 L 10 22 Q 26 19 26 19 Q 33 10 30 -1 Q 18.5 7.5 9 10 Z')`,
-      
-        // standing-arch
-        `path('M 9 8 L 9.5 15 L10 22 Q 18 19 26 19 Q 30 -3 30 -3 Q 20 0 9 8 Z')`,
-        
-        // semi-squat-extra
-        `path('M 9 7 L 9.5 15 L10 22 Q 18 19.5 26 19 Q 26 8 30 -4 Q 20 -1 9 7 Z')`,
-        
-        // semi-squat-extra
-        `path('M 9 7 L 9.5 15 L10 22 Q 18 19.5 26 19 Q 26 8 30 -4 Q 20 -1 9 7 Z')`,
-        
-        // semi-squat-extra
-        `path('M 9 7 L 9.5 15 L10 22 Q 18 19.5 26 19 Q 26 8 30 -4 Q 20 -1 9 7 Z')`,
-        
-        // standing
-        shadeStandD
-        
-                ]
-            }
-        },
-        
-        // boxLite
-        {
-            obj: boxLite,
-            steps: {
-                d: [
-                    `path('M3.2 12L4 16L10 22 L10.25 17 Z')`,
-                    `path('M4 12L4 16L10 22 L10.5 17 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`
-                ],
-                fill: [
-                    'hsla(35,100%,80%,0.15)',
-                    'hsla(35,100%,80%,0.15)',
-                    'none',
-                    'none',
-                    'none',
-                    'none',
-                    'none'
-                ]
-            }
-        },
-        
-        // boxGroup
-        {
-            obj: boxGroup,
-            steps: {
-                transform: [
-                    'translate(0px, 0px)',
-                    'translate(0px, 0px)',
-                    'translate(0px, 0px)',
-                    'translate(0px, calc(-2.2px * var(--xtra)))',
-                    'translate(0px, calc(-3.0px * var(--xtra)))',
-                    'translate(0px, calc(-2.2px * var(--xtra)))',
-                    'translate(0px, 0px)'
                 ]
             }
         }
         
     ].map(s => new Sprite(s)),
     
-    // running forward
-    running : [
+    // duck and hide
+    duckoff : [
         
         // boxShadow
         {
             obj: boxShadow,
-            fill: 'hsla(35,100%,0%,0.45)',
-            cssVars: [[boxGroup, '--xtra', () => 1 + 4 * rand()]],
             steps: {
                 d: [
-                    `path('M12 22L40 22L25 12 L12 14L6.0 16Z')`,
-                    `path('M12 22L40 22L25 12 L12 14L6.0 16Z')`,
-                    `path('M10 22L40 22L25 12 L12 14L4.0 16Z')`,
-                    `path('M 8 22L40 22L25 12 L12 14L2.0 16Z')`,
-                    shadowStandD
-                ],
-                transform: [
-                    'translate(calc(2.0px * var(--xtra)))',
-                    'translate(calc(2.5px * var(--xtra)))',
-                    'translate(calc(2.2px * var(--xtra)))',
-                    'translate(calc(2.0px * var(--xtra)))',
-                    'translate(0)'
+                    
+                    POS.shadow.squatSemi,
+                    POS.shadow.squat,
+                    POS.shadow.squatXtra,
+                    POS.shadow.squatXtra,
+                    POS.shadow.squatXtra,
+                    POS.shadow.squat
+                    
                 ]
             }
         },
-       
+        
         // boxBody
         {
             obj: boxBody,
-            fill: 'hsla(35,100%,50%,1.0)',
             steps: {
                 d: [
         
-        // back lift
-        `path('M-1 0L2.5 12L4.5 15.5L11 21L28 16L 27 12L30 -3L13 -8Q 5 -4.5 -1 0Z')`,
+        POS.body.squatSemi,
+        POS.body.squat,
+        POS.body.squatXtra,
+        POS.body.squatXtra,
+        POS.body.squatXtra,
+        POS.body.squat
         
-        // back lift
-        `path('M-1 0L2.5 12L4.5 15.5L11 21L28 16L 27 12L30 -3L13 -8 Q5 -5.1 -1 0Z')`,
-        
-        // standing
-        bodyStandD,
-        
-        // front lift
-        `path('M-1 0L2 10L1 14L8 20L23.5 20L28 12L30 -3L13 -8 Q6 -3 -1 0 Z')`,
-        
-        // standing
-        bodyStandD
-      
                 ]
             }
         },
@@ -889,89 +1159,156 @@ document.addEventListener('DOMContentLoaded', () => {
         // boxShade
         {
             obj: boxShade,
-            fill: 'url(#shade)',
-            stroke: 'hsla(35,100%,20%,0.8)',
-            strokeWidth: 0.2,
             steps: {
                 d:[
         
-        // backlift
-        `path('M 9 8 L 9.25 17 L11 21 L 28 16 L 27 12 L 30 -3 Q 19 0.25 9 8 Z')`,
+        POS.shade.squatSemi,
+        POS.shade.squat,
+        POS.shade.squatXtra,
+        POS.shade.squatXtra,
+        POS.shade.squatXtra,
+        POS.shade.squat
         
-        // backlift
-        `path('M 9 8 L 9.25 17 L11 21 L 28 16 L 27 12 L 30 -3 Q 19 0.25 9 8 Z')`,
-        
-        // standing
-        shadeStandD,
-        
-        // front lift
-        `path('M 9 8 L 9.5 15 L 8 20 L 23.5 20 L 28 12 L 30 -3 Q 20 3 9 8 Z')`,
-        
-        // standing
-        shadeStandD
-      
                 ]
             }
         },
+
+    ].map(s => new Sprite(s)),
+  
+    // up-and-down hop
+    hopping : [
         
-        /*
-        // boxLite
+        // boxShadow
         {
-            obj: boxLite,
+            obj: boxShadow,
+            cssVars: [[boxOver, '--xtra', () => 1 + 3 * rand()]],
             steps: {
                 d: [
-                    `path('M4.5 15.5L11 21L 9.25 17L2.5 12 Z')`,
-                    `path('M4.5 15.5L11 21L 9.25 17L2.5 12 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M2 10 L1 14L8 20L9.5 15 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand
                 ],
-                fill: [
-                    'hsla(35,100%,20%,0.2)',
-                    'hsla(35,100%,20%,0.2)',
-                    'none',
-                    'hsla(35,100%,80%,0.15)',
-                    'none'
+                transform: [
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(calc(1.0px * var(--xtra)))',
+                    'translate(calc(2.0px * var(--xtra)))',
+                    'translate(calc(2.5px * var(--xtra)))',
+                    'translate(calc(2.7px * var(--xtra)))',
+                    'translate(calc(2.5px * var(--xtra)))',
+                    'translate(calc(2.2px * var(--xtra)))',
+                    'translate(calc(1.0px * var(--xtra)))',
+                    'translate(0px)'
                 ]
             }
         },
-        */
+        
+        // boxBody
+        {
+            obj: boxBody,
+            steps: {
+                d: [
+                    
+        POS.body.squatSemi,
+        POS.body.archFlat,
+        POS.body.archXtra,
+        POS.body.archXtra,
+        POS.body.archXtra,
+        POS.body.archXtra,
+        POS.body.archXtra,
+        POS.body.archXtra,
+        POS.body.archXtra,
+        POS.body.stand
+        
+                ]
+            }
+        },
+
+        // boxShade
+        {
+            obj: boxShade,
+            steps: {
+                d:[
+                    
+        POS.shade.squatSemi,
+        POS.shade.archFlat,
+        POS.shade.archXtra,
+        POS.shade.archXtra,
+        POS.shade.archXtra,
+        POS.shade.archXtra,
+        POS.shade.archXtra,
+        POS.shade.archXtra,
+        POS.shade.archXtra,
+        POS.shade.stand
+        
+                ]
+            }
+        },
         
         // boxGroup
         {
             obj: boxGroup,
             steps: {
                 transform: [
-                    'translate(0px, calc(-1.5px * var(--xtra)))',
-                    'translate(0px, calc(-1.8px * var(--xtra)))',
-                    'translate(0px, calc(-2.2px * var(--xtra)))',
-                    'translate(0px, calc(-2.0px * var(--xtra)))',
-                    'translate(0px)'
+                    'translate(0px, 0px)',
+                    'translate(0px, 0px)',
+                    'translate(0px, calc(-1.2px * var(--xtra)))',
+                    'translate(0px, calc(-2.4px * var(--xtra)))',
+                    'translate(0px, calc(-3.0px * var(--xtra)))',
+                    'translate(0px, calc(-3.3px * var(--xtra)))',
+                    'translate(0px, calc(-3.0px * var(--xtra)))',
+                    'translate(0px, calc(-2.4px * var(--xtra)))',
+                    'translate(0px, calc(-1.2px * var(--xtra)))',
+                    'translate(0px, 0px)'
+                ]
+            }
+        },
+        
+        // shineGroup
+        {
+            obj: shineGroup,
+            steps: {
+                transform: [
+                    'translate(-1px, 0.5px)',
+                    'translate(-1px, -0.5px)',
+                    'translate(-1px, -1px)',
+                    'translate(-1px, -1px)',
+                    'translate(-1px, -1px)',
+                    'translate(-1px, -1px)',
+                    'translate(-1px, -1px)',
+                    'translate(-1px, -1px)',
+                    'translate(-1px, -1px)',
+                    'translate(-1px, 0px)'
                 ]
             }
         }
         
     ].map(s => new Sprite(s)),
    
-    // up-and-down hopping
-    dropkik : [
+    // hop and kick
+    hopkick: [
         
         // boxShadow
         {
             obj: boxShadow,
-            fill: 'hsla(35,100%,0%,0.45)',
-            cssVars: [[boxOver, '--xtra', () => 1 + 3 * rand()]],
             steps: {
                 d: [
-                    `path('M10 22L39 22L24 14 L20 14L4 16Z')`,
-                    `path('M10 22L38 22L23 14 L20 14L4 16Z')`,
-                    shadowStandD,
-                    shadowStandD,
-                    shadowStandD,
-                    `path('M8 22L38 22L23 14 L20 14L2 16Z')`,
-                    `path('M8 22L38 22L23 14 L20 14L2 16Z')`,
-                    shadowStandD,
-                    shadowStandD
+                    POS.shadow.backSemi,
+                    POS.shadow.back,
+                    POS.shadow.arch,
+                    POS.shadow.archXtra,
+                    POS.shadow.archXtra,
+                    POS.shadow.frontLift,
+                    POS.shadow.frontLift,
+                    POS.shadow.archFlat,
+                    POS.shadow.stand
                 ],
                 transform: [
                     'translate(0px)',
@@ -990,36 +1327,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // boxBody
         {
             obj: boxBody,
-            fill: 'hsla(35,100%,50%,1.0)',
             steps: {
                 d: [
         
-        // semi-back-squat
-        `path('M -1 1 L 3.2 12 L4 16 L10 22 Q26 19 26 19 Q30 10 30 -2 L13 -7 Q6 -1.5 -1 1 Z')`,
-        
-        // full-back-squat
-        `path('M-1 2L4 12L4 16L10 22Q26 19 26 19Q33 10 30 -1L13 -6Q7 -0.5 -1 2Z')`,
-        
-        // standing-arch
-        `path('M-1 0L1.5 8L4 16L10 22Q18 19 26 19Q30 -3 30 -3L13 -8Q6 -6 -1 0Z')`,
-        
-        // standing-arch-extra
-        `path('M-1 -1L3.2 12L4 16L10 22Q18 19.5 26 19Q26 8 30 -4L13 -9Q6 -7 -1 -1Z')`,
-        
-        // standing-arch-extra
-        `path('M-1 -1L3.2 12L4 16L10 22Q18 19.5 26 19Q26 8 30 -4L13 -9Q6 -7 -1 -1Z')`,
-        
-        // front lift
-        `path('M-1 0L2 10L1 14L8 20L23.5 20L28 12L30 -3L13 -8 Q6 -3 -1 0 Z')`,
-        
-        // front lift
-        `path('M-1 0L2 10L1 14L8 20L23.5 20L28 12L30 -3L13 -8 Q6 -3 -1 0 Z')`,
-        
-        // standing-arch
-        `path('M-1 0L1.5 8L4 16L10 22Q18 19 26 19Q30 -3 30 -3L13 -8Q6 -6 -1 0Z')`,
-        
-        // standing
-        bodyStandD
+                    POS.body.backSemi,
+                    POS.body.back,
+                    POS.body.arch,
+                    POS.body.archXtra,
+                    POS.body.archXtra,
+                    POS.body.frontLift,
+                    POS.body.frontLift,
+                    POS.body.archFlat,
+                    POS.body.stand
         
                 ]
             }
@@ -1028,74 +1347,23 @@ document.addEventListener('DOMContentLoaded', () => {
         // boxShade
         {
             obj: boxShade,
-            fill: 'url(#shade)',
-            stroke: 'hsla(35,0%,0%,0.3',
-            strokeWidth: 0.1,
             steps: {
                 d:[
-        
-        // semi-back-squat
-        `path('M 9 9 L 10.25 17 L 10 22 Q 26 19 26 19 Q 30 10 30 -2 Q 20 5 9 9 Z')`,
-        
-        // full-back-squat
-        `path('M 9 10 L 10.75 17 L 10 22 Q 26 19 26 19 Q 33 10 30 -1 Q 18.5 7.5 9 10 Z')`,
-      
-        // standing-arch
-        `path('M 9 8 L 9.5 15 L10 22 Q 18 19 26 19 Q 30 -3 30 -3 Q 20 0 9 8 Z')`,
-        
-        // standing-arch-extra
-        `path('M 9 7 L 9.5 15 L10 22 Q 18 19.5 26 19 Q 26 8 30 -4 Q 20 -1 9 7 Z')`,
-        
-        // standing-arch-extra
-        `path('M 9 7 L 9.5 15 L10 22 Q 18 19.5 26 19 Q 26 8 30 -4 Q 20 -1 9 7 Z')`,
-        
-        // front lift
-        `path('M 9 8 L 9.5 15 L 8 20 L 23.5 20 L 28 12 L 30 -3 Q 20 3 9 8 Z')`,
-        
-        // front lift
-        `path('M 9 8 L 9.5 15 L 8 20 L 23.5 20 L 28 12 L 30 -3 Q 20 3 9 8 Z')`,
-        
-        // standing-arch
-        `path('M 9 8 L 9.5 15 L10 22 Q 18 19 26 19 Q 30 -3 30 -3 Q 20 0 9 8 Z')`,
-        
-        // standing
-        shadeStandD
+                    
+                    POS.shade.backSemi,
+                    POS.shade.back,
+                    POS.shade.arch,
+                    POS.shade.archXtra,
+                    POS.shade.archXtra,
+                    POS.shade.frontLift,
+                    POS.shade.frontLift,
+                    POS.shade.archFlat,
+                    POS.shade.stand
         
                 ]
             }
         },
-        
-        /*
-        // boxLite
-        {
-            obj: boxLite,
-            steps: {
-                d: [
-                    `path('M3.2 12L4 16L10 22 L10.25 17 Z')`,
-                    `path('M4 12L4 16L10 22 L10.5 17 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M2 10 L1 14L8 20L9.5 15 Z')`,
-                    `path('M2 10 L1 14L8 20L9.5 15 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`
-                ],
-                fill: [
-                    'hsla(35,100%,80%,0.15)',
-                    'hsla(35,100%,80%,0.15)',
-                    'none',
-                    'none',
-                    'none',
-                    'hsla(35,100%,80%,0.15)',
-                    'hsla(35,100%,80%,0.15)',
-                    'none',
-                    'none'
-                ]
-            }
-        },
-        */
-        
+
         // boxGroup
         {
             obj: boxGroup,
@@ -1115,19 +1383,33 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
     ].map(s => new Sprite(s)),
-    
-    // twist
-    twister : [
+     
+    // hop and pound
+    hopaway: [
         
         // boxShadow
         {
             obj: boxShadow,
-            fill: 'hsla(35,100%,0%,0.45)',
             steps: {
                 d: [
-                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`,
-                    `path('M6.5 21Q 22 24 38 22L30 15 L20 15L4 16Z')`,
-                    `path('M10 22L40.0 22L25 14 L20 14L4 16Z')`
+                    POS.shadow.back,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.backSemi,
+                    POS.shadow.back,
+                    POS.shadow.back,
+                    POS.shadow.stand
+                ],
+                transform: [
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(calc(2.0px * var(--xtra)))',
+                    'translate(calc(2.5px * var(--xtra)))',
+                    'translate(calc(3.2px * var(--xtra)))',
+                    'translate(calc(2.7px * var(--xtra)))',
+                    'translate(calc(1.8px * var(--xtra)))',
+                    'translate(0px)'
                 ]
             }
         },
@@ -1135,20 +1417,92 @@ document.addEventListener('DOMContentLoaded', () => {
         // boxBody
         {
             obj: boxBody,
-            fill: 'hsla(35,100%,50%,1.0)',
             steps: {
                 d: [
         
-        // standing-arch-extra
-        `path('M-1 -1L3.2 12L4 16L10 22Q18 19.5 26 19Q26 8 30 -4L13 -9Q6 -7 -1 -1Z')`,
+        POS.body.back,
+        POS.body.arch,
+        POS.body.archXtra,
+        POS.body.stand,
+        POS.body.backSemi,
+        POS.body.back,
+        POS.body.back,
+        POS.body.stand
         
-        // quarter turn
-        `path('M0 -3L3.4 10L4 14L6.5 21Q16 19 24 20Q24 8 29 -2.4 L18.5 -10 Q8 -9.4 0 -3Z')`,
+                ]
+            }
+        },
+    
+        // boxShade
+        {
+            obj: boxShade,
+            steps: {
+                d:[
+
+        POS.shade.back,
+        POS.shade.arch,
+        POS.shade.archXtra,
+        POS.shade.stand,
+        POS.shade.backSemi,
+        POS.shade.back,
+        POS.shade.back,
+        POS.shade.stand
         
-        `path('M-1 -1L3.2 12L4 16L10 22Q18 19.5 26 19Q26 8 30 -4L13 -9Q6 -7 -1 -1Z')`
+                ]
+            }
+        },
         
-        // more turn
-        //`path('M14 -4 L0 -2 L4 16 Q7 16 10 22 Q26 19 26 19 Q30 -4 30 -4  L18.5 -10 Q8 -9.4 0 -3Z')`
+        // boxGroup
+        {
+            obj: boxGroup,
+            steps: {
+                transform: [
+                    'translate(0px, 0px)',
+                    'translate(0px, 0px)',
+                    'translate(0px, calc(-2.2px * var(--xtra)))',
+                    'translate(0px, calc(-3.0px * var(--xtra)))',
+                    'translate(0px, calc(-3.4px * var(--xtra)))',
+                    'translate(0px, calc(-3.0px * var(--xtra)))',
+                    'translate(0px, calc(-2.2px * var(--xtra)))',
+                    'translate(0px, 0px)'
+                ]
+            }
+        }
+        
+    ].map(s => new Sprite(s)),
+    
+    // forward kick
+    kicking : [
+        
+        // boxShadow
+        {
+            obj: boxShadow,
+            steps: {
+                d: [
+                    POS.shadow.back,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand
+                ],
+                transform: [
+                    'translate(0px)',
+                    'translate(-2px)',
+                    'translate(-1px)',
+                    'translate(0px)'
+                ]
+            }
+        },
+        
+        // boxBody
+        {
+            obj: boxBody,
+            steps: {
+                d: [
+        
+                    POS.body.back,
+                    POS.body.frontLift,
+                    POS.body.frontLift,
+                    POS.body.stand
         
                 ]
             }
@@ -1157,85 +1511,374 @@ document.addEventListener('DOMContentLoaded', () => {
         // boxShade
         {
             obj: boxShade,
-            fill: 'url(#shade)',
-            stroke: 'hsla(35,0%,0%,0.3',
-            strokeWidth: 0.1,
             steps: {
                 d:[
         
-        
-        // standing-arch
-        `path('M 9 7 L 9.5 15 L 10 22 Q 18 19.5 26 19 Q 26 8 30 -4 Q 20 -1.5 9 7 Z')`,
-        
-        // quarter turn
-        `path('M 5 7 L 6 15 L 6.5 21 Q 16 19 24 20 Q 24 8 29 -2.4 Q 18 -1.5 5 7 Z')`,
-        
-        `path('M 9 7 L 9.5 15 L 10 22 Q 18 19.5 26 19 Q 26 8 30 -4 Q 20 -1.5 9 7 Z')`
+                    POS.shade.back,
+                    POS.shade.frontLift,
+                    POS.shade.frontLift,
+                    POS.shade.stand
         
                 ]
             }
         },
         
-        /*
-        // boxLite
-        {
-            obj: boxLite,
-            steps: {
-                d: [
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M2.3 12L4 16L10 22 L9.4 17 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M2 12L4 16L10 22 L9.3 17 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`,
-                    `path('M4 16L4 16L10 22L10 22 Z')`
-                ],
-                fill: [
-                    'none',
-                    'hsla(35,0%,0%,0.02)',
-                    'none',
-                    'none',
-                    'none',
-                    'hsla(35,0%,0%,0.028)',
-                    'none',
-                    'none'
-                ]
-            }
-        }
-        */
-        
-        /*
         // boxGroup
         {
             obj: boxGroup,
             steps: {
                 transform: [
+                    'translate(0px)',
+                    'translate(-3px, -3px)',
+                    'translate(-1px, -2px)',
                     'translate(0px)'
                 ]
             }
         }
-        */
+        
+    ].map(s => new Sprite(s)),
+   
+    // forward slice
+    slicing : [
+        
+        // boxShadow
+        {
+            obj: boxShadow,
+            steps: {
+                transform: [
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(0px)'
+                ]
+            }
+        },
+        
+        // boxBody
+        {
+            obj: boxBody,
+            steps: {
+                d: [
+        
+                    POS.body.sliceSemi,
+                    POS.body.slice,
+                    POS.body.slice,
+                    POS.body.slice,
+                    POS.body.stand
+        
+                ]
+            }
+        },
+        
+        // boxShade
+        {
+            obj: boxShade,
+            steps: {
+                d: [
+                    
+                    POS.shade.sliceSemi,
+                    POS.shade.slice,
+                    POS.shade.slice,
+                    POS.shade.slice,
+                    POS.shade.stand
+                    
+                ]
+        
+            }
+            
+        }
+        
+    ].map(s => new Sprite(s)),
+   
+    // running forward
+    running : [
+        
+        // boxShadow
+        {
+            obj: boxShadow,
+            cssVars: [[boxGroup, '--xtra', () => 1 + 4 * rand()]],
+            steps: {
+                d: [
+                    POS.shadow.backLift,
+                    POS.shadow.backLift,
+                    POS.shadow.stand,
+                    POS.shadow.frontLift,
+                    POS.shadow.stand
+                ],
+                transform: [
+                    'translate(calc(2.0px * var(--xtra)))',
+                    'translate(calc(2.5px * var(--xtra)))',
+                    'translate(calc(2.2px * var(--xtra)))',
+                    'translate(calc(2.0px * var(--xtra)))',
+                    'translate(0)'
+                ]
+            }
+        },
+       
+        // boxBody
+        {
+            obj: boxBody,
+            steps: {
+                d: [
+        
+                    POS.body.backLift,
+                    POS.body.backLift,
+                    POS.body.stand,
+                    POS.body.frontLift,
+                    POS.body.stand
+      
+                ]
+            }
+        },
+        
+        // boxShade
+        {
+            obj: boxShade,
+            steps: {
+                d:[
+        
+                    POS.shade.backLift,
+                    POS.shade.backLift,
+                    POS.shade.stand,
+                    POS.shade.frontLift,
+                    POS.shade.stand
+      
+                ]
+            }
+        },
+        
+        // boxGroup
+        {
+            obj: boxGroup,
+            steps: {
+                transform: [
+                    'translate(0px, calc(-1.5px * var(--xtra)))',
+                    'translate(0px, calc(-1.8px * var(--xtra)))',
+                    'translate(0px, calc(-2.2px * var(--xtra)))',
+                    'translate(0px, calc(-2.0px * var(--xtra)))',
+                    'translate(0px)'
+                ]
+            }
+        }
+        
+    ].map(s => new Sprite(s)),
+
+    // forward punch
+    puncher : [
+        
+        // boxShadow
+        {
+            obj: boxShadow,
+            steps: {
+                d: [
+                    POS.shadow.archXtra,
+                    POS.shadow.quarterTurn,
+                    POS.shadow.archXtra,
+                    POS.shadow.stand
+                ]
+            }
+        },
+        
+        // boxBody
+        {
+            obj: boxBody,
+            steps: {
+                d: [
+        
+        POS.body.archXtra,
+        POS.body.quarterTurn,
+        POS.body.archXtra,
+        POS.body.stand
+        
+                ]
+            }
+        },
+        
+        // boxShade
+        {
+            obj: boxShade,
+            steps: {
+                d:[
+        
+                    POS.shade.archXtra,
+                    POS.shade.quarterTurn,
+                    POS.shade.archXtra,
+                    POS.shade.stand
+        
+                ]
+            }
+        }
+        
+    ].map(s => new Sprite(s)),
+      
+    // punch kick combo
+    twister : [
+        
+        // boxShadow
+        {
+            obj: boxShadow,
+            steps: {
+                d: [
+                    POS.shadow.archXtra,
+                    POS.shadow.quarterTurn,
+                    POS.shadow.archXtra,
+                    POS.shadow.stand,
+                    POS.shadow.back,
+                    POS.shadow.frontLift,
+                    POS.shadow.frontLift,
+                    POS.shadow.stand
+                ],
+                transform: [
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(-2px)',
+                    'translate(-1px)',
+                    'translate(0px)'
+                ]
+            }
+        },
+        
+        // boxBody
+        {
+            obj: boxBody,
+            steps: {
+                d: [
+        
+                    POS.body.archXtra,
+                    POS.body.quarterTurn,
+                    POS.body.archXtra,
+                    POS.body.stand,
+                    POS.body.back,
+                    POS.body.frontLift,
+                    POS.body.frontLift,
+                    POS.body.stand
+        
+                ]
+            }
+        },
+        
+        // boxShade
+        {
+            obj: boxShade,
+            steps: {
+                d:[
+        
+                    POS.shade.archXtra,
+                    POS.shade.quarterTurn,
+                    POS.shade.archXtra,
+                    POS.shade.stand,
+                    POS.shade.back,
+                    POS.shade.frontLift,
+                    POS.shade.frontLift,
+                    POS.shade.stand
+        
+                ]
+            }
+        },
+        
+        // boxGroup
+        {
+            obj: boxGroup,
+            steps: {
+                transform: [
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(0px)',
+                    'translate(-3px, -3px)',
+                    'translate(-1px, -2px)',
+                    'translate(0px)'
+                ]
+            }
+        }
+        
         
     ].map(s => new Sprite(s))
     
     };
     
-    allSprites.bobbing.stall = 120;
-    allSprites.hopping.stall = 200;
-    allSprites.running.stall = 140;
-    allSprites.dropkik.stall = 100;
-    allSprites.twister.stall = 500;
+    
+    const allNewSprites = [
+        
+        ['bobbing', 8, 120, [
+        
+        // boxShadow
+        {
+            obj: boxShadow,
+            steps: {
+                d: [
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.stand,
+                    POS.shadow.archXtra,
+                    POS.shadow.stand
+                ]
+            }
+        },
+        
+        // boxBody
+        {
+            obj: boxBody,
+            steps: {
+                d: [
+        
+        POS.body.squatSemi,
+        POS.body.stand,
+        POS.body.archFlat,
+        POS.body.stand,
+        POS.body.squat,
+        POS.body.stand,
+        POS.body.archXtra,
+        POS.body.stand
+        
+                ]
+            }
+        },
+        
+        // boxShade
+        {
+            obj: boxShade,
+            steps: {
+                d:[
+        
+        POS.shade.squatSemi,
+        POS.shade.stand,
+        POS.shade.archFlat,
+        POS.shade.stand,
+        POS.shade.squat,
+        POS.shade.stand,
+        POS.shade.archXtra,
+        POS.shade.stand
+        
+                ]
+            }
+        }
+
+        ].map(s => new Sprite(s))]
+    ].map(SS => [SS[0], new SSet(...SS)]);
     
     //}
     
-    // all echos {
-        
-    /*
-    const allEchos = [...new Array(numEchos).fill(0)].map((x, i) =>
-        new Echo(i * 1000 +'ms')
-    );
-    */
+    // sprite stalls {
+    
+    allSprites.bobbing.stall = 120;
+    allSprites.duckoff.stall = 100;
+    allSprites.hopping.stall = 080;
+    allSprites.hopkick.stall = 100;
+    allSprites.hopaway.stall = 100;
+    allSprites.kicking.stall = 120;
+    allSprites.slicing.stall = 120;
+    allSprites.running.stall = 240;
+    allSprites.puncher.stall = 100;
+    allSprites.twister.stall = 080;
     
     //}
     
@@ -1258,32 +1901,39 @@ document.addEventListener('DOMContentLoaded', () => {
             this.frameCount++;
             
             if (this.isLooping) {
-            
-                allSprites.bobbing.stall = 100 + 80 * rand();
                 
-                if (this.frameCount >= this.frameEnd) {
+                if (this.frameCount < this.frameEnd) {
+                    
+                    this.isLooping = setTimeout(
+                        this.anim, this.spriteSet.stall
+                    );
+                    
+                } else {
 
                     this.frameCount = 0;
-
-                    if (this.nextSet !== allSprites.bobbing) {
+                    
+                    if (
+                        this.spriteSet !== allSprites.bobbing &&
+                        this.spriteSet !== allSprites.duckoff
+                    ) {
+                        
+                        this.spriteSet[0].dispatchEnd();
+                        
+                    } else {
+                    
+                        allSprites.bobbing.stall = 100 + 80 * rand();
+                        
+                    }
+                    
+                    if (this.nextSet !== this.spriteSet) {
 
                         this.spriteSet = this.nextSet;
-                        this.nextSet = allSprites.bobbing;
-
-                    } else {
-
-                        this.spriteSet = allSprites.bobbing;
+                        this.nextSet = this.spriteSet;
 
                     }
                     
                     this.isLooping = setTimeout(
                         this.play, this.spriteSet.stall
-                    );
-                    
-                } else {
-                    
-                    this.isLooping = setTimeout(
-                        this.anim, this.spriteSet.stall
                     );
                     
                 }
@@ -1315,10 +1965,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.frameCount = 0;
                 this.spriteSet = s;
                 this.isLooping = setTimeout(this.play, 50);
-                setTimeout(
-                    () => canKey = true,
-                    (s[0].steps.d.length - 1) * s.stall
-                );
+                boxShadow.addEventListener('spriteend', () => canKey = true);
             
         };
         
@@ -1326,75 +1973,276 @@ document.addEventListener('DOMContentLoaded', () => {
             
             this.isLooping = clearTimeout(this.isLooping);
             
-            if (
-                boxGroup.style.transform === 'translate(0px)' &&
-                boxBody.style.d.replace(/[^\d-]/g, '') === bodyMatch
-            ) {
-
-                swap(s);
-                
-            } else { // animate to standing position first
+            boxShadow.removeEventListener('spriteend', ()=>canKey=true);
             
-                setTimeout(() => {
-                    
-                    boxShadow.style.d = shadowStandD;
-                    boxBody.style.d = bodyStandD;
-                    boxShade.style.d = shadeStandD;
-                    boxLite.style.fill = 'none';
-                    boxGroup.style.transform = 'translate(0px)';
-                    
-                    setTimeout(() => {
-                        
-                        swap(s);
-                    
-                    }, s.stall);
-                    
-                }, 50);
-                
-            }
+            this.swapTimeout = clearTimeout(this.swapTimeout);
+            
+            swap(s);
+            
         }
     
     };
-    aniMaker.play();
+    
+    //aniMaker.play();
         
+    //}
+     
+    // combo list {
+    
+    const comboList = {
+        
+        SS : () => {
+            if (shockGroup.children[0]) {
+                shockGroup.removeChild(shockGroup.children[0]);
+            }
+            aniMaker.switchTo(allSprites.slicing);
+        },
+      
+        FF : () => {
+            aniMaker.switchTo(allSprites.twister);
+        },
+        
+        EE  : () => {
+            
+            let T = boxOver.style.transform.match(/-?\d+/g)
+        
+            boxShadow.addEventListener('spriteend', e => {
+                new Echo(T[0], T[1], 0);
+                new Echo(T[0], T[1], 180);
+                if (rand() > 0.8 ) {
+                    new Echo(T[0], T[1], 200, 2000, 5);
+                }
+            }, { once: true });
+        
+            boxOver.style.setProperty('--xtra', 6);
+            boxGroup.style.setProperty('--xtra', 6);
+            aniMaker.switchTo(allSprites.hopaway);
+            
+        },
+        
+        EF : () => {
+            
+            mirror = mirror === 1 ? -1 : 1;
+            boxMirror.style.transform = 'scale('+ mirror +', 1)';
+        }
+        
+    };
+    
+    //}
+    
+    // key combo stuff {
+    
+    let keyCombo = '';
+    let keyWaiting = '';
+    
+    const keyComboLiz = e => keyCombo += e.key;
+    
+    const firstKeyLiz = e => {
+        window.removeEventListener('keypress', firstKeyLiz);
+        keyCombo += e.key;
+        window.addEventListener('keypress', keyComboLiz);
+        keyWaiting = setTimeout(endKeyLiz, prefs.keyComboLimit);
+    };
+    
+    const endKeyLiz = () => {
+        
+        window.removeEventListener('keypress', keyComboLiz);
+        
+        if (comboList[keyCombo]) {
+            
+            canKey = false;
+            comboList[keyCombo]();
+            setTimeout(() => {
+                window.addEventListener('keypress', firstKeyLiz);
+            }, 1000)
+            
+        } else {
+            window.addEventListener('keypress', firstKeyLiz);
+        }
+        
+        keyCombo = '';
+        
+    }
+    
+    window.addEventListener('keypress', firstKeyLiz);
+    
+    //}
+    
+    // touch combo stuff {
+        
+    let touchCombo = '';
+    let touchShift = false;
+    let touchWaiting = '';
+    
+    const touchComboLiz = e => {
+        
+        let key = e.target.id.replace(/key/g, '');
+        touchCombo += touchShift ? key : key.toLowerCase();
+        
+    };
+    
+    const firstTouchLiz = e => {
+        
+        let key = e.target.id.replace(/key/g, '');
+        touchCombo = touchShift ? key : key.toLowerCase();
+        
+        [Skey,Fkey,Ekey].forEach(butt => {
+            
+            butt.removeEventListener('touchstart', firstTouchLiz);
+            butt.addEventListener('touchstart', touchComboLiz);
+            
+        });
+        
+        touchWaiting = setTimeout(endTouchLiz, prefs.touchComboLimit);
+        
+    };
+    
+    const endTouchLiz = e => {
+        
+        [Skey, Fkey, Ekey].forEach(butt =>
+            butt.removeEventListener('touchstart', touchComboLiz)
+        );
+    
+        if (comboList[touchCombo]) {
+    
+            canKey = false;
+            comboList[touchCombo]();
+    
+            boxShadow.addEventListener('spriteend', e => {
+    
+                [Skey, Fkey, Ekey].forEach(butt =>
+                    butt.addEventListener(
+                        'touchstart', firstTouchLiz
+                    )
+                );
+    
+            });
+    
+        }
+        else {
+    
+            [Skey, Fkey, Ekey].forEach(butt =>
+                butt.addEventListener(
+                    'touchstart', firstTouchLiz
+                )
+            );
+    
+        }
+    
+        touchCombo = '';
+    
+    };
+        
+    [Skey,Fkey,Ekey].forEach(butt =>
+        butt.addEventListener('touchstart', firstTouchLiz)
+    );
+    
+    
     //}
     
     // lizzers {
+    
+    const reqFullscreen = e => holder.requestFullscreen();
+    
+    const touchEater = e => {
+        e.stopPropagation();
+        e.preventDefault();
+    };
+    
+    const dukLizzer = e => {
+        
+        if (e.code === 'KeyD') {
+            
+            canKey = true;
+            
+            aniMaker.frameCount = 0;
+            aniMaker.spriteSet = allSprites.bobbing;
+            aniMaker.nextSet = allSprites.bobbing;
+            
+            window.removeEventListener('keyup', dukLizzer);
+            window.addEventListener('keypress', firstKeyLiz);
+            
+        }
+        
+    };
     
     const keyLizzer = e => {
     
         e.stopPropagation();
         e.preventDefault();
-        if (e.repeat) return;
+        
+        //if (e.repeat) return;
     
         if (e.code === 'Space') {
     
             if (aniMaker.isLooping) {
                 aniMaker.pause();
+                if (echoGroup.children) {
+                    echoGroup.childNodes.forEach(c => {
+                        c.childNodes.forEach(n => {
+                            n.style.animationPlayState = 'paused';
+                        });
+                    });
+                }
+                if (shineGroup.children) {
+                    shineGroup.childNodes.forEach(c => {
+                        c.childNodes.forEach(n => {
+                            n.style.animationPlayState = 'paused';
+                        });
+                    });
+                }
             }
             else {
                 aniMaker.play();
+                if (echoGroup.children) {
+                    echoGroup.childNodes.forEach(c => {
+                        c.childNodes.forEach(n => {
+                            n.style.animationPlayState = 'running';
+                        });
+                    });
+                }
+                if (shineGroup.children) {
+                    shineGroup.childNodes.forEach(c => {
+                        c.childNodes.forEach(n => {
+                            n.style.animationPlayState = 'running';
+                        });
+                    });
+                }
             }
     
         }
         
         if (!canKey) return;
         
-        if (e.code === 'KeyJ' || e.code === 'KeyL') {
+        if (e.code === 'KeyS' || e.code === 'KeyF') {
         
             canKey = false;
+            
+            if (e.shiftKey) {
+                
+                aniMaker.switchTo(allSprites[
+                    e.code === 'KeyS' ? 'kicking' : 'puncher'
+                ]);
+                
+                return;
+                
+            }
         
             aniMaker.pause();
+            aniMaker.frameCount = 3;
             
-            let xDir = e.code === 'KeyJ' ? -1 :
-                       e.code === 'KeyL' ?  1 : 0;
-                       
-            boxGroup.style.transform = 'translate('+ xDir +'px, -3px)';
-            boxBody.style.d = bodyStandD;
-            boxShade.style.d = shadeStandD;
-            boxShadow.style.transform = 'translate('+ (
-                xDir === 1 ? 4 : 2
-            ) + 'px, 0px)';
+            let xDir = e.code === 'KeyS' ? -1 : 1;
+            
+            boxGroup.style.transform = `
+                translate(${xDir * mirror}px, -3px)
+            `;
+            
+            //boxBody.style.d = POS.body.stand;
+            //boxShade.style.d = POS.shade.stand;
+            
+            boxShadow.style.transform = `
+                translate(${(xDir * mirror) === 1 ? 4 : 2}px, 0px)
+            `;
             
             setTimeout(() => {
         
@@ -1402,52 +2250,130 @@ document.addEventListener('DOMContentLoaded', () => {
                 let T = boxOver.style.transform.match(/-?\d+/g)
                     .map(v => Number(v));
                     
-                boxOver.style.transform = 'translate(' +
+                boxOver.style.transform = 'translate(' + (
                     (T[0] + xDir * 3) + 'px,' +
-                    T[1] + 'px' +
-                ')';
+                    T[1] + 'px'
+                ) + ')';
                     
                 boxGroup.style.transform = 'translate(0px)';
                 boxShadow.style.transform = 'translate(0px)';
+                
                 aniMaker.play();
         
-            }, 80 );
+            }, prefs.moveStall);
         
         }
         
-        else if (e.code === 'KeyH') {
+        else if (e.code === 'KeyE') {
+            
             canKey = false;
-            aniMaker.switchTo(allSprites.hopping);
+            
+            if (e.shiftKey) {
+                
+                boxOver.style.setProperty('--xtra', 4.3);
+                boxGroup.style.setProperty('--xtra', 4.3);
+                aniMaker.switchTo(allSprites.hopkick);
+                
+            } else {
+                
+                if (rand() > 0.7) new Shine(
+                    allSprites.hopping.stall * 5,
+                    allSprites.hopping.stall * 2
+                );
+                boxOver.style.setProperty('--xtra', 4);
+                boxGroup.style.setProperty('--xtra', 4);
+                aniMaker.switchTo(allSprites.hopping);
+                
+            }
+            
+            
         }
-        else if (e.code === 'KeyI') {
+        
+        else if (e.code === 'KeyD') {
+            
+            if (e.shiftKey) { return; }
+            
             canKey = false;
-            aniMaker.switchTo(allSprites.dropkik);
+            aniMaker.pause();
+            aniMaker.frameCount = 0;
+            aniMaker.spriteSet = allSprites.duckoff;
+            aniMaker.nextSet = allSprites.duckoff;
+            aniMaker.play();
+            
+            window.removeEventListener('keypress', firstKeyLiz);
+            window.addEventListener('keyup', dukLizzer);
         }
-        else if (e.code === 'KeyR') {
-            canKey = false;
-            aniMaker.switchTo(allSprites.running);
-        }
-        else if (e.code === 'KeyT') {
-            canKey = false;
-            aniMaker.switchTo(allSprites.twister);
-        }
-        else if (e.code === 'KeyS') {
-            boxMirror.style.transform =
-            boxMirror.style.transform.indexOf('-1') === -1 ?
-            'scale(-1, 1)' :
-            'scale( 1, 1)';
-        }
-    
     
     };
     
-    window.addEventListener('keypress', keyLizzer, { passive: false });
+    const buttLiz = key => {
+        
+        if (!canTouch) return;
+        
+        keyLizzer({
+            code : key,
+            shiftKey : touchShift,
+            stopPropagation : () => {},
+            preventDefault : () => {}
+        });
+        
+    };
     
-    slide0.addEventListener('input', e => {
-        curSpeed = (slide0.value / 100) * topSpeed;
+    //}
+    
+    // add lizzers {
+    
+    window.addEventListener('keypress', keyLizzer, {passive: false});
+    
+    Skey.addEventListener('touchstart', e => {
+            buttLiz('KeyS');
+    }, {passive: false});
+    
+    Fkey.addEventListener('touchstart', e => {
+        buttLiz('KeyF');
+    }, {passive: false});
+    
+    Ekey.addEventListener('touchstart', e => {
+        buttLiz('KeyE');
+    }, {passive: false});
+    
+    ShiftButt.addEventListener('touchstart', e => {
+        touchShift = true;
+        ShiftButt.style.borderColor = 'hsla(0,0%,0%,0.8)';
+    }, {passive: false});
+    
+    ShiftButt.addEventListener('touchend', e => {
+        touchShift = false;
+        ShiftButt.style.borderColor = 'hsla(0,0%,0%,0.2)';
+    }, {passive: false});
+    
+    window.addEventListener('click', reqFullscreen, {once: true});
+    
+    holder.addEventListener('fullscreenchange', e=> {
+        
+        if (document?.fullscreenElement) {
+
+            window.addEventListener(
+                'touchmove', touchEater, {passive: false}
+            );
+            
+        } else {
+            
+            window.removeEventListener(
+                'touchmove', touchEater, {passive: false}
+            );
+            
+            window.addEventListener(
+                'click', reqFullscreen, {once: true}
+            );
+            
+        }
+        
     });
     
     //}
+    
+    aniMaker.play();
     
 }))() === undefined || (console.log('eXp!red'));
 
