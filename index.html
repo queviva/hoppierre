@@ -7,6 +7,7 @@
 	<script defer src="nanopicker.js"></script>
     <script src="sketch.js"></script>
 	<style id="docStyles">
+	
 		* {
 			box-sizing: border-box;
 			word-wrap: break-word;
@@ -34,7 +35,7 @@
 			font-size: 24px;
 			text-align: justify;
 			xxxmax-width: 700px;
-			width: 100%;
+			width: 100vw;
 			height: 100vh;
 			margin: auto;
 			xxxborder: 1px solid #000;
@@ -140,13 +141,11 @@
 		/*possibly a mobile landscaper*/
 		@media screen and (orientation: landscape) and (max-width: 760px) {
 
-            /*
 			#holder {
-				height: 500px;
-				width: 100%;
+				height: 100vh;
+				width: 100vw;
 				max-width: none;
 			}
-			*/
 
 		}
 		
@@ -241,10 +240,6 @@
 
 		/*possibly a portrait mobi-fone*/
 		@media screen and (max-width:500px) {
-
-			#svgHolder {
-				border-width: 2px;
-			}
 
 		}
 	</style>
@@ -630,6 +625,9 @@
         <div id="LTC"><div>
             <div id="ShiftButt"></div>
         </div></div>
+        
+        <div id="noteArea" style="position:absolute;top:0;left:0;">
+        </div>
 
     </div>
 
@@ -665,6 +663,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const log = console.log;
     const rand = Math.random;
     const round = Math.round;
+    
+    const note = x => {
+        document.getElementById('noteArea').innerHTML = x;
+    };
         
     //}
     
@@ -1041,7 +1043,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     SSet.prototype.show = function (n) {
         this.set.forEach(s => log(s));
-    }
+    };
     
     //}
         
@@ -2052,12 +2054,17 @@ document.addEventListener('DOMContentLoaded', () => {
             
             canKey = false;
             comboList[keyCombo]();
-            setTimeout(() => {
+            
+            aniMaker.spriteSet[0].obj.addEventListener('spriteend', e => {
                 window.addEventListener('keypress', firstKeyLiz);
-            }, 1000)
+            });
             
         } else {
-            window.addEventListener('keypress', firstKeyLiz);
+            
+            aniMaker.spriteSet[0].obj.addEventListener('spriteend', e => {
+                window.addEventListener('keypress', firstKeyLiz);
+            });
+            
         }
         
         keyCombo = '';
@@ -2108,7 +2115,7 @@ document.addEventListener('DOMContentLoaded', () => {
             canKey = false;
             comboList[touchCombo]();
     
-            boxShadow.addEventListener('spriteend', e => {
+            aniMaker.spriteSet[0].obj.addEventListener('spriteend', e => {
     
                 [Skey, Fkey, Ekey].forEach(butt =>
                     butt.addEventListener(
@@ -2121,11 +2128,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else {
     
-            [Skey, Fkey, Ekey].forEach(butt =>
-                butt.addEventListener(
-                    'touchstart', firstTouchLiz
-                )
-            );
+            aniMaker.spriteSet[0].obj.addEventListener('spriteend', e => {
+                [Skey, Fkey, Ekey].forEach(butt =>
+                    butt.addEventListener(
+                        'touchstart', firstTouchLiz
+                    )
+                );
+            });
     
         }
     
@@ -2142,7 +2151,17 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // lizzers {
     
-    const reqFullscreen = e => holder.requestFullscreen();
+    const reqFullscreen = e => {
+        
+        document.getElementById('holder').requestFullscreen()
+        .then((...x) => {
+            
+            holder.style.width = '100vw';
+            holder.style.height = '100vh';
+            
+        });
+        
+    };
     
     const touchEater = e => {
         e.stopPropagation();
@@ -2251,14 +2270,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     .map(v => Number(v));
                     
                 boxOver.style.transform = 'translate(' + (
-                    (T[0] + xDir * 3) + 'px,' +
-                    T[1] + 'px'
+                    (T[0] + (xDir * 3 * 1)) + 'px,' +
+                  //(T[1] - (xDir * 3 * 2)) + 'px'
+                     T[1] + 'px'
                 ) + ')';
                     
                 boxGroup.style.transform = 'translate(0px)';
                 boxShadow.style.transform = 'translate(0px)';
                 
                 aniMaker.play();
+                aniMaker.spriteSet[0].dispatchEnd();
         
             }, prefs.moveStall);
         
@@ -2321,7 +2342,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     //}
     
-    // add lizzers {
+    // interface lizzers {
     
     window.addEventListener('keypress', keyLizzer, {passive: false});
     
@@ -2347,12 +2368,18 @@ document.addEventListener('DOMContentLoaded', () => {
         ShiftButt.style.borderColor = 'hsla(0,0%,0%,0.2)';
     }, {passive: false});
     
-    window.addEventListener('click', reqFullscreen, {once: true});
+    //}
+    
+    // fullscreen lizzers {
+
+    holder.addEventListener('click', reqFullscreen, {once: true});
     
     holder.addEventListener('fullscreenchange', e=> {
         
         if (document?.fullscreenElement) {
 
+            //note('ent ' + document?.fullscreenElement?.id +' '+
+            //reqCount++);
             window.addEventListener(
                 'touchmove', touchEater, {passive: false}
             );
@@ -2363,7 +2390,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 'touchmove', touchEater, {passive: false}
             );
             
-            window.addEventListener(
+            holder.addEventListener(
                 'click', reqFullscreen, {once: true}
             );
             
