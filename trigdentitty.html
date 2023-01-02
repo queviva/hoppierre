@@ -25,7 +25,7 @@ num::after {
 }
 
 sup, sub {
-    font-size: 0.6em;
+    font-size: 0.5em;
 }
 
 com {
@@ -118,7 +118,9 @@ that in the denominator</com>
 <div>
 <red>
 <frac><num>1</num><span>sec<sup>2</sup></span></frac>
+</red>
 -
+<red>
 <frac><num>tan<sup>2</sup></num><span>sec<sup>2</sup></span></frac>
 </red>
 = 1 - <hsp>2 sin<sup>2</sup></hsp>
@@ -136,7 +138,7 @@ tan<sup>2</sup>
 = 1 - <hsp>2 sin<sup>2</sup></hsp>
 </div>
 
-<com>by definition, 1/sec is equal to cos, so replace that</com>
+<com>by definition, <frac><num>1</num>sec</frac> is equal to cos, so replace that</com>
 <div>
 <red>cos<sup>2</sup></red>
 -
@@ -146,7 +148,7 @@ tan<sup>2</sup>
 = 1 - <hsp>2 sin<sup>2</sup></hsp>
 </div>
 
-<com>also by definition, tan is equal to sin/cos, so replace that</com>
+<com>also by definition, tan is equal to <frac><num>sin</num>cos</frac>, so replace that</com>
 <div>
 cos<sup>2</sup> - cos<sup>2</sup> &middot;
 <red>
@@ -161,6 +163,7 @@ cos<sup>2</sup> - cos<sup>2</sup> &middot;
 cos<sup>2</sup>
 -
 <red><s>cos<sup>2</sup></s></red>
+&middot;
 <frac><num>sin<sup>2</sup></num><red><s>cos<sup>2</sup></s></red></frac>
 = 1 - <hsp>2 sin<sup>2</sup></hsp>
 </div>
@@ -246,7 +249,7 @@ cos<sup>2</sup>=1-sin<sup>2</sup>, so replace</com>
 <div>
 <frac><num>
 <red>
-    1 - <hsp>2 sin</hsp>+ sin<sup>2</sup>
+    1 - <hsp>2 sin</hsp> + sin<sup>2</sup>
 </red>
 </num>
 <red>
@@ -327,7 +330,7 @@ sec
 <com>combine and examine; hmm... do you see it?</com>
 <div>
 sec<sup>2</sup>
-- <hsp>2 sin</hsp>&middot;tan
+- <hsp>2 sec</hsp>&middot;tan
 + tan<sup>2</sup>
 = (sec - tan)<sup>2</sup>
 </div>
@@ -335,7 +338,7 @@ sec<sup>2</sup>
 <com>the left side IS the expansion of the right side</com>
 <div>
 sec<sup>2</sup>
-- <hsp>2 sin</hsp>&middot;tan
+- <hsp>2 sec</hsp>&middot;tan
 + tan<sup>2</sup>
 = (<red>sec - tan</red>)&middot;(<red>sec - tan</red>)
 </div>
@@ -354,7 +357,9 @@ sec<sup>2</sup>
 
 <com>we see that the identity is true</com>
 <div class="head">
-(sec - tan)<sup>2</sup> = (sec - tan)<sup>2</sup>
+    <starr/>
+(sec-tan)<sup>2</sup> = (sec-tan)<sup>2</sup>
+<starr/>
 </div>
 
 </div end_prob_02>
@@ -362,7 +367,140 @@ sec<sup>2</sup>
 <br>
 
 <div id="PROBLEM_03" class="prob">
-    
+
+<div class="head">
+<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<br><br>
+<frac><num>tan + sec - 1</num>
+tan - sec + 1
+</frac>
+= <frac><num>1 + sin</num>cos</frac>
+<br><br>
+</div>
+
+<hr>
+
+<com>this is an impossible trick,
+think of (tan&plusmn;sec) as one thing</com>
+<div>
+<frac><num><red>(</red>tan + sec<red>)</red> - 1</num>
+<span><red>(</red>tan - sec<red>)</red> + 1</span>
+</frac>
+= <frac><num>1 + sin</num>cos</frac>
+</div>
+
+<com>multiply the numerator and denominator by (tan+sec)</com>
+<div>
+<frac><num>(tan + sec) - 1</num>
+(tan - sec) + 1
+</frac>
+<red>&middot;</red>
+<frac><num><red>(tan + sec)</red></num><red>(tan + sec)</red></frac>
+= <frac><num>1 + sin</num>cos</frac>
+</div>
+
+<com>leave numerator factored; distribute (tan+sec) in denominator</com>
+<div>
+<frac><num>
+<red>[</red>(tan + sec) - 1<red>]</red> &middot; (tan+sec)
+</num>
+<span>
+(tan - sec)<red>&middot;(tan+sec)</red> + 1<red>&middot;(tan + sec)</red>
+</span>
+</frac>
+= <frac><num>1 + sin</num>cos</frac>
+</div>
+
+<com>(tan-sec)&middot;(tan+sec) is the difference of two squares,
+so replace that</com>
+<div>
+<frac><num>
+[(tan + sec) - 1] &middot; (tan+sec)
+</num>
+<span>
+<red>(tan<sup>2</sup> - sec<sup>2</sup>)</red>
++ (tan + sec)
+</red>
+</span>
+</frac>
+= <frac><num>1 + sin</num>cos</frac>
+</div>
+
+<com>since tan<sup>2</sup>+1=sec<sup>2</sup>,
+tan<sup>2</sup>-sec<sup>2</sup>=-1, so replace that</com>
+<div>
+<frac><num>
+[(tan + sec) - 1] &middot; (tan+sec)
+</num>
+<span>
+<red>-1</red>
++ (tan + sec)
+</span>
+</frac>
+= <frac><num>1 + sin</num>cos</frac>
+</div>
+
+<com>use the commutative property of addition to
+rearrange the denominator</com>
+<div>
+<frac><num>
+[(tan + sec) - 1] &middot; (tan+sec)
+</num>
+<span>
+<red>[</red>(tan + sec) <red>-1]</red>
+</span>
+</frac>
+= <frac><num>1 + sin</num>cos</frac>
+</div>
+
+<com>cancel the terms</com>
+<div>
+<frac><num>
+<red><s>[(tan + sec) - 1]</s></red> &middot; (tan+sec)
+</num>
+<span>
+<red><s>[(tan + sec) - 1]</s></red>
+</span>
+</frac>
+= <frac><num>1 + sin</num>cos</frac>
+</div>
+
+<com>drop the parenthesis; this is now much more possible</com>
+<div>
+<red>(</red>tan + sec<red>)</red>
+= <frac><num>1 + sin</num>cos</frac>
+</div>
+
+<com>tan is <frac><num>sin</num>cos</frac>, so replace that</com>
+<div>
+<red><frac><num>sin</num>cos</frac></red> + sec
+= <frac><num>1 + sin</num>cos</frac>
+</div>
+
+<com>sec is <frac><num>1</num>cos</frac>, so replace that</com>
+<div>
+<frac><num>sin</num>cos</frac>
++ <red><frac><num>1</num>cos</frac></red>
+= <frac><num>1 + sin</num>cos</frac>
+</div>
+
+<com>combine the fractions into one</com>
+<div>
+<frac><num><red>sin + 1</red></num><red>cos</red></frac>
+= <frac><num>1 + sin</num>cos</frac>
+</div>
+
+<com>the commutative property of addition
+reveals that the identity is true</com>
+<div class="head">
+<starr/>
+<frac><num>1 + sin</num>cos</frac>
+= <frac><num>1 + sin</num>cos</frac>
+<starr/>
+</div>
+
+
+
 </div end_prob_03>
 
 </body>
