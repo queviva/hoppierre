@@ -54,7 +54,7 @@ com::after {
     max-width:700px;
     min-width:400px;
     background-color:#000;
-    color:#fb0;
+    color:#e90;
     font-size:30px;
     text-align:center;
 }
@@ -402,10 +402,25 @@ think of (tan&plusmn;sec) as one thing</com>
 <com>leave numerator factored; distribute (tan+sec) in denominator</com>
 <div>
 <frac><num>
-<red>[</red>(tan + sec) - 1<red>]</red> &middot; (tan+sec)
+<red>[</red>(tan + sec) - 1<red>]</red> &middot; (tan + sec)
 </num>
 <span>
-(tan - sec)<red>&middot;(tan+sec)</red> + 1<red>&middot;(tan + sec)</red>
+(tan - sec) <red>&middot; (tan + sec)</red>
++ 1 <red>&middot; (tan + sec)</red>
+</span>
+</frac>
+= <frac><num>1 + sin</num>cos</frac>
+</div>
+
+<com>demoninator now has (tan-sec)(tan+sec),
+which was the whole point</com>
+<div>
+<frac><num>
+[(tan + sec) - 1] &middot; (tan + sec)
+</num>
+<span>
+<red>(tan - sec)&middot;(tan + sec)</red>
++ (tan + sec)
 </span>
 </frac>
 = <frac><num>1 + sin</num>cos</frac>
@@ -415,7 +430,7 @@ think of (tan&plusmn;sec) as one thing</com>
 so replace that</com>
 <div>
 <frac><num>
-[(tan + sec) - 1] &middot; (tan+sec)
+[(tan + sec) - 1] &middot; (tan + sec)
 </num>
 <span>
 <red>(tan<sup>2</sup> - sec<sup>2</sup>)</red>
@@ -430,7 +445,7 @@ so replace that</com>
 tan<sup>2</sup>-sec<sup>2</sup>=-1, so replace that</com>
 <div>
 <frac><num>
-[(tan + sec) - 1] &middot; (tan+sec)
+[(tan + sec) - 1] &middot; (tan + sec)
 </num>
 <span>
 <red>-1</red>
@@ -444,7 +459,7 @@ tan<sup>2</sup>-sec<sup>2</sup>=-1, so replace that</com>
 rearrange the denominator</com>
 <div>
 <frac><num>
-[(tan + sec) - 1] &middot; (tan+sec)
+[(tan + sec) - 1] &middot; (tan + sec)
 </num>
 <span>
 <red>[</red>(tan + sec) <red>-1]</red>
@@ -456,7 +471,7 @@ rearrange the denominator</com>
 <com>cancel the terms</com>
 <div>
 <frac><num>
-<red><s>[(tan + sec) - 1]</s></red> &middot; (tan+sec)
+<red><s>[(tan + sec) - 1]</s></red> &middot; (tan + sec)
 </num>
 <span>
 <red><s>[(tan + sec) - 1]</s></red>
