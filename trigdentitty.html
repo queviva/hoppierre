@@ -55,7 +55,7 @@ com::after {
     min-width:400px;
     background-color:#000;
     color:#e90;
-    font-size:30px;
+    xfont-size:30px;
     text-align:center;
 }
 
@@ -517,6 +517,343 @@ reveals that the identity is true</com>
 
 
 </div end_prob_03>
+
+<br>
+
+<div id="PROBLEM_04" class="prob">
+
+<div class="head">
+<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<br><br>
+<frac><num>sin<sup>4</sup> - cos<sup>4</sup></num>
+<span>sin<sup>2</sup> - cos<sup>2</sup></span></frac>
+= 1
+<br><br>
+</div>
+
+<hr>
+
+<com>sin<sup>4</sup>-cos<sup>4</sup> is actually the
+difference of two squares</com>
+<div>
+<frac><num><red>sin<sup>4</sup> - cos<sup>4</sup></red></num>
+<span>sin<sup>2</sup> - cos<sup>2</sup></span></frac>
+= 1
+</div>
+
+<com>rewrite numerator as "squared squares"</com>
+<div>
+<frac><num><red>
+    (sin<sup>2</sup>)<sup>2</sup> - (cos<sup>2</sup>)<sup>2</sup>
+</red></num>
+<span>
+    sin<sup>2</sup> - cos<sup>2</sup>
+</span>
+</frac>
+= 1
+</div>
+
+<com>factor numerator as difference of squares</com>
+<div>
+<frac><num>
+(<red>sin<sup>2</sup> + cos<sup>2</sup></red>)
+<red>&middot;</red>
+(<red>sin<sup>2</sup> - cos<sup>2</sup></red>)
+</num>
+<span>sin<sup>2</sup> - cos<sup>2</sup></span>
+</frac>
+= 1
+</div>
+
+<com>cancel the like terms</com>
+<div>
+<frac><num>
+(sin<sup>2</sup> + cos<sup>2</sup>) &middot;
+<red><s>(sin<sup>2</sup> - cos<sup>2</sup>)</s></red>
+</num>
+<red><s>(sin<sup>2</sup> - cos<sup>2</sup>)</s></red>
+</frac>
+= 1
+</div>
+
+<com>drop parenthesis</com>
+<div>
+<red>(</red>sin<sup>2</sup> + cos<sup>2</sup><red>)</red>
+= 1
+</div>
+
+<com>this is the very identity itself</com>
+<div>
+sin<sup>2</sup> + cos<sup>2</sup> = 1
+</div>
+
+<com>replace to show that the expression is true</com>
+<div class="head">
+<starr/>
+1 = 1
+<starr/>
+</div>
+
+</div end_prob_04>
+
+<br>
+
+<div id="PROBLEM_05" class="prob">
+
+<div class="head">
+<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<br><br>
+<frac><num>tan<sup>2</sup></num>
+<span>tan<sup>2</sup> + 1</span>
+</frac>
+= sin<sup>2</sup>
+<br><br>
+</div>
+
+<hr>
+
+<com>try this trick; since we know ...</com>
+<div>
+sin<sup>2</sup> + cos<sup>2</sup> = 1
+</div>
+
+<com>if we divide everything by cos<sup>2</sup></com>
+<div>
+<frac><num>sin<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
++
+<frac><num>cos<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
+=
+<frac><num>1</num><red>cos<sup>2</sup></red></frac>
+</div>
+
+<com>and replace everything with its definition</com>
+<div>
+<red>tan<sup>2</sup></red> + <red>1</red>
+= <red>sec<sup>2</sup></red>
+</div>
+
+<com>we now see a substitution in the original denominator</com>
+<div>
+<frac><num>tan<sup>2</sup></num>
+<red>tan<sup>2</sup> + 1</red></frac>
+= sin<sup>2</sup>
+</div>
+
+<com>subtitute 1+tan<sup>2</sup>=sec<sup>2</sup></com>
+<div>
+<frac><num>tan<sup>2</sup></num><red>sec<sup>2</sup></red></frac>
+= sin<sup>2</sup>
+</div>
+
+<com>break that fraction into a product</com>
+<div>
+<frac><num><red>1</red></num><red>sec<sup>2</sup></red></frac>
+&middot;
+<frac><num><red>tan<sup>2</sup></red></num><red>1</red></frac>
+= sin<sup>2</sup>
+</div>
+
+<com>substitute <frac><num>1</num>sec</frac> equals
+<frac><num>cos</num>1</frac></com>
+<div>
+<frac><num><red>cos<sup>2</sup></red></num><red>1</red></frac>
+&middot; <frac><num>tan<sup>2</sup></num>1</frac>
+= sin<sup>2</sup>
+</div>
+
+<com>substitue tan equals <frac><num>sin</num>cos</frac></com>
+<div>
+<frac><num>cos<sup>2</sup></num>1</frac>
+&middot;
+<frac><num><red>sin<sup>2</sup></red></num>
+<red>cos<sup>2</sup></red></frac>
+= sin<sup>2</sup>
+</div>
+
+<com>cancel out</com>
+<div>
+<frac><num><red><s>cos<sup>2</sup></s></red></num>1</frac>
+&middot;
+<frac><num>sin<sup>2</sup></num>
+<red><s>cos<sup>2</sup></s></red></frac>
+= sin<sup>2</sup>
+</div>
+
+<com>reducing that proves the identity to be valid</com>
+<div class="head">
+<starr/>
+sin<sup>2</sup> = sin<sup>2</sup>
+<starr/>
+</div>
+</div end_prob_05>
+
+<br>
+
+<div id="PROBLEM_06" class="prob">
+
+<div class="head">
+<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<br><br>
+1 - <hsp>2 cos</hsp><sup>2</sup>
+= <frac><num>tan<sup>2</sup> - 1</num>
+<span>tan<sup>2</sup> + 1</span></frac>
+<br><br>
+</div>
+<hr>
+
+<com>super tricky, -2cos<sup>2</sup>
+equals -cos<sup>2</sup> - cos<sup>2</sup> because of algebra
+</com>
+<div>
+1 - <red><hsp>2 cos<sup>2</sup></hsp></red>
+= <frac><num>tan<sup>2</sup> - 1</num>
+<span>tan<sup>2</sup> + 1</span></frac>
+</div>
+    
+<com>so, replace that</com>
+<div>
+1 - <red>cos<sup>2</sup></red> - <red>cos<sup>2</sup></red>
+= <frac><num>tan<sup>2</sup> - 1</num>
+<span>tan<sup>2</sup> + 1</span></frac>
+</div>
+
+<com>now group the 1-cos<sup>2</sup></com>
+<div>
+<red>(</red>1 - cos<sup>2</sup><red>)</red> - cos<sup>2</sup>
+= <frac><num>tan<sup>2</sup> - 1</num>
+<span>tan<sup>2</sup> + 1</span></frac>
+</div>
+
+<com>since sin<sup>2</sup>+cos<sup>2</sup>=1,
+1-cos<sup>2</sup>=sin<sup>2</sup>
+</com>
+<div>
+(<red>sin<sup>2</sup></red>) - cos<sup>2</sup>
+= <frac><num>tan<sup>2</sup> - 1</num>
+<span>tan<sup>2</sup> + 1</span></frac>
+</div>
+
+<com>with super trickiness, put that over one</com>
+<div>
+<frac><num>sin<sup>2</sup> - cos<sup>2</sup></num><red>1</red></frac>
+= <frac><num>tan<sup>2</sup> - 1</num>
+<span>tan<sup>2</sup> + 1</span></frac>
+</div>
+
+<com>divide everything by cos<sup>2</sup></com>
+<div>
+    
+<frac><num>
+<frac><num>sin<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
+-
+<frac><num>cos<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
+</num>
+<span><frac><num>1</num><red>cos<sup>2</sup></red></frac></span>
+</frac>
+= <frac><num>tan<sup>2</sup> - 1</num>
+<span>tan<sup>2</sup> + 1</span></frac>
+</div>
+
+<com><frac><num>sin</num>cos</frac>=tan, and
+<frac><num>1</num>cos</frac>=sec; replace and reduce</com>
+<div>
+<frac><num><red>tan<sup>2</sup></red> - <red>1</red></num>
+<red>sec<sup>2</sup></red>
+</frac>
+= <frac><num>tan<sup>2</sup> - 1</num>
+<span>tan<sup>2</sup> + 1</span></frac>
+</div>
+
+<com>remember...</com>
+<div style="font-size:5px;">
+sin<sup>2</sup> + cos<sup>2</sup> = 1
+<br>
+  <frac><num>sin<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
++ <frac><num>cos<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
+= <frac><num>1</num><red>cos<sup>2</sup></red></frac>
+<br>
+tan<sup>2</sup> + 1 = sec<sup>2</sup>
+</div>
+
+<com>since tan<sup>2</sup>+1=sec<sup>2</sup>, replace that</com>
+<div>
+<frac><num>tan<sup>2</sup> - 1</num>
+<red>tan<sup>2</sup> + 1</red></frac>
+= <frac><num>tan<sup>2</sup> - 1</num>
+<span>tan<sup>2</sup> + 1</span></frac>
+</div>
+
+<com>if you knew tan<sup>2</sup>+1=sec<sup>2</sup>,
+that proved the identity true</com>
+<div class="head">
+<frac><num>tan<sup>2</sup> - 1</num>
+<span>tan<sup>2</sup> + 1</span></frac>
+= <frac><num>tan<sup>2</sup> - 1</num>
+<span>tan<sup>2</sup> + 1</span></frac>
+</div>
+
+</div end_prob_06>
+
+<br>
+
+<div if="PROBLEM_07" class="prob">
+    
+<div class="head">
+<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<br><br>
+tan<sup>2</sup> + 1 + <hsp>tan &middot; sec</hsp>
+= <frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
+<br><br>
+</div>
+<hr>
+
+<com>good to remember that tan<sup>2</sup>+1=sec<sup>2</sup></com>
+<div>
+<red>(</red>tan<sup>2</sup> + 1<red>)</red> + tan&middot;sec
+= <frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
+</div>
+
+<com>replace that then</com>
+<div>
+<red>sec<sup>2</sup></red> + tan&middot;sec
+= <frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
+</div>
+
+<com>we know that sec=<frac><num>1</num>cos</frac></com>
+<div>
+<frac><num><red>1</red></num><red>cos<sup>2</sup></red></frac>
++ tan &middot;
+<frac><num><red>1</red></num><red>cos</red></frac>
+= <frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
+</div>
+
+<com>and tan equals <frac><num>sin</num>cos</frac></com>
+<div>
+<frac><num>1</num><span>cos<sup>2</sup></span></frac>
++
+<frac><num><red>sin</red></num><red>cos</red></frac>
+&middot;
+<frac><num>1</num>cos</frac>
+= <frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
+</div>
+
+<com>do the multiplication</com>
+<div>
+<frac><num>1</num><span>cos<sup>2</sup></span></frac>
++
+<frac><num><red>sin&middot;1</red></num><red>cos<sup>2</sup></red></frac>
+= <frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
+</div>
+
+<com>combing the fractions show that the identity to be true</com>
+<div class="head">
+<starr/>
+<frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac> =
+<frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
+<starr/>
+</div>
+
+</div end_prob_07>
 
 </body>
 </html>
