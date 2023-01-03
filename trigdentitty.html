@@ -796,7 +796,7 @@ that proved the identity true</com>
 
 <br>
 
-<div if="PROBLEM_07" class="prob">
+<div id="PROBLEM_07" class="prob">
     
 <div class="head">
 <red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
@@ -854,6 +854,417 @@ tan<sup>2</sup> + 1 + <hsp>tan &middot; sec</hsp>
 </div>
 
 </div end_prob_07>
+
+<br>
+
+<div id="PROBLEM_08" class="prob">
+
+<div class="head">
+<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<br><br>
+<frac><num>cos</num>1 - tan</frac> +
+<frac><num>sin</num>1 - cot</frac>
+= sin + cos
+<br><br>
+</div>
+<hr>
+
+<com>try denominator conjugate trick in both fractions</com>
+<div>
+<frac><num>cos</num>(1 - tan)</frac><red>&middot;</red><frac>
+    <num><red>(1 + tan)</red></num>
+    <red>(1 + tan)</red>
+</frac>
++
+<frac><num>sin</num>(1 - cot)</frac><red>&middot;</red><frac>
+    <num><red>(1 + cot)</red></num>
+    <red>(1 + cot)</red>
+</frac>
+= sin + cos
+</div>
+
+<com>each denominator is now a difference of two squares</com>
+<div>
+<frac><num>cos &middot; (1 + tan)</num>
+<red>1 + tan<sup>2</sup></red>
+</frac>
++
+<frac><num>sin &middot; (1 + cot)</num>
+<red>1 + cot<sup>2</sup></red>
+</frac>
+= sin + cos
+</div>
+
+<com>remember...</com>
+<div style="font-size:0.4em;">
+    sin<sup>2</sup> + cos<sup>2</sup> = 1<br>
+    <frac><num>sin<sup>2</sup></num><red>sin<sup>2</sup></red></frac>
+    +
+    <frac><num>cos<sup>2</sup></num><red>sin<sup>2</sup></red></frac>
+    =
+    <frac><num>1</num><red>sin<sup>2</sup></red></frac>
+    <br>
+    1 + cot<sup>2</sup> = csc<sup>2</sup>
+</div>
+
+<com>replace that</com>
+<div>
+<frac><num>cos &middot; (1 + tan)</num>
+<span>1 + tan<sup>2</sup></span>
+</frac>
++
+<frac><num>sin &middot; (1 + cot)</num>
+<red>csc<sup>2</sup></red>
+</frac>
+= sin + cos
+</div>
+
+<com>remember...</com>
+<div style="font-size:0.4em;">
+    cos<sup>2</sup> + sin<sup>2</sup> = 1<br>
+    <frac><num>cos<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
+    +
+    <frac><num>sin<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
+    =
+    <frac><num>1</num><red>cos<sup>2</sup></red></frac>
+    <br>
+    1 + tan<sup>2</sup> = sec<sup>2</sup>
+</div>
+
+<com>replace that</com>
+<div>
+<frac><num>cos &middot; (1 + tan)</num>
+<red>sec<sup>2</sup></red>
+</frac>
++
+<frac><num>sin &middot; (1 + cot)</num>
+<span>csc<sup>2</sup></span>
+</frac>
+= sin + cos
+</div>
+
+<com>separate the denominators of each fraction</com>
+<div>
+<frac><num><red>1</red></num><red>sec<sup>2</sup></red></frac>
+&middot;
+<frac><num>cos&middot;(1 + tan)</num>1</frac>
++
+<frac><num><red>1</red></num><red>csc<sup>2</sup></red></frac>
+&middot;
+<frac><num>sin&middot;(1 + cot)</num>1</frac>
+= sin + cos
+</div>
+
+<com><frac><num>1</num>sec</frac> equals cos, and
+<frac><num>1</num>csc</frac> equals sin; replace those</com>
+<div>
+<frac><num><red>cos<sup>2</sup></red></num><red>1</red></frac>
+&middot;
+<frac><num>cos&middot;(1 + tan)</num>1</frac>
++
+<frac><num><red>sin<sup>2</sup></red></num><red>1</red></frac>
+&middot;
+<frac><num>sin&middot;(1 + cot)</num>1</frac>
+= sin + cos
+</div>
+
+<com>multiply each numerator</com>
+<div>
+<frac><num><red>cos<sup>3</sup></red>&middot;(1 + tan)</num>1</frac>
++
+<frac><num><red>sin<sup>3</sup></red>&middot;(1 + cot)</num>1</frac>
+= sin + cos
+</div>
+
+<com>drop the denominator</com>
+<div>
+cos<sup>3</sup>&middot;(1 + tan) +
+sin<sup>3</sup>&middot;(1 + cot)
+= sin + cos
+</div>
+
+<com>distribute in the parenthesis</com>
+<div>
+cos<sup>3</sup><red>&middot;</red>1
++ cos<sup>3</sup><red>&middot;</red>tan
+&nbsp;+&nbsp;
+sin<sup>3</sup><red>&middot;</red>1
++ sin<sup>3</sup><red>&middot;</red>cot
+= sin + cos
+</div>
+
+<com>tan equals<frac><num>sin</num>cos</frac>
+and cot equals <frac><num>cos</num>sin</frac></com>
+<div>
+cos<sup>3</sup> +
+<frac><num>cos<sup>3</sup></num>1</frac>&middot;<frac>
+<num><red>sin</red></num><red>cos</red></frac>
++
+sin<sup>3</sup> +
+<frac><num>sin<sup>3</sup></num>1</frac>&middot;<frac>
+<num><red>cos</red></num><red>sin</red></frac>
+</div>
+
+<com>cancel</com>
+<div>
+cos<sup>3</sup> +
+<frac><num><red>cos<sup><s>3</s>2</sup></red></num>1</frac>&middot;<frac>
+<num>sin</num><red><s>cos</s></red></frac>
++
+sin<sup>3</sup> +
+<frac><num><red>sin<sup><s>3</s>2</sup></red></num>1</frac>&middot;<frac>
+<num>cos</num><red><s>sin</s></red></frac>
+= sin + cos
+</div>
+
+<com>reduce</com>
+<div>
+cos<sup>3</sup> +
+cos<sup>2</sup>&middot;sin +
+sin<sup>3</sup> +
+sin<sup>2</sup>&middot;cos
+= sin + cos
+</div>
+
+<com>factor out cos<sup>2</sup> and sin<sup>2</sup></com>
+<div>
+<red>cos<sup>2</sup></red>&middot;(cos + sin) +
+<red>sin<sup>2</sup></red>&middot;(sin + cos)
+= sin + cos
+</div>
+
+<com>commutative property of addition to rearrange</com>
+<div>
+cos<sup>2</sup>&middot;(<red>sin + cos</red>) +
+sin<sup>2</sup>&middot;(sin + cos)
+= sin + cos
+</div>
+
+<com>factor out the (sin+cos) term</com>
+<div>
+<red>(sin + cos)</red> &middot;
+(cos<sup>2</sup> + sin<sup>2</sup>)
+= sin + cos
+</div>
+
+<com>remember, cos<sup>2</sup>+sin<sup>2</sup> also equals one</com>
+<div>
+(sin + cos) &middot; (<red>1</red>)
+= sin + cos
+</div>
+
+<com>multiply and drop parenthesis</com>
+<div>
+<red>(</red>sin + cos<red>)</red>
+= sin + cos
+</div>
+
+<com>more difficult than necessary, but the identity holds</com>
+<div class="head">
+<starr/>
+sin + cos = sin + cos
+<starr/>
+</div>
+
+</div end_prob_08>
+
+<br>
+
+<div id="PROBLEM_09" class="prob">
+
+<div class="head">
+<red style="font-size:0.5em;"
+>&nbsp;&nbsp;&nbsp;show, in a better way, that...</red>
+<br><br>
+<frac><num>cos</num>1 - tan</frac> +
+<frac><num>sin</num>1 - cot</frac>
+= sin + cos
+<br><br>
+</div>
+<hr>
+
+<com>tan equals<frac><num>sin</num>cos</frac>
+and cot equals<frac><num>cos</num>sin</frac>; replace those</com>
+<div>
+<frac><num>
+    <frac><num>cos</num><red>1</red></frac>
+</num><span>&nbsp;
+&nbsp;
+    <frac><num>1</num>1</frac> -
+    <frac><num><red>sin</red></num><red>cos</red></frac>
+    &nbsp;&nbsp;
+</span></frac>
++
+<frac><num>
+    <frac><num>sin</num><red>1</red></frac>
+</num><span>&nbsp;
+&nbsp;
+    <frac><num>1</num>1</frac> -
+    <frac><num><red>cos</red></num><red>sin</red></frac>
+    &nbsp;&nbsp;
+</span></frac>
+= sin + cos
+</div>
+
+<com>replace each <frac><num>1</num>1</frac> with
+corresponding denominator value</com>
+<div>
+<frac><num>
+    <frac><num>cos</num>1</frac>
+</num><span>&nbsp;
+&nbsp;
+    <frac><num><red>cos</red></num><red>cos</red></frac> -
+    <frac><num>sin</num>cos</frac>
+    &nbsp;&nbsp;
+</span></frac>
++
+<frac><num>
+    <frac><num>sin</num>1</frac>
+</num><span>&nbsp;
+&nbsp;
+    <frac><num><red>sin</red></num><red>sin</red></frac> -
+    <frac><num>cos</num>sin</frac>
+    &nbsp;&nbsp;
+</span></frac>
+= sin + cos
+</div>
+
+<com>combine the fractions in each denominator</com>
+<div>
+<frac><num>
+    <frac><num>cos</num>1</frac>
+</num><span>&nbsp;
+&nbsp;
+    <frac><num><red>cos - sin</red></num><red>cos</red></frac>
+    &nbsp;&nbsp;
+</span></frac>
++
+<frac><num>
+    <frac><num>sin</num>1</frac>
+</num><span>&nbsp;
+&nbsp;
+    <frac><num><red>sin - cos</red></num><red>sin</red></frac>
+    &nbsp;&nbsp;
+</span></frac>
+= sin + cos
+</div>
+
+<com>flip denominators up to inverse numerators</com>
+<div>
+    <frac><num>cos</num>1</frac>
+    &middot;
+    <frac><num><red>cos</red></num><red>cos - sin</red></frac>
+    
++
+    <frac><num>sin</num>1</frac>
+    &middot;
+    <frac><num><red>sin</red></num><red>sin - cos</red></frac>
+= sin + cos
+</div>
+
+<com>multiply both fractions</com>
+<div>
+<frac><num><red>cos<sup>2</sup></red></num>
+cos - sin</frac>
++
+<frac><num><red>sin<sup>2</sup></red></num>
+sin - cos</frac>
+= sin + cos
+</div>
+
+<com>tricky tricky, multiply one fraction by negative one</com>
+<div>
+<frac><num>cos<sup>2</sup></num>
+cos - sin</frac>
++
+<frac><num><red>-1&middot; </red>sin<sup>2</sup></num>
+<span>
+<red>-1&middot; </red>sin - <red>-1&middot; </red>cos
+</span>
+</frac>
+= sin + cos
+</div>
+
+<com>reduce a bit</com>
+<div>
+<frac><num>cos<sup>2</sup></num>
+cos - sin</frac>
++
+<frac><num><red>-</red>sin<sup>2</sup></num>
+<span>
+<red>-</red>sin <red>+</red>cos
+</span>
+</frac>
+= sin + cos
+</div>
+
+<com>commute the denominator to match</com>
+<div>
+<frac><num>cos<sup>2</sup></num>
+cos - sin</frac>
++
+<frac><num>-sin<sup>2</sup></num>
+<red>cos - sin</red>
+</frac>
+= sin + cos
+</div>
+
+<com>move the negative between fractions</com>
+<div>
+<frac><num>cos<sup>2</sup></num>
+cos - sin</frac>
+<red>-</red>
+<frac><num>sin<sup>2</sup></num>
+cos - sin
+</frac>
+= sin + cos
+</div>
+
+<com>combine into one fraction</com>
+<div>
+<frac><num><red>cos<sup>2</sup> - sin<sup>2</sup></red></num>
+<red>cos - sin</red></frac>
+= sin + cos
+</div>
+
+<com>numerator is now the difference of two squares</com>
+<div>
+<frac><num><red>(cos<sup>2</sup> - sin<sup>2</sup>)</red></num>
+<span>cos - sin</span></frac>
+= sin + cos
+</div>
+
+<com>break up into factors</com>
+<div>
+<frac><num>
+    <red>(cos + sin)</red>&middot;<red>(cos - sin)</red>
+</num><span><red>(</red>cos - sin<red>)</red></span></frac>
+= sin + cos
+</div>
+
+<com>cancel like terms</com>
+<div>
+<frac><num>
+   (cos + sin)&middot;<red><s>(cos - sin)</s></red>
+</num><span><red><s>(cos - sin)</s></red></span></frac>
+= sin + cos
+</div>
+
+<com>drop the parenthesis</com>
+<div>
+<red>(</red>cos + sin<red>)</red>
+= sin + cos
+</div>
+
+<com>again, the commutative property
+reveals the truth of the identity</com>
+<div class="head">
+<starr/>
+sin + cos = sin + cos
+<starr/>
+</div>
+
+</div end_prob_09>
 
 </body>
 </html>
