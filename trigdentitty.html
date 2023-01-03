@@ -85,6 +85,36 @@ starr::before {
     color:#a00;
 }
 
+.distro {
+    position: relative;
+}
+
+.distro::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left:0;
+    width: 100%;
+    height: 60%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none' %3E%3Cpath d='M10 100A27.5 80 180 0 1 65 100A15 46 180 0 0 35 100A27.5 80 180 0 1 90 100C90 -30 10 -30 10 100' fill='none' stroke-width='4' stroke='%23900' /%3E%3C/svg%3E");
+}
+
+[data-cancel] {
+    position: relative;
+}
+
+[data-cancel]::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none' %3E%3Cpath d='M0 85L100 10' fill='none' stroke-width='6' stroke='%23900' /%3E%3C/svg%3E");
+}
+
+</style>
+
 </style>
 </head>
 
@@ -162,9 +192,12 @@ cos<sup>2</sup> - cos<sup>2</sup> &middot;
 
 cos<sup>2</sup>
 -
-<red><s>cos<sup>2</sup></s></red>
+<red data-cancel>cos<sup>2</sup></red>
 &middot;
-<frac><num>sin<sup>2</sup></num><red><s>cos<sup>2</sup></s></red></frac>
+<frac>
+<num>sin<sup>2</sup></num>
+<red data-cancel>cos<sup>2</sup></red>
+</frac>
 = 1 - <hsp>2 sin<sup>2</sup></hsp>
 </div>
 
@@ -190,9 +223,7 @@ cos<sup>2</sup>=1-sin<sup>2</sup>, so replace</com>
 <starr/>
 </div>
 
-
-
-</div end_prob_03>
+</div end_prob_01>
 
 <br>
 
@@ -221,13 +252,25 @@ cos<sup>2</sup>=1-sin<sup>2</sup>, so replace</com>
 
 <com>combine into one fraction</com>
 <div>
-<frac><num>(1 - sin) (1 - sin)</num>
-(1 + sin) (1 - sin)</frac>
+<frac><num>(1 - sin)&middot;(1 - sin)</num>
+(1 + sin)&middot;(1 - sin)</frac>
 =
 (sec - tan)<sup>2</sup>
 </div>
 
-<com>expand the parenthesis</com>
+<com>binomials must be distributed</com>
+<div>
+<frac>
+<num>
+<span class="distro">(1 - sin)&middot;(1 - sin)</span>
+</num>
+<span class="distro">(1 + sin)&middot;(1 - sin)</span>
+</frac>
+=
+(sec - tan)<sup>2</sup>
+</div>
+
+<com>expanded parenthesis</com>
 <div>
 <frac><num>
 1<red>&middot;</red>1
@@ -253,7 +296,8 @@ cos<sup>2</sup>=1-sin<sup>2</sup>, so replace</com>
 </red>
 </num>
 <red>
-    1 <s>- sin</s> <s>+ sin</s> - sin<sup>2</sup>
+    1 <hsp data-cancel>- sin</hsp>
+        <hsp data-cancel>+ sin</hsp> - sin<sup>2</sup>
 </red>
 </frac>
 
@@ -340,7 +384,10 @@ sec<sup>2</sup>
 sec<sup>2</sup>
 - <hsp>2 sec</hsp>&middot;tan
 + tan<sup>2</sup>
-= (<red>sec - tan</red>)&middot;(<red>sec - tan</red>)
+=
+<span class="distro">
+(<red>sec - tan</red>)&middot;(<red>sec - tan</red>)
+</span>
 </div>
 
 <com>so, factor the left side</com>
@@ -471,10 +518,10 @@ rearrange the denominator</com>
 <com>cancel the terms</com>
 <div>
 <frac><num>
-<red><s>[(tan + sec) - 1]</s></red> &middot; (tan + sec)
+<red data-cancel>[(tan + sec) - 1]</red> &middot; (tan + sec)
 </num>
 <span>
-<red><s>[(tan + sec) - 1]</s></red>
+<red data-cancel>[(tan + sec) - 1]</red>
 </span>
 </frac>
 = <frac><num>1 + sin</num>cos</frac>
@@ -513,8 +560,6 @@ reveals that the identity is true</com>
 = <frac><num>1 + sin</num>cos</frac>
 <starr/>
 </div>
-
-
 
 </div end_prob_03>
 
@@ -569,9 +614,11 @@ difference of two squares</com>
 <div>
 <frac><num>
 (sin<sup>2</sup> + cos<sup>2</sup>) &middot;
-<red><s>(sin<sup>2</sup> - cos<sup>2</sup>)</s></red>
+<red data-cancel>(sin<sup>2</sup> - cos<sup>2</sup>)</red>
 </num>
-<red><s>(sin<sup>2</sup> - cos<sup>2</sup>)</s></red>
+<span>
+<red data-cancel>(sin<sup>2</sup> - cos<sup>2</sup>)</red>
+</span>
 </frac>
 = 1
 </div>
@@ -672,10 +719,10 @@ sin<sup>2</sup> + cos<sup>2</sup> = 1
 
 <com>cancel out</com>
 <div>
-<frac><num><red><s>cos<sup>2</sup></s></red></num>1</frac>
+<frac><num><red data-cancel>cos<sup>2</sup></red></num>1</frac>
 &middot;
 <frac><num>sin<sup>2</sup></num>
-<red><s>cos<sup>2</sup></s></red></frac>
+<red data-cancel>cos<sup>2</sup></red></frac>
 = sin<sup>2</sup>
 </div>
 
@@ -1008,12 +1055,16 @@ sin<sup>3</sup> +
 <com>cancel</com>
 <div>
 cos<sup>3</sup> +
-<frac><num><red>cos<sup><s>3</s>2</sup></red></num>1</frac>&middot;<frac>
-<num>sin</num><red><s>cos</s></red></frac>
+<frac>
+<num><red>cos<sup><span data-cancel>3</span>2</sup></red></num>
+1</frac>&middot;<frac>
+<num>sin</num><red data-cancel>cos</red></frac>
 +
 sin<sup>3</sup> +
-<frac><num><red>sin<sup><s>3</s>2</sup></red></num>1</frac>&middot;<frac>
-<num>cos</num><red><s>sin</s></red></frac>
+<frac>
+<num><red>sin<sup><span data-cancel>3</span>2</sup></red></num>
+1</frac>&middot;<frac>
+<num>cos</num><red data-cancel>sin</red></frac>
 = sin + cos
 </div>
 
@@ -1245,8 +1296,8 @@ cos - sin
 <com>cancel like terms</com>
 <div>
 <frac><num>
-   (cos + sin)&middot;<red><s>(cos - sin)</s></red>
-</num><span><red><s>(cos - sin)</s></red></span></frac>
+   (cos + sin)&middot;<red data-cancel>(cos - sin)</red>
+</num><span><red data-cancel>(cos - sin)</red></span></frac>
 = sin + cos
 </div>
 
@@ -1265,6 +1316,7 @@ sin + cos = sin + cos
 </div>
 
 </div end_prob_09>
+
 
 </body>
 </html>
