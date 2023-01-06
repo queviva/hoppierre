@@ -1,6 +1,7 @@
 <!doctype html lang="en"><html>
 
 <head><title>trigdentitties</title>
+
 <style id="mathStyles">
 
 frac {
@@ -46,45 +47,9 @@ com::after {
     content: "]";
 }
 
-.prob {
-    margin:auto;
-    padding:10px;
-    padding-bottom:100px;
-    box-sizing:border-box;
-    width:800px;
-    max-width:800px;
-    min-width:400px;
-    background-color:#000;
-    color:#e90;
-    font-size:40px;
-    text-align:center;
-}
+</style>
 
-.head {
-    font-size: 1.5em;
-    font-style: italic;
-}
-
-red {
-    color: #a00;
-}
-
-hr {
-    border-top: 1px solid #888;
-    border-bottom: none;
-    border-left: none;
-    border-right: none;
-}
-
-hsp {
-    word-spacing: -0.4ch;
-}
-
-starr::before {
-    font-size:0.7em;
-    content:'\2606';
-    color:#a00;
-}
+<style id="distroCanc">
 
 [data-distro]{
     position: relative;
@@ -107,98 +72,159 @@ starr::before {
 }
 
 [data-cancel] {
+    
+    --canc-color: #900;
+    --canc-top: 20%;
+    --canc-bot: 10%;
+    --canc-wide: 120%;
+    
     position: relative;
 }
 
 [data-cancel]::after {
     
-    --canc-col: #900;
-    --canc-top: 20%;
-    --canc-bot: 10%;
-    
     content: '';
     position: absolute;
     top: var(--canc-top);
-    left: -10%;
-    width: 120%;
-    height: calc(100% - var(--canc-top,20%) - var(--canc-bot));
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none' %3E%3Cpath d='M0 100L100 0' fill='none' stroke-width='6' stroke='%23900' /%3E%3C/svg%3E");
+    left: calc((100% - var(--canc-wide))/2);
+    width: var(--canc-wide);
+    height: calc(100% - var(--canc-top) - var(--canc-bot));
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none' vector-effect='non-scaling-stroke' %3E%3Cpath d='M0 100L100 0' fill='none' stroke-width='6' stroke='%23900' /%3E%3C/svg%3E");
     -webkit-mask-size: cover;
-    background-color: var(--canc-col);
+    background-color: var(--canc-color);
+}
+
+p-rens {
+    word-spacing: -0.3ch;
+}
+
+p-rens::before{
+    content: '(';
+}
+
+p-rens::after{
+    content: ')';
 }
 
 </style>
 
+<style id="pageStyles">
+
+.prob {
+    margin:auto;
+    padding:10px;
+    padding-bottom:100px;
+    box-sizing:border-box;
+    width:800px;
+    max-width:800px;
+    min-width:400px;
+    background-color:#000;
+    color:#e90;
+    font-size:40px;
+    text-align:center;
+}
+
+.head {
+    font-size: 1.5em;
+    font-style: italic;
+}
+
+hr {
+    border-top: 1px solid #888;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+
+x-red {
+    color: #a00;
+}
+
+x-hsp {
+    word-spacing: -0.4ch;
+}
+
+x-starr {
+    word-spacing: -0.4ch;
+}
+
+x-starr::before, x-starr::after {
+    font-size:0.7em;
+    content:'\2606';
+    color:#a00;
+}
+
 </style>
+
 </head>
 
 <body style="background-color:#888;">
-
+    
 <div id="PROBLEM_01" class="prob">
 
 <div class="head">
     
-<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<x-red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</x-red>
 <br>
 <br>
 <frac><num>1 - tan<sup>2</sup></num>
 <div>1 + tan<sup>2</sup></div>
 </frac>
-= <hsp>1 - 2 sin<sup>2</sup></hsp>
+= <x-hsp>1 - 2 sin<sup>2</sup></x-hsp>
 <br>
 <br>
 </div>
 
 <hr>
 
-<com>1 + tan<sup>2</sup> is equal to sec<sup>2</sup>, so replace
-that in the denominator</com>
+<com>1 + tan<sup>2</sup> is equal to sec<sup>2</sup>,
+so replace that in the denominator</com>
 <div>
-<frac><num>1 - tan<sup>2</sup></num><red>sec<sup>2</sup></red></frac>
-= 1 - <hsp>2 sin<sup>2</sup></hsp>
+<frac><num>1 - tan<sup>2</sup></num><x-red>sec<sup>2</sup></x-red></frac>
+= 1 - <x-hsp>2 sin<sup>2</sup></x-hsp>
 </div>
 
 <com>split up the fraction into a difference</com>
 <div>
-<red>
+<x-red>
 <frac><num>1</num><span>sec<sup>2</sup></span></frac>
-</red>
+</x-red>
 -
-<red>
+<x-red>
 <frac><num>tan<sup>2</sup></num><span>sec<sup>2</sup></span></frac>
-</red>
-= 1 - <hsp>2 sin<sup>2</sup></hsp>
+</x-red>
+= 1 - <x-hsp>2 sin<sup>2</sup></x-hsp>
 </div>
 
 <com>again, split one of the fractions into a product</com>
 <div>
 <frac><num>1</num><span>sec<sup>2</sup></span></frac>
 -
-<red>
+<x-red>
 <frac><num>1</num><span>sec<sup>2</sup></span></frac>
 &middot;
 tan<sup>2</sup>
-</red>
-= 1 - <hsp>2 sin<sup>2</sup></hsp>
+</x-red>
+= 1 - <x-hsp>2 sin<sup>2</sup></x-hsp>
 </div>
 
 <com>by definition, <frac><num>1</num>sec</frac> is equal to cos, so replace that</com>
 <div>
-<red>cos<sup>2</sup></red>
+<x-red>cos<sup>2</sup></x-red>
 -
-<red>cos<sup>2</sup></red>
+<x-red>cos<sup>2</sup></x-red>
 &middot;
 tan<sup>2</sup>
-= 1 - <hsp>2 sin<sup>2</sup></hsp>
+= 1 - <x-hsp>2 sin<sup>2</sup></x-hsp>
 </div>
 
 <com>also by definition, tan is equal to <frac><num>sin</num>cos</frac>, so replace that</com>
 <div>
 cos<sup>2</sup> - cos<sup>2</sup> &middot;
-<red>
+<x-red>
 <frac><num>sin<sup>2</sup></num><span>cos<sup>2</sup></span></frac>
-</red>
-= 1 - <hsp>2 sin<sup>2</sup></hsp>
+</x-red>
+= 1 - <x-hsp>2 sin<sup>2</sup></x-hsp>
 </div>
 
 <com>canceling that out ...</com>
@@ -206,35 +232,35 @@ cos<sup>2</sup> - cos<sup>2</sup> &middot;
 
 cos<sup>2</sup>
 -
-<red data-cancel>cos<sup>2</sup></red>
+<x-red data-cancel>cos<sup>2</sup></x-red>
 &middot;
 <frac>
 <num>sin<sup>2</sup></num>
-<red data-cancel>cos<sup>2</sup></red>
+<x-red data-cancel>cos<sup>2</sup></x-red>
 </frac>
-= 1 - <hsp>2 sin<sup>2</sup></hsp>
+= 1 - <x-hsp>2 sin<sup>2</sup></x-hsp>
 </div>
 
 <com>leaves us with</com>
 <div>
 cos<sup>2</sup> - sin<sup>2</sup>
-= 1 - <hsp>2 sin<sup>2</sup></hsp>
+= 1 - <x-hsp>2 sin<sup>2</sup></x-hsp>
 </div>
 
 <com>if sin<sup>2</sup>+cos<sup>2</sup>=1, then
 cos<sup>2</sup>=1-sin<sup>2</sup>, so replace</com>
 <div>
     
-<red>1 - sin<sup>2</sup></red> - sin<sup>2</sup>
-= 1 - <hsp>2 sin<sup>2</sup></hsp>
+<x-red>1 - sin<sup>2</sup></x-red> - sin<sup>2</sup>
+= 1 - <x-hsp>2 sin<sup>2</sup></x-hsp>
 </div>
 
 <com>combine like terms to see that the statement is true</com>
 <div class="head">
-<starr/>
-<hsp>1 - 2 sin<sup>2</sup></hsp>
-= <hsp>1 - 2 sin<sup>2</sup></hsp>
-<starr/>
+<x-starr>
+<x-hsp>1 - 2 sin<sup>2</sup></x-hsp>
+= <x-hsp>1 - 2 sin<sup>2</sup></x-hsp>
+</x-starr>
 </div>
 
 </div end_prob_01>
@@ -244,12 +270,12 @@ cos<sup>2</sup>=1-sin<sup>2</sup>, so replace</com>
 <div id="PROBLEM_02" class="prob">
     
 <div class="head">
-<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<x-red style="font-size:0.5em;">&nbsp;&nbsp;&nbspshow that...</x-red>
 <br>
 <br>
 <frac><num>1 - sin</num>1 + sin</frac>
 =
-(sec - tan)<sup>2</sup>
+<p-rens>sec - tan</p-rens><sup>2</sup>
 <br>
 <br>
 </div>
@@ -258,118 +284,125 @@ cos<sup>2</sup>=1-sin<sup>2</sup>, so replace</com>
 <com>multiply by the denominator's conjugate</com>
 <div>
 <frac><num>1 - sin</num>1 + sin</frac>
-<red>&middot; <frac><num>1 - sin</num>1 - sin</frac></red>
+<x-red>&middot; <frac><num>1 - sin</num>1 - sin</frac></x-red>
 =
-(sec - tan)<sup>2</sup>
-</red>
+<p-rens>sec - tan</p-rens><sup>2</sup>
+</x-red>
 </div>
 
 <com>combine into one fraction</com>
 <div>
-<frac><num>(1 - sin)&middot;(1 - sin)</num>
-(1 + sin)&middot;(1 - sin)</frac>
+<frac><num><p-rens>1 - sin</p-rens> <x-red>&middot;</x-red>
+<p-rens>1 - sin</p-rens></num>
+<span>
+<p-rens>1 + sin</p-rens> <x-red>&middot;</x-red>
+<p-rens>1 - sin</p-rens>
+</span>
+</frac>
 =
-(sec - tan)<sup>2</sup>
+<p-rens>sec - tan</p-rens><sup>2</sup>
 </div>
 
 <com>binomials must be distributed</com>
 <div>
 <frac>
 <num>
-<span data-distro>(1 - sin)&middot;(1 - sin)</span>
+<span data-distro><p-rens>1 - sin</p-rens> &middot;
+<p-rens>1 - sin</p-rens></span>
 </num><span>
-<span data-distro>(1 + sin)&middot;(1 - sin)</span>
+<span data-distro><p-rens>1 + sin</p-rens> &middot;
+<p-rens>1 - sin</p-rens></span>
 </span>
 </frac>
 =
-(sec - tan)<sup>2</sup>
+<p-rens>sec - tan</p-rens><sup>2</sup>
 </div>
 
 <com>expanded parenthesis</com>
 <div>
 <frac><num>
-1<red>&middot;</red>1
-+ 1<red>&middot;</red>-sin
-+ -sin<red>&middot;</red>1
-+ -sin<red>&middot;</red>-sin
+1<x-red>&middot;</x-red>1
++ 1<x-red>&middot;</x-red>-sin
++ -sin<x-red>&middot;</x-red>1
++ -sin<x-red>&middot;</x-red>-sin
 </num>
 <span>
-1<red>&middot;</red>1
-+ 1<red>&middot;</red>-sin
-+ sin<red>&middot;</red>1
-+ sin<red>&middot;</red>-sin
+1<x-red>&middot;</x-red>1
++ 1<x-red>&middot;</x-red>-sin
++ sin<x-red>&middot;</x-red>1
++ sin<x-red>&middot;</x-red>-sin
 </span>
 </frac>
-= (sec - tan)<sup>2</sup>
+= <p-rens>sec - tan</p-rens><sup>2</sup>
 </div>
 
 <com>reduce and cancel</com>
 <div>
 <frac><num>
-<red>
-    1 - <hsp>2 sin</hsp> + sin<sup>2</sup>
-</red>
+<x-red>
+    1 - <x-hsp>2 sin</x-hsp> + sin<sup>2</sup>
+</x-red>
 </num>
-<red>
-    1 <hsp data-cancel>- sin</hsp>
-        <hsp data-cancel>+ sin</hsp> - sin<sup>2</sup>
-</red>
+<x-red>
+1 <x-hsp data-cancel>- sin</x-hsp>
+<x-hsp data-cancel>+sin</x-hsp> - sin<sup>2</sup>
+</x-red>
 </frac>
 
-= (sec - tan)<sup>2</sup>
+= <p-rens>sec - tan</p-rens><sup>2</sup>
 </div>
     
 <com>rewrite and contemplate, because this is not simple</com>
 <div>
-<frac><num> 1 - <hsp>2 sin</hsp> + sin<sup>2</sup> </num>
+<frac><num> 1 - <x-hsp>2 sin</x-hsp> + sin<sup>2</sup> </num>
 <span> 1 - sin<sup>2</sup></span> </frac>
-= (sec - tan)<sup>2</sup>
+= <p-rens>sec - tan</p-rens><sup>2</sup>
 </div>
     
 <com>if sin<sup>2</sup>+cos<sup>2</sup>=1,
 then 1 - sin<sup>2</sup>=cos<sup>2</sup>, so replace</com>
 <div>
-<frac><num> 1 - <hsp>2 sin</hsp> + sin<sup>2</sup> </num>
-<red>cos<sup>2</sup></red> </frac>
-= (sec - tan)<sup>2</sup>
+<frac><num> 1 - <x-hsp>2 sin</x-hsp> + sin<sup>2</sup> </num>
+<x-red>cos<sup>2</sup></x-red> </frac>
+= <p-rens>sec - tan</p-rens><sup>2</sup>
 </div>
 
 <com>break the fraction up into parts</com>
 <div>
-<frac><num><red>1</red></num><red>cos<sup>2</sup></red></frac>
+<frac><num><x-red>1</x-red></num><x-red>cos<sup>2</sup></x-red></frac>
 -
-<frac><num><red><hsp>2 sin</hsp></red></num><red>cos<sup>2</sup></red></frac>
+<frac><num><x-red><x-hsp>2 sin</x-hsp></x-red></num><x-red>cos<sup>2</sup></x-red></frac>
 +
-<frac><num><red>sin<sup>2</sup></red></num><red>cos<sup>2</sup></red></frac>
-= (sec - tan)<sup>2</sup>
+<frac><num><x-red>sin<sup>2</sup></x-red></num><x-red>cos<sup>2</sup></x-red></frac>
+= <p-rens>sec - tan</p-rens><sup>2</sup>
 </div>
 
 <com>serious trick here, breakup the middle fraction into products</com>
 <div>
 <frac><num>1</num><span>cos<sup>2</sup></span></frac>
 -
-<frac><num><red>2</red></num><red>1</red></frac>
+<frac><num><x-red>2</x-red></num><x-red>1</x-red></frac>
 &middot;
-<frac><num><red>1</red></num><red>cos</red></frac>
+<frac><num><x-red>1</x-red></num><x-red>cos</x-red></frac>
 &middot;
-<frac><num><red>sin</red></num><red>cos</red></frac>
+<frac><num><x-red>sin</x-red></num><x-red>cos</x-red></frac>
 +
 <frac><num>sin<sup>2</sup></num><span>cos<sup>2</sup></span></frac>
-= (sec - tan)<sup>2</sup>
+= <p-rens>sec - tan</p-rens><sup>2</sup>
 </div>
 
 <com>replace <frac><num>1</num>cos</frac> with sec</com>
 <div>
-<red>sec<sup>2</sup></red>
+<x-red>sec<sup>2</sup></x-red>
 -
 <frac><num>2</num>1</frac>
 &middot;
-<red>sec</red>
+<x-red>sec</x-red>
 &middot;
 <frac><num>sin</num>cos</frac>
 +
 <frac><num>sin<sup>2</sup></num><span>cos<sup>2</sup></span></frac>
-= (sec - tan)<sup>2</sup>
+= <p-rens>sec - tan</p-rens><sup>2</sup>
 </div>
 
 <com>replace <frac><num>sin</num>cos</frac> with tan</com>
@@ -380,48 +413,50 @@ sec<sup>2</sup>
 &middot;
 sec
 &middot;
-<red>tan</red>
+<x-red>tan</x-red>
 +
-<red>tan<sup>2</sup></red>
-= (sec - tan)<sup>2</sup>
+<x-red>tan<sup>2</sup></x-red>
+= <p-rens>sec - tan</p-rens><sup>2</sup>
 </div>
 
 <com>combine and examine; hmm... do you see it?</com>
 <div>
 sec<sup>2</sup>
-- <hsp>2 sec</hsp>&middot;tan
+- <x-hsp>2 sec</x-hsp>&middot;tan
 + tan<sup>2</sup>
-= (sec - tan)<sup>2</sup>
+= <p-rens>sec - tan</p-rens><sup>2</sup>
 </div>
 
 <com>the left side IS the expansion of the right side</com>
 <div>
 sec<sup>2</sup>
-- <hsp>2 sec</hsp>&middot;tan
+- <x-hsp>2 sec</x-hsp>&middot;tan
 + tan<sup>2</sup>
 =
 <span data-distro style="--distro-wide:90%">
-(<red>sec - tan</red>)&middot;(<red>sec - tan</red>)
+<p-rens><x-red>sec - tan</x-red></p-rens>&middot;<p-rens><x-red>sec - tan</x-red></p-rens>
 </span>
 </div>
 
-<com>so, factor the left side</com>
+<com>so, the left side can be factored like that</com>
 <div>
-(<red>sec - tan</red>)&middot;(<red>sec - tan</red>)
-= (sec - tan)<sup>2</sup>
+<p-rens><x-red>sec - tan</x-red></p-rens>&middot;<p-rens><x-red>sec - tan</x-red></p-rens>
+= <p-rens>sec - tan</p-rens><sup>2</sup>
 </div>
 
 <com>rewrite as a square</com>
 <div>
-(sec - tan)<sup><red>2</red></sup>
-= (sec - tan)<sup>2</sup>
+<p-rens>sec - tan</p-rens><sup><x-red>2</x-red></sup>
+= <p-rens>sec - tan</p-rens><sup>2</sup>
 </div>
 
 <com>we see that the identity is true</com>
 <div class="head">
-    <starr/>
-(sec-tan)<sup>2</sup> = (sec-tan)<sup>2</sup>
-<starr/>
+<x-starr>
+<p-rens>sec - tan</p-rens><sup>2</sup>
+=
+<p-rens>sec - tan</p-rens><sup>2</sup>
+</x-starr>
 </div>
 
 </div end_prob_02>
@@ -431,7 +466,7 @@ sec<sup>2</sup>
 <div id="PROBLEM_03" class="prob">
 
 <div class="head">
-<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<x-red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</x-red>
 <br><br>
 <frac><num>tan + sec - 1</num>
 tan - sec + 1
@@ -443,61 +478,63 @@ tan - sec + 1
 <hr>
 
 <com>this is an impossible trick,
-think of (tan&plusmn;sec) as one thing</com>
+think of <p-rens>tan&plusmn;sec</p-rens> as one thing</com>
 <div>
-<frac><num><red>(</red>tan + sec<red>)</red> - 1</num>
-<span><red>(</red>tan - sec<red>)</red> + 1</span>
+<frac><num><x-red>(</x-red>tan + sec<x-red>)</x-red> - 1</num>
+<span><x-red>(</x-red>tan - sec<x-red>)</x-red> + 1</span>
 </frac>
 = <frac><num>1 + sin</num>cos</frac>
 </div>
 
-<com>multiply the numerator and denominator by (tan+sec)</com>
+<com>multiply the numerator and denominator by <p-rens>tan+sec</p-rens></com>
 <div>
-<frac><num>(tan + sec) - 1</num>
-(tan - sec) + 1
+<frac><num><p-rens>tan + sec</p-rens> - 1</num>
+<span>
+<p-rens>tan - sec</p-rens> + 1
+</span>
 </frac>
-<red>&middot;</red>
-<frac><num><red>(tan + sec)</red></num><red>(tan + sec)</red></frac>
+<x-red>&middot;</x-red>
+<frac><num><x-red><p-rens>tan + sec</p-rens></x-red></num><x-red><p-rens>tan + sec</p-rens></x-red></frac>
 = <frac><num>1 + sin</num>cos</frac>
 </div>
 
-<com>leave numerator factored; distribute (tan+sec) in denominator</com>
+<com>leave numerator factored; distribute <p-rens>tan+sec</p-rens> in denominator</com>
 <div>
 <frac><num>
-<red>[</red>(tan + sec) - 1<red>]</red> &middot; (tan + sec)
+<x-red>[</x-red><p-rens>tan + sec</p-rens> - 1<x-red>]</x-red> &middot; <p-rens>tan + sec</p-rens>
 </num>
 <span>
-(tan - sec) <red>&middot; (tan + sec)</red>
-+ 1 <red>&middot; (tan + sec)</red>
+<p-rens>tan - sec</p-rens> <x-red>&middot; <p-rens>tan + sec</p-rens></x-red>
++ 1 <x-red>&middot; <p-rens>tan + sec</p-rens></x-red>
 </span>
 </frac>
 = <frac><num>1 + sin</num>cos</frac>
 </div>
 
-<com>demoninator now has (tan-sec)(tan+sec),
+<com>demoninator now has <p-rens>tan-sec</p-rens><p-rens>tan+sec</p-rens>,
 which was the whole point</com>
 <div>
 <frac><num>
-[(tan + sec) - 1] &middot; (tan + sec)
+[<p-rens>tan + sec</p-rens> - 1] &middot; <p-rens>tan + sec</p-rens>
 </num>
 <span>
-<red data-distro>(tan - sec)&middot;(tan + sec)</red>
-+ (tan + sec)
+<x-red data-distro><p-rens>tan - sec</p-rens>&middot;<p-rens>tan + sec</p-rens></x-red>
++ <p-rens>tan + sec</p-rens>
 </span>
 </frac>
 = <frac><num>1 + sin</num>cos</frac>
 </div>
 
-<com>(tan-sec)&middot;(tan+sec) is the difference of two squares,
+<com><p-rens>tan-sec</p-rens>&middot;<p-rens>tan+sec</p-rens> is the difference of two squares,
 so replace that</com>
 <div>
 <frac><num>
-[(tan + sec) - 1] &middot; (tan + sec)
+[<p-rens>tan + sec</p-rens> - 1] &middot; <p-rens>tan + sec</p-rens>
 </num>
 <span>
-<red>(tan<sup>2</sup> - sec<sup>2</sup>)</red>
-+ (tan + sec)
-</red>
+<x-red><p-rens>tan<sup>2</sup> - sec<sup>2</sup></p-rens></x-red>
++ <p-rens>tan + sec</p-rens>
+</x-red>
 </span>
 </frac>
 = <frac><num>1 + sin</num>cos</frac>
@@ -507,11 +544,11 @@ so replace that</com>
 tan<sup>2</sup>-sec<sup>2</sup>=-1, so replace that</com>
 <div>
 <frac><num>
-[(tan + sec) - 1] &middot; (tan + sec)
+[<p-rens>tan + sec</p-rens> - 1] &middot; <p-rens>tan + sec</p-rens>
 </num>
 <span>
-<red>-1</red>
-+ (tan + sec)
+<x-red>-1</x-red>
++ <p-rens>tan + sec</p-rens>
 </span>
 </frac>
 = <frac><num>1 + sin</num>cos</frac>
@@ -521,10 +558,10 @@ tan<sup>2</sup>-sec<sup>2</sup>=-1, so replace that</com>
 rearrange the denominator</com>
 <div>
 <frac><num>
-[(tan + sec) - 1] &middot; (tan + sec)
+[<p-rens>tan + sec</p-rens> - 1] &middot; <p-rens>tan + sec</p-rens>
 </num>
 <span>
-<red>[</red>(tan + sec) <red>-1]</red>
+<x-red>[</x-red><p-rens>tan + sec</p-rens> <x-red>-1]</x-red>
 </span>
 </frac>
 = <frac><num>1 + sin</num>cos</frac>
@@ -533,10 +570,10 @@ rearrange the denominator</com>
 <com>cancel the terms</com>
 <div>
 <frac><num>
-<red data-cancel>[(tan + sec) - 1]</red> &middot; (tan + sec)
+<x-red data-cancel>[<p-rens>tan + sec</p-rens> - 1]</x-red> &middot; <p-rens>tan + sec</p-rens>
 </num>
 <span>
-<red data-cancel>[(tan + sec) - 1]</red>
+<x-red data-cancel>[<p-rens>tan + sec</p-rens> - 1]</x-red>
 </span>
 </frac>
 = <frac><num>1 + sin</num>cos</frac>
@@ -544,36 +581,36 @@ rearrange the denominator</com>
 
 <com>drop the parenthesis; this is now much more possible</com>
 <div>
-<red>(</red>tan + sec<red>)</red>
+<x-red>(</x-red>tan + sec<x-red>)</x-red>
 = <frac><num>1 + sin</num>cos</frac>
 </div>
 
 <com>tan is <frac><num>sin</num>cos</frac>, so replace that</com>
 <div>
-<red><frac><num>sin</num>cos</frac></red> + sec
+<x-red><frac><num>sin</num>cos</frac></x-red> + sec
 = <frac><num>1 + sin</num>cos</frac>
 </div>
 
 <com>sec is <frac><num>1</num>cos</frac>, so replace that</com>
 <div>
 <frac><num>sin</num>cos</frac>
-+ <red><frac><num>1</num>cos</frac></red>
++ <x-red><frac><num>1</num>cos</frac></x-red>
 = <frac><num>1 + sin</num>cos</frac>
 </div>
 
 <com>combine the fractions into one</com>
 <div>
-<frac><num><red>sin + 1</red></num><red>cos</red></frac>
+<frac><num><x-red>sin + 1</x-red></num><x-red>cos</x-red></frac>
 = <frac><num>1 + sin</num>cos</frac>
 </div>
 
 <com>the commutative property of addition
 reveals that the identity is true</com>
 <div class="head">
-<starr/>
+<x-starr>&nbsp;
 <frac><num>1 + sin</num>cos</frac>
 = <frac><num>1 + sin</num>cos</frac>
-<starr/>
+</x-starr>&nbsp;
 </div>
 
 </div end_prob_03>
@@ -583,7 +620,7 @@ reveals that the identity is true</com>
 <div id="PROBLEM_04" class="prob">
 
 <div class="head">
-<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<x-red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</x-red>
 <br><br>
 <frac><num>sin<sup>4</sup> - cos<sup>4</sup></num>
 <span>sin<sup>2</sup> - cos<sup>2</sup></span></frac>
@@ -596,16 +633,16 @@ reveals that the identity is true</com>
 <com>sin<sup>4</sup>-cos<sup>4</sup> is actually the
 difference of two squares</com>
 <div>
-<frac><num><red>sin<sup>4</sup> - cos<sup>4</sup></red></num>
+<frac><num><x-red>sin<sup>4</sup> - cos<sup>4</sup></x-red></num>
 <span>sin<sup>2</sup> - cos<sup>2</sup></span></frac>
 = 1
 </div>
 
 <com>rewrite numerator as "squared squares"</com>
 <div>
-<frac><num><red>
-    (sin<sup>2</sup>)<sup>2</sup> - (cos<sup>2</sup>)<sup>2</sup>
-</red></num>
+<frac><num><x-red>
+    <p-rens>sin<sup>2</sup></p-rens><sup>2</sup> - <p-rens>cos<sup>2</sup></p-rens><sup>2</sup>
+</x-red></num>
 <span>
     sin<sup>2</sup> - cos<sup>2</sup>
 </span>
@@ -616,9 +653,9 @@ difference of two squares</com>
 <com>factor numerator as difference of squares</com>
 <div>
 <frac><num>
-(<red>sin<sup>2</sup> + cos<sup>2</sup></red>)
-<red>&middot;</red>
-(<red>sin<sup>2</sup> - cos<sup>2</sup></red>)
+<p-rens><x-red>sin<sup>2</sup> + cos<sup>2</sup></x-red></p-rens>
+<x-red>&middot;</x-red>
+<p-rens><x-red>sin<sup>2</sup> - cos<sup>2</sup></x-red></p-rens>
 </num>
 <span>sin<sup>2</sup> - cos<sup>2</sup></span>
 </frac>
@@ -628,11 +665,11 @@ difference of two squares</com>
 <com>cancel the like terms</com>
 <div>
 <frac><num>
-(sin<sup>2</sup> + cos<sup>2</sup>) &middot;
-<red data-cancel>(sin<sup>2</sup> - cos<sup>2</sup>)</red>
+<p-rens>sin<sup>2</sup> + cos<sup>2</sup></p-rens> &middot;
+<x-red data-cancel><p-rens>sin<sup>2</sup> - cos<sup>2</sup></p-rens></x-red>
 </num>
 <span>
-<red data-cancel>(sin<sup>2</sup> - cos<sup>2</sup>)</red>
+<x-red data-cancel><p-rens>sin<sup>2</sup> - cos<sup>2</sup></p-rens></x-red>
 </span>
 </frac>
 = 1
@@ -640,7 +677,7 @@ difference of two squares</com>
 
 <com>drop parenthesis</com>
 <div>
-<red>(</red>sin<sup>2</sup> + cos<sup>2</sup><red>)</red>
+<x-red>(</x-red>sin<sup>2</sup> + cos<sup>2</sup><x-red>)</x-red>
 = 1
 </div>
 
@@ -651,9 +688,9 @@ sin<sup>2</sup> + cos<sup>2</sup> = 1
 
 <com>replace to show that the expression is true</com>
 <div class="head">
-<starr/>
+<x-starr>
 1 = 1
-<starr/>
+</x-starr>
 </div>
 
 </div end_prob_04>
@@ -663,7 +700,7 @@ sin<sup>2</sup> + cos<sup>2</sup> = 1
 <div id="PROBLEM_05" class="prob">
 
 <div class="head">
-<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<x-red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</x-red>
 <br><br>
 <frac><num>tan<sup>2</sup></num>
 <span>tan<sup>2</sup> + 1</span>
@@ -681,44 +718,44 @@ sin<sup>2</sup> + cos<sup>2</sup> = 1
 
 <com>if we divide everything by cos<sup>2</sup></com>
 <div>
-<frac><num>sin<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
+<frac><num>sin<sup>2</sup></num><x-red>cos<sup>2</sup></x-red></frac>
 +
-<frac><num>cos<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
+<frac><num>cos<sup>2</sup></num><x-red>cos<sup>2</sup></x-red></frac>
 =
-<frac><num>1</num><red>cos<sup>2</sup></red></frac>
+<frac><num>1</num><x-red>cos<sup>2</sup></x-red></frac>
 </div>
 
 <com>and replace everything with its definition</com>
 <div>
-<red>tan<sup>2</sup></red> + <red>1</red>
-= <red>sec<sup>2</sup></red>
+<x-red>tan<sup>2</sup></x-red> + <x-red>1</x-red>
+= <x-red>sec<sup>2</sup></x-red>
 </div>
 
 <com>we now see a substitution in the original denominator</com>
 <div>
 <frac><num>tan<sup>2</sup></num>
-<red>tan<sup>2</sup> + 1</red></frac>
+<x-red>tan<sup>2</sup> + 1</x-red></frac>
 = sin<sup>2</sup>
 </div>
 
 <com>subtitute 1+tan<sup>2</sup>=sec<sup>2</sup></com>
 <div>
-<frac><num>tan<sup>2</sup></num><red>sec<sup>2</sup></red></frac>
+<frac><num>tan<sup>2</sup></num><x-red>sec<sup>2</sup></x-red></frac>
 = sin<sup>2</sup>
 </div>
 
 <com>break that fraction into a product</com>
 <div>
-<frac><num><red>1</red></num><red>sec<sup>2</sup></red></frac>
+<frac><num><x-red>1</x-red></num><x-red>sec<sup>2</sup></x-red></frac>
 &middot;
-<frac><num><red>tan<sup>2</sup></red></num><red>1</red></frac>
+<frac><num><x-red>tan<sup>2</sup></x-red></num><x-red>1</x-red></frac>
 = sin<sup>2</sup>
 </div>
 
 <com>substitute <frac><num>1</num>sec</frac> equals
 <frac><num>cos</num>1</frac></com>
 <div>
-<frac><num><red>cos<sup>2</sup></red></num><red>1</red></frac>
+<frac><num><x-red>cos<sup>2</sup></x-red></num><x-red>1</x-red></frac>
 &middot; <frac><num>tan<sup>2</sup></num>1</frac>
 = sin<sup>2</sup>
 </div>
@@ -727,25 +764,25 @@ sin<sup>2</sup> + cos<sup>2</sup> = 1
 <div>
 <frac><num>cos<sup>2</sup></num>1</frac>
 &middot;
-<frac><num><red>sin<sup>2</sup></red></num>
-<red>cos<sup>2</sup></red></frac>
+<frac><num><x-red>sin<sup>2</sup></x-red></num>
+<x-red>cos<sup>2</sup></x-red></frac>
 = sin<sup>2</sup>
 </div>
 
 <com>cancel out</com>
 <div>
-<frac><num><red data-cancel>cos<sup>2</sup></red></num>1</frac>
+<frac><num><x-red data-cancel>cos<sup>2</sup></x-red></num>1</frac>
 &middot;
 <frac><num>sin<sup>2</sup></num>
-<red data-cancel>cos<sup>2</sup></red></frac>
+<x-red data-cancel>cos<sup>2</sup></x-red></frac>
 = sin<sup>2</sup>
 </div>
 
 <com>reducing that proves the identity to be valid</com>
 <div class="head">
-<starr/>
+<x-starr>
 sin<sup>2</sup> = sin<sup>2</sup>
-<starr/>
+</x-starr>
 </div>
 </div end_prob_05>
 
@@ -754,9 +791,9 @@ sin<sup>2</sup> = sin<sup>2</sup>
 <div id="PROBLEM_06" class="prob">
 
 <div class="head">
-<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<x-red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</x-red>
 <br><br>
-1 - <hsp>2 cos</hsp><sup>2</sup>
+1 - <x-hsp>2 cos</x-hsp><sup>2</sup>
 = <frac><num>tan<sup>2</sup> - 1</num>
 <span>tan<sup>2</sup> + 1</span></frac>
 <br><br>
@@ -767,21 +804,21 @@ sin<sup>2</sup> = sin<sup>2</sup>
 equals -cos<sup>2</sup> - cos<sup>2</sup> because of algebra
 </com>
 <div>
-1 - <red><hsp>2 cos<sup>2</sup></hsp></red>
+1 - <x-red><x-hsp>2 cos<sup>2</sup></x-hsp></x-red>
 = <frac><num>tan<sup>2</sup> - 1</num>
 <span>tan<sup>2</sup> + 1</span></frac>
 </div>
     
 <com>so, replace that</com>
 <div>
-1 - <red>cos<sup>2</sup></red> - <red>cos<sup>2</sup></red>
+1 - <x-red>cos<sup>2</sup></x-red> - <x-red>cos<sup>2</sup></x-red>
 = <frac><num>tan<sup>2</sup> - 1</num>
 <span>tan<sup>2</sup> + 1</span></frac>
 </div>
 
 <com>now group the 1-cos<sup>2</sup></com>
 <div>
-<red>(</red>1 - cos<sup>2</sup><red>)</red> - cos<sup>2</sup>
+<x-red>(</x-red>1 - cos<sup>2</sup><x-red>)</x-red> - cos<sup>2</sup>
 = <frac><num>tan<sup>2</sup> - 1</num>
 <span>tan<sup>2</sup> + 1</span></frac>
 </div>
@@ -790,14 +827,14 @@ equals -cos<sup>2</sup> - cos<sup>2</sup> because of algebra
 1-cos<sup>2</sup>=sin<sup>2</sup>
 </com>
 <div>
-(<red>sin<sup>2</sup></red>) - cos<sup>2</sup>
+<p-rens><x-red>sin<sup>2</sup></x-red></p-rens> - cos<sup>2</sup>
 = <frac><num>tan<sup>2</sup> - 1</num>
 <span>tan<sup>2</sup> + 1</span></frac>
 </div>
 
 <com>with super trickiness, put that over one</com>
 <div>
-<frac><num>sin<sup>2</sup> - cos<sup>2</sup></num><red>1</red></frac>
+<frac><num>sin<sup>2</sup> - cos<sup>2</sup></num><x-red>1</x-red></frac>
 = <frac><num>tan<sup>2</sup> - 1</num>
 <span>tan<sup>2</sup> + 1</span></frac>
 </div>
@@ -806,11 +843,11 @@ equals -cos<sup>2</sup> - cos<sup>2</sup> because of algebra
 <div>
     
 <frac><num>
-<frac><num>sin<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
+<frac><num>sin<sup>2</sup></num><x-red>cos<sup>2</sup></x-red></frac>
 -
-<frac><num>cos<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
+<frac><num>cos<sup>2</sup></num><x-red>cos<sup>2</sup></x-red></frac>
 </num>
-<span><frac><num>1</num><red>cos<sup>2</sup></red></frac></span>
+<span><frac><num>1</num><x-red>cos<sup>2</sup></x-red></frac></span>
 </frac>
 = <frac><num>tan<sup>2</sup> - 1</num>
 <span>tan<sup>2</sup> + 1</span></frac>
@@ -819,28 +856,28 @@ equals -cos<sup>2</sup> - cos<sup>2</sup> because of algebra
 <com><frac><num>sin</num>cos</frac>=tan, and
 <frac><num>1</num>cos</frac>=sec; replace and reduce</com>
 <div>
-<frac><num><red>tan<sup>2</sup></red> - <red>1</red></num>
-<red>sec<sup>2</sup></red>
+<frac><num><x-red>tan<sup>2</sup></x-red> - <x-red>1</x-red></num>
+<x-red>sec<sup>2</sup></x-red>
 </frac>
 = <frac><num>tan<sup>2</sup> - 1</num>
 <span>tan<sup>2</sup> + 1</span></frac>
 </div>
 
 <com>remember...</com>
-<div style="font-size:5px;">
+<div style="font-size:0.5em;">
 sin<sup>2</sup> + cos<sup>2</sup> = 1
 <br>
-  <frac><num>sin<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
-+ <frac><num>cos<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
-= <frac><num>1</num><red>cos<sup>2</sup></red></frac>
+  <frac><num>sin<sup>2</sup></num><x-red>cos<sup>2</sup></x-red></frac>
++ <frac><num>cos<sup>2</sup></num><x-red>cos<sup>2</sup></x-red></frac>
+= <frac><num>1</num><x-red>cos<sup>2</sup></x-red></frac>
 <br>
 tan<sup>2</sup> + 1 = sec<sup>2</sup>
 </div>
 
-<com>since tan<sup>2</sup>+1=sec<sup>2</sup>, replace that</com>
+<com>since sec<sup>2</sup> equals tan<sup>2</sup>+1, replace that</com>
 <div>
 <frac><num>tan<sup>2</sup> - 1</num>
-<red>tan<sup>2</sup> + 1</red></frac>
+<x-red>tan<sup>2</sup> + 1</x-red></frac>
 = <frac><num>tan<sup>2</sup> - 1</num>
 <span>tan<sup>2</sup> + 1</span></frac>
 </div>
@@ -848,10 +885,15 @@ tan<sup>2</sup> + 1 = sec<sup>2</sup>
 <com>if you knew tan<sup>2</sup>+1=sec<sup>2</sup>,
 that proved the identity true</com>
 <div class="head">
+<x-starr>
+&nbsp;
 <frac><num>tan<sup>2</sup> - 1</num>
 <span>tan<sup>2</sup> + 1</span></frac>
-= <frac><num>tan<sup>2</sup> - 1</num>
+&nbsp;=&nbsp;
+<frac><num>tan<sup>2</sup> - 1</num>
 <span>tan<sup>2</sup> + 1</span></frac>
+&nbsp;
+</x-starr>
 </div>
 
 </div end_prob_06>
@@ -861,11 +903,11 @@ that proved the identity true</com>
 <div id="PROBLEM_07" class="prob">
     
 <div class="head">
-<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<x-red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</x-red>
 <br><br>
-<hsp>
-tan<sup>2</sup> + 1 + <hsp>tan &middot; sec</hsp>
-</hsp>
+<x-hsp>
+tan<sup>2</sup> + 1 + <x-hsp>tan &middot; sec</x-hsp>
+</x-hsp>
 = <frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
 <br><br>
 </div>
@@ -873,21 +915,21 @@ tan<sup>2</sup> + 1 + <hsp>tan &middot; sec</hsp>
 
 <com>good to remember that tan<sup>2</sup>+1=sec<sup>2</sup></com>
 <div>
-<red>(</red>tan<sup>2</sup> + 1<red>)</red> + tan&middot;sec
+<x-red>(</x-red>tan<sup>2</sup> + 1<x-red>)</x-red> + tan&middot;sec
 = <frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
 </div>
 
 <com>replace that then</com>
 <div>
-<red>sec<sup>2</sup></red> + tan&middot;sec
+<x-red>sec<sup>2</sup></x-red> + tan&middot;sec
 = <frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
 </div>
 
 <com>we know that sec=<frac><num>1</num>cos</frac></com>
 <div>
-<frac><num><red>1</red></num><red>cos<sup>2</sup></red></frac>
+<frac><num><x-red>1</x-red></num><x-red>cos<sup>2</sup></x-red></frac>
 + tan &middot;
-<frac><num><red>1</red></num><red>cos</red></frac>
+<frac><num><x-red>1</x-red></num><x-red>cos</x-red></frac>
 = <frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
 </div>
 
@@ -895,7 +937,7 @@ tan<sup>2</sup> + 1 + <hsp>tan &middot; sec</hsp>
 <div>
 <frac><num>1</num><span>cos<sup>2</sup></span></frac>
 +
-<frac><num><red>sin</red></num><red>cos</red></frac>
+<frac><num><x-red>sin</x-red></num><x-red>cos</x-red></frac>
 &middot;
 <frac><num>1</num>cos</frac>
 = <frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
@@ -905,16 +947,17 @@ tan<sup>2</sup> + 1 + <hsp>tan &middot; sec</hsp>
 <div>
 <frac><num>1</num><span>cos<sup>2</sup></span></frac>
 +
-<frac><num><red>sin&middot;1</red></num><red>cos<sup>2</sup></red></frac>
+<frac><num><x-red>sin&middot;1</x-red></num><x-red>cos<sup>2</sup></x-red></frac>
 = <frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
 </div>
 
-<com>combing the fractions show that the identity to be true</com>
+<com>combining fractions shows the identity to be true</com>
 <div class="head">
-<starr/>
-<frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac> =
+<x-starr>&nbsp;
 <frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
-<starr/>
+&nbsp;=&nbsp;
+<frac><num>1 + sin</num><span>cos<sup>2</sup></span></frac>
+</x-starr>&nbsp;
 </div>
 
 </div end_prob_07>
@@ -924,86 +967,86 @@ tan<sup>2</sup> + 1 + <hsp>tan &middot; sec</hsp>
 <div id="PROBLEM_08" class="prob">
 
 <div class="head">
-<red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</red>
+<x-red style="font-size:0.5em;">&nbsp;&nbsp;&nbsp;show that...</x-red>
 <br><br>
 <frac><num>cos</num>1 - tan</frac> +
 <frac><num>sin</num>1 - cot</frac>
-<hsp>
+<x-hsp>
 = sin + cos
-</hsp>
+</x-hsp>
 <br><br>
 </div>
 <hr>
 
 <com>try denominator conjugate trick in both fractions</com>
 <div>
-<frac><num>cos</num>(1 - tan)</frac><red>&middot;</red><frac>
-    <num><red>(1 + tan)</red></num>
-    <red>(1 + tan)</red>
+<frac><num>cos</num><p-rens>1 - tan</p-rens></frac><x-red>&middot;</x-red><frac>
+    <num><x-red><p-rens>1 + tan</p-rens></x-red></num>
+    <x-red><p-rens>1 + tan</p-rens></x-red>
 </frac>
 +
-<frac><num>sin</num>(1 - cot)</frac><red>&middot;</red><frac>
-    <num><red>(1 + cot)</red></num>
-    <red>(1 + cot)</red>
+<frac><num>sin</num><p-rens>1 - cot</p-rens></frac><x-red>&middot;</x-red><frac>
+    <num><x-red><p-rens>1 + cot</p-rens></x-red></num>
+    <x-red><p-rens>1 + cot</p-rens></x-red>
 </frac>
 = sin + cos
 </div>
 
 <com>each denominator is now a difference of two squares</com>
 <div>
-<frac><num>cos &middot; (1 + tan)</num>
-<red>1 + tan<sup>2</sup></red>
+<frac><num>cos &middot; <p-rens>1 + tan</p-rens></num>
+<x-red>1 + tan<sup>2</sup></x-red>
 </frac>
 +
-<frac><num>sin &middot; (1 + cot)</num>
-<red>1 + cot<sup>2</sup></red>
+<frac><num>sin &middot; <p-rens>1 + cot</p-rens></num>
+<x-red>1 + cot<sup>2</sup></x-red>
 </frac>
 = sin + cos
 </div>
 
 <com>remember...</com>
-<div style="font-size:0.4em;">
+<div style="font-size:0.5em;">
     sin<sup>2</sup> + cos<sup>2</sup> = 1<br>
-    <frac><num>sin<sup>2</sup></num><red>sin<sup>2</sup></red></frac>
+    <frac><num>sin<sup>2</sup></num><x-red>sin<sup>2</sup></x-red></frac>
     +
-    <frac><num>cos<sup>2</sup></num><red>sin<sup>2</sup></red></frac>
+    <frac><num>cos<sup>2</sup></num><x-red>sin<sup>2</sup></x-red></frac>
     =
-    <frac><num>1</num><red>sin<sup>2</sup></red></frac>
+    <frac><num>1</num><x-red>sin<sup>2</sup></x-red></frac>
     <br>
     1 + cot<sup>2</sup> = csc<sup>2</sup>
 </div>
 
 <com>replace that</com>
 <div>
-<frac><num>cos &middot; (1 + tan)</num>
+<frac><num>cos &middot; <p-rens>1 + tan</p-rens></num>
 <span>1 + tan<sup>2</sup></span>
 </frac>
 +
-<frac><num>sin &middot; (1 + cot)</num>
-<red>csc<sup>2</sup></red>
+<frac><num>sin &middot; <p-rens>1 + cot</p-rens></num>
+<x-red>csc<sup>2</sup></x-red>
 </frac>
 = sin + cos
 </div>
 
 <com>remember...</com>
-<div style="font-size:0.4em;">
+<div style="font-size:0.5em;">
     cos<sup>2</sup> + sin<sup>2</sup> = 1<br>
-    <frac><num>cos<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
+    <frac><num>cos<sup>2</sup></num><x-red>cos<sup>2</sup></x-red></frac>
     +
-    <frac><num>sin<sup>2</sup></num><red>cos<sup>2</sup></red></frac>
+    <frac><num>sin<sup>2</sup></num><x-red>cos<sup>2</sup></x-red></frac>
     =
-    <frac><num>1</num><red>cos<sup>2</sup></red></frac>
+    <frac><num>1</num><x-red>cos<sup>2</sup></x-red></frac>
     <br>
     1 + tan<sup>2</sup> = sec<sup>2</sup>
 </div>
 
 <com>replace that</com>
 <div>
-<frac><num>cos &middot; (1 + tan)</num>
-<red>sec<sup>2</sup></red>
+<frac><num>cos &middot; <p-rens>1 + tan</p-rens></num>
+<x-red>sec<sup>2</sup></x-red>
 </frac>
 +
-<frac><num>sin &middot; (1 + cot)</num>
+<frac><num>sin &middot; <p-rens>1 + cot</p-rens></num>
 <span>csc<sup>2</sup></span>
 </frac>
 = sin + cos
@@ -1011,51 +1054,51 @@ tan<sup>2</sup> + 1 + <hsp>tan &middot; sec</hsp>
 
 <com>separate the denominators of each fraction</com>
 <div style="word-spacing:-0.2ch">
-<frac><num><red>1</red></num><red>sec<sup>2</sup></red></frac>
+<frac><num><x-red>1</x-red></num><x-red>sec<sup>2</sup></x-red></frac>
 &middot;
-<frac><num>cos&middot;(1 + tan)</num>1</frac>
+<frac><num>cos&middot;<p-rens>1 + tan</p-rens></num>1</frac>
 +
-<frac><num><red>1</red></num><red>csc<sup>2</sup></red></frac>
+<frac><num><x-red>1</x-red></num><x-red>csc<sup>2</sup></x-red></frac>
 &middot;
-<frac><num>sin&middot;(1 + cot)</num>1</frac>
+<frac><num>sin&middot;<p-rens>1 + cot</p-rens></num>1</frac>
 = sin + cos
 </div>
 
 <com><frac><num>1</num>sec</frac> equals cos, and
 <frac><num>1</num>csc</frac> equals sin; replace those</com>
 <div style="word-spacing:-0.2ch">
-<frac><num><red>cos<sup>2</sup></red></num><red>1</red></frac>
+<frac><num><x-red>cos<sup>2</sup></x-red></num><x-red>1</x-red></frac>
 &middot;
-<frac><num>cos&middot;(1 + tan)</num>1</frac>
+<frac><num>cos&middot;<p-rens>1 + tan</p-rens></num>1</frac>
 +
-<frac><num><red>sin<sup>2</sup></red></num><red>1</red></frac>
+<frac><num><x-red>sin<sup>2</sup></x-red></num><x-red>1</x-red></frac>
 &middot;
-<frac><num>sin&middot;(1 + cot)</num>1</frac>
+<frac><num>sin&middot;<p-rens>1 + cot</p-rens></num>1</frac>
 = sin + cos
 </div>
 
 <com>multiply each numerator</com>
 <div>
-<frac><num><red>cos<sup>3</sup></red>&middot;(1 + tan)</num>1</frac>
+<frac><num><x-red>cos<sup>3</sup></x-red>&middot;<p-rens>1 + tan</p-rens></num>1</frac>
 +
-<frac><num><red>sin<sup>3</sup></red>&middot;(1 + cot)</num>1</frac>
+<frac><num><x-red>sin<sup>3</sup></x-red>&middot;<p-rens>1 + cot</p-rens></num>1</frac>
 = sin + cos
 </div>
 
-<com>drop the denominator</com>
+<com>drop the one from the denominator</com>
 <div>
-cos<sup>3</sup>&middot;(1 + tan) +
-sin<sup>3</sup>&middot;(1 + cot)
+cos<sup>3</sup>&middot;<p-rens>1 + tan</p-rens> +
+sin<sup>3</sup>&middot;<p-rens>1 + cot</p-rens>
 = sin + cos
 </div>
 
 <com>distribute in the parenthesis</com>
 <div style="word-spacing:-0.5ch">
-cos<sup>3</sup><red>&middot;</red>1
-+ cos<sup>3</sup><red>&middot;</red>tan
+cos<sup>3</sup><x-red>&middot;</x-red>1
++ cos<sup>3</sup><x-red>&middot;</x-red>tan
 &nbsp;+&nbsp;
-sin<sup>3</sup><red>&middot;</red>1
-+ sin<sup>3</sup><red>&middot;</red>cot
+sin<sup>3</sup><x-red>&middot;</x-red>1
++ sin<sup>3</sup><x-red>&middot;</x-red>cot
 = sin + cos
 </div>
 
@@ -1064,27 +1107,27 @@ and cot equals <frac><num>cos</num>sin</frac></com>
 <div style="word-spacing:-0.2ch">
 cos<sup>3</sup> +
 <frac><num>cos<sup>3</sup></num>1</frac>&middot;<frac>
-<num><red>sin</red></num><red>cos</red></frac>
+<num><x-red>sin</x-red></num><x-red>cos</x-red></frac>
 +
 sin<sup>3</sup> +
 <frac><num>sin<sup>3</sup></num>1</frac>&middot;<frac>
-<num><red>cos</red></num><red>sin</red></frac>
+<num><x-red>cos</x-red></num><x-red>sin</x-red></frac>
 = sin + cos
 </div>
 
-<com>cancel</com>
+<com>cancel exponents</com>
 <div style="word-spacing:-0.2ch">
 cos<sup>3</sup> +
 <frac>
-<num><red>cos<sup><s>3</s>2</sup></red></num>
+<num><x-red>cos<sup><s>3</s>2</sup></x-red></num>
 1</frac>&middot;<frac>
-<num>sin</num><red data-cancel>cos</red></frac>
+<num>sin</num><x-red data-cancel>cos</x-red></frac>
 +
 sin<sup>3</sup> +
 <frac>
-<num><red>sin<sup><s>3</s>2</sup></red></num>
+<num><x-red>sin<sup><s>3</s>2</sup></x-red></num>
 1</frac>&middot;<frac>
-<num>cos</num><red data-cancel>sin</red></frac>
+<num>cos</num><x-red data-cancel>sin</x-red></frac>
 = sin + cos
 </div>
 
@@ -1099,42 +1142,43 @@ sin<sup>2</sup>&middot;cos
 
 <com>factor out cos<sup>2</sup> and sin<sup>2</sup></com>
 <div style="word-spacing:-0.2ch">
-<red>cos<sup>2</sup></red>&middot;(cos + sin) +
-<red>sin<sup>2</sup></red>&middot;(sin + cos)
+<x-red>cos<sup>2</sup></x-red>&middot;<p-rens>cos + sin</p-rens> +
+<x-red>sin<sup>2</sup></x-red>&middot;<p-rens>sin + cos</p-rens>
 = sin + cos
 </div>
 
 <com>commutative property of addition to rearrange</com>
 <div style="word-spacing:-0.2ch">
-cos<sup>2</sup>&middot;(<red>sin + cos</red>) +
-sin<sup>2</sup>&middot;(sin + cos)
+cos<sup>2</sup>&middot;<p-rens><x-red>sin + cos</x-red></p-rens> +
+sin<sup>2</sup>&middot;<p-rens>sin + cos</p-rens>
 = sin + cos
 </div>
 
-<com>factor out the (sin+cos) term</com>
+<com>factor out the <p-rens>sin+cos</p-rens> term</com>
 <div>
-<red>(sin + cos)</red> &middot;
-(cos<sup>2</sup> + sin<sup>2</sup>)
+<x-red><p-rens>sin + cos</p-rens></x-red> &middot;
+<p-rens>cos<sup>2</sup> + sin<sup>2</sup></p-rens>
 = sin + cos
 </div>
 
-<com>remember, cos<sup>2</sup>+sin<sup>2</sup> also equals one</com>
+<com>remember, cos<sup>2</sup>+sin<sup>2</sup>
+also equals one</com>
 <div>
-(sin + cos) &middot; (<red>1</red>)
+<p-rens>sin + cos</p-rens> &middot; <p-rens><x-red>1</x-red></p-rens>
 = sin + cos
 </div>
 
 <com>multiply and drop parenthesis</com>
 <div>
-<red>(</red>sin + cos<red>)</red>
+<x-red>(</x-red>sin + cos<x-red>)</x-red>
 = sin + cos
 </div>
 
 <com>more difficult than necessary, but the identity holds</com>
 <div class="head" style="word-spacing:-0.3ch">
-<starr/>
+<x-starr>
 sin + cos = sin + cos
-<starr/>
+</x-starr>
 </div>
 
 </div end_prob_08>
@@ -1144,8 +1188,8 @@ sin + cos = sin + cos
 <div id="PROBLEM_09" class="prob">
 
 <div class="head">
-<red style="font-size:0.5em;"
->&nbsp;&nbsp;&nbsp;show, in a better way, that...</red>
+<x-red style="font-size:0.5em;"
+>&nbsp;&nbsp;&nbsp;show, in a better way, that...</x-red>
 <br><br>
 <frac><num>cos</num>1 - tan</frac> +
 <frac><num>sin</num>1 - cot</frac>
@@ -1155,23 +1199,24 @@ sin + cos = sin + cos
 <hr>
 
 <com>tan equals<frac><num>sin</num>cos</frac>
-and cot equals<frac><num>cos</num>sin</frac>; replace those</com>
+and cot equals<frac><num>cos</num>sin</frac>;
+replace those</com>
 <div>
 <frac><num>
-    <frac><num>cos</num><red>1</red></frac>
+    <frac><num>cos</num><x-red>1</x-red></frac>
 </num><span>&nbsp;
 &nbsp;
     <frac><num>1</num>1</frac> -
-    <frac><num><red>sin</red></num><red>cos</red></frac>
+    <frac><num><x-red>sin</x-red></num><x-red>cos</x-red></frac>
     &nbsp;&nbsp;
 </span></frac>
 +
 <frac><num>
-    <frac><num>sin</num><red>1</red></frac>
+    <frac><num>sin</num><x-red>1</x-red></frac>
 </num><span>&nbsp;
 &nbsp;
     <frac><num>1</num>1</frac> -
-    <frac><num><red>cos</red></num><red>sin</red></frac>
+    <frac><num><x-red>cos</x-red></num><x-red>sin</x-red></frac>
     &nbsp;&nbsp;
 </span></frac>
 = sin + cos
@@ -1184,7 +1229,7 @@ corresponding denominator value</com>
     <frac><num>cos</num>1</frac>
 </num><span>&nbsp;
 &nbsp;
-    <frac><num><red>cos</red></num><red>cos</red></frac> -
+    <frac><num><x-red>cos</x-red></num><x-red>cos</x-red></frac> -
     <frac><num>sin</num>cos</frac>
     &nbsp;&nbsp;
 </span></frac>
@@ -1193,7 +1238,7 @@ corresponding denominator value</com>
     <frac><num>sin</num>1</frac>
 </num><span>&nbsp;
 &nbsp;
-    <frac><num><red>sin</red></num><red>sin</red></frac> -
+    <frac><num><x-red>sin</x-red></num><x-red>sin</x-red></frac> -
     <frac><num>cos</num>sin</frac>
     &nbsp;&nbsp;
 </span></frac>
@@ -1206,7 +1251,7 @@ corresponding denominator value</com>
     <frac><num>cos</num>1</frac>
 </num><span>&nbsp;
 &nbsp;
-    <frac><num><red>cos - sin</red></num><red>cos</red></frac>
+    <frac><num><x-red>cos - sin</x-red></num><x-red>cos</x-red></frac>
     &nbsp;&nbsp;
 </span></frac>
 +
@@ -1214,7 +1259,7 @@ corresponding denominator value</com>
     <frac><num>sin</num>1</frac>
 </num><span>&nbsp;
 &nbsp;
-    <frac><num><red>sin - cos</red></num><red>sin</red></frac>
+    <frac><num><x-red>sin - cos</x-red></num><x-red>sin</x-red></frac>
     &nbsp;&nbsp;
 </span></frac>
 = sin + cos
@@ -1224,21 +1269,21 @@ corresponding denominator value</com>
 <div>
     <frac><num>cos</num>1</frac>
     &middot;
-    <frac><num><red>cos</red></num><red>cos - sin</red></frac>
+    <frac><num><x-red>cos</x-red></num><x-red>cos - sin</x-red></frac>
     
 +
     <frac><num>sin</num>1</frac>
     &middot;
-    <frac><num><red>sin</red></num><red>sin - cos</red></frac>
+    <frac><num><x-red>sin</x-red></num><x-red>sin - cos</x-red></frac>
 = sin + cos
 </div>
 
 <com>multiply both fractions</com>
 <div>
-<frac><num><red>cos<sup>2</sup></red></num>
+<frac><num><x-red>cos<sup>2</sup></x-red></num>
 cos - sin</frac>
 +
-<frac><num><red>sin<sup>2</sup></red></num>
+<frac><num><x-red>sin<sup>2</sup></x-red></num>
 sin - cos</frac>
 = sin + cos
 </div>
@@ -1248,9 +1293,9 @@ sin - cos</frac>
 <frac><num>cos<sup>2</sup></num>
 cos - sin</frac>
 +
-<frac><num><red>-1&middot; </red>sin<sup>2</sup></num>
+<frac><num><x-red>-1&middot; </x-red>sin<sup>2</sup></num>
 <span>
-<red>-1&middot; </red>sin - <red>-1&middot; </red>cos
+<x-red>-1&middot; </x-red>sin - <x-red>-1&middot; </x-red>cos
 </span>
 </frac>
 = sin + cos
@@ -1261,9 +1306,9 @@ cos - sin</frac>
 <frac><num>cos<sup>2</sup></num>
 cos - sin</frac>
 +
-<frac><num><red>-</red>sin<sup>2</sup></num>
+<frac><num><x-red>-</x-red>sin<sup>2</sup></num>
 <span>
-<red>-</red>sin <red>+</red>cos
+<x-red>-</x-red>sin <x-red>+</x-red>cos
 </span>
 </frac>
 = sin + cos
@@ -1275,7 +1320,7 @@ cos - sin</frac>
 cos - sin</frac>
 +
 <frac><num>-sin<sup>2</sup></num>
-<red>cos - sin</red>
+<x-red>cos - sin</x-red>
 </frac>
 = sin + cos
 </div>
@@ -1284,7 +1329,7 @@ cos - sin</frac>
 <div>
 <frac><num>cos<sup>2</sup></num>
 cos - sin</frac>
-<red>-</red>
+<x-red>-</x-red>
 <frac><num>sin<sup>2</sup></num>
 cos - sin
 </frac>
@@ -1293,14 +1338,14 @@ cos - sin
 
 <com>combine into one fraction</com>
 <div>
-<frac><num><red>cos<sup>2</sup> - sin<sup>2</sup></red></num>
-<red>cos - sin</red></frac>
+<frac><num><x-red>cos<sup>2</sup> - sin<sup>2</sup></x-red></num>
+<x-red>cos - sin</x-red></frac>
 = sin + cos
 </div>
 
 <com>numerator is now the difference of two squares</com>
 <div>
-<frac><num><red>(cos<sup>2</sup> - sin<sup>2</sup>)</red></num>
+<frac><num><x-red><p-rens>cos<sup>2</sup> - sin<sup>2</sup></p-rens></x-red></num>
 <span>cos - sin</span></frac>
 = sin + cos
 </div>
@@ -1308,31 +1353,40 @@ cos - sin
 <com>break up into factors</com>
 <div>
 <frac><num>
-    <red>(cos + sin)</red>&middot;<red>(cos - sin)</red>
-</num><span><red>(</red>cos - sin<red>)</red></span></frac>
+<x-red><p-rens>cos + sin</p-rens></x-red> &middot;
+<x-red><p-rens>cos - sin</p-rens></x-red>
+</num>
+<span>
+  <x-red>(</x-red>cos - sin<x-red>)</x-red>
+</span>
+</frac>
 = sin + cos
 </div>
 
 <com>cancel like terms</com>
 <div>
 <frac><num>
-   (cos + sin)&middot;<red data-cancel>(cos - sin)</red>
-</num><span><red data-cancel>(cos - sin)</red></span></frac>
+<p-rens>cos + sin</p-rens> &middot;
+<x-red data-cancel><p-rens>cos - sin</p-rens></x-red>
+</num>
+<span><x-red data-cancel>
+<p-rens>cos - sin</p-rens>
+</x-red></span></frac>
 = sin + cos
 </div>
 
 <com>drop the parenthesis</com>
 <div>
-<red>(</red>cos + sin<red>)</red>
+<x-red>(</x-red>cos + sin<x-red>)</x-red>
 = sin + cos
 </div>
 
 <com>again, the commutative property
 reveals the truth of the identity</com>
 <div class="head" style="word-spacing:-0.2ch">
-<starr/>
+<x-starr>
 sin + cos = sin + cos
-<starr/>
+</x-starr>
 </div>
 
 </div end_prob_09>
